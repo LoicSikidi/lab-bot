@@ -1,9 +1,6 @@
 package bot;
 import java.io.IOException;
 
-import com.ullink.slack.simpleslackapi.SlackBot;
-import com.ullink.slack.simpleslackapi.SlackChannel;
-import com.ullink.slack.simpleslackapi.SlackPersona;
 import com.ullink.slack.simpleslackapi.SlackSession;
 import com.ullink.slack.simpleslackapi.SlackUser;
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted;
@@ -12,13 +9,13 @@ import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 public class Bot{
 
-	private static final String TOKEN_BOT = "xoxb-90193202946-oEkDGShSzYqPvMkPTllGdgXZ";
+	private static final String TOKEN_BOT = "xoxb-91352476245-kNoh5IbBqyc8BBmWieOc0Qig"; //TODO : à mettre dans variable d'env
 	private SlackSession session;
 
 	public Bot() throws IOException{
 		session = SlackSessionFactory.createWebSocketSlackSession(TOKEN_BOT);
 	}
-
+	
 	public void connect() throws IOException{
 		if(session!=null){
 			session.connect();
@@ -29,6 +26,10 @@ public class Bot{
 		if(session!=null && session.isConnected()){
 			session.disconnect();
 		}
+	}
+	
+	public boolean isConnected(){
+		return session.isConnected();
 	}
 
 	/**
@@ -47,15 +48,23 @@ public class Bot{
 				if (session.sessionPersona().getId().equals(event.getSender().getId())) {
 					return;
 				}
-				SlackChannel channelOnWhichMessageWasPosted = event.getChannel();
 				String messageContent = event.getMessageContent();
 				SlackUser messageSender = event.getSender();
-				System.out.println(messageContent);
+				
+				if (messageContent.contains("Hi")) {
+					session.sendMessage(event.getChannel(),"Hello "+messageSender.getUserName()+" !");
+					return;
+				} else {
+					session.sendMessage(event.getChannel(),"Hello "+messageSender.getUserName()+", my name is "+session.sessionPersona().getUserName());
+					return;
+				}
+				
+				// UTILS
 
 				// if I'm only interested on a certain channel :
 				// I can filter out messages coming from other channels
+				// SlackChannel channelOnWhichMessageWasPosted = event.getChannel();
 				// SlackChannel theChannel = session.findChannelByName("thechannel");
-				//
 				// if (!theChannel.getId().equals(event.getChannel().getId())) {
 				//	 return;
 				// }
@@ -67,13 +76,6 @@ public class Bot{
 				//if (!myInterestingUser.getId().equals(event.getSender().getId())) {
 				//	return;
 				//}
-				if (messageContent.contains("Hi")) {
-					session.sendMessage(event.getChannel(),"Hello "+messageSender.getUserName()+" !");
-					return;
-				} else {
-					session.sendMessage(event.getChannel(),"Hello "+messageSender.getUserName()+", my name is "+session.sessionPersona().getUserName());
-					return;
-				}
 
 			}
 		};
