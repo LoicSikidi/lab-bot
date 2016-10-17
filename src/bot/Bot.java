@@ -9,11 +9,11 @@ import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener;
 
 public class Bot{
 
-	private static final String TOKEN_BOT = "xoxb-91352476245-kNoh5IbBqyc8BBmWieOc0Qig"; //TODO : à mettre dans variable d'env
 	private SlackSession session;
+	public static final String TOKEN_NAME = "LAB_BOT";
 
-	public Bot() throws IOException{
-		session = SlackSessionFactory.createWebSocketSlackSession(TOKEN_BOT);
+	public Bot(String token) throws IOException{
+		session = SlackSessionFactory.createWebSocketSlackSession(token);
 	}
 	
 	public void connect() throws IOException{
@@ -43,8 +43,7 @@ public class Bot{
 			@Override
 			public void onEvent(SlackMessagePosted event, SlackSession session)
 			{
-				// How to avoid message the bot send (yes it is receiving notification for its own messages)
-				// session.sessionPersona() returns the user this session represents
+				// To avoid message the bot send (yes it is receiving notification for its own messages)
 				if (session.sessionPersona().getId().equals(event.getSender().getId())) {
 					return;
 				}
@@ -59,24 +58,6 @@ public class Bot{
 					return;
 				}
 				
-				// UTILS
-
-				// if I'm only interested on a certain channel :
-				// I can filter out messages coming from other channels
-				// SlackChannel channelOnWhichMessageWasPosted = event.getChannel();
-				// SlackChannel theChannel = session.findChannelByName("thechannel");
-				// if (!theChannel.getId().equals(event.getChannel().getId())) {
-				//	 return;
-				// }
-
-				// if I'm only interested on messages posted by a certain user :
-				// I can filter out messages coming from other users
-				// SlackUser myInterestingUser = session.findUserByUserName("gueststar");
-
-				//if (!myInterestingUser.getId().equals(event.getSender().getId())) {
-				//	return;
-				//}
-
 			}
 		};
 		

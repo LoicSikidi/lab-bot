@@ -13,7 +13,7 @@ public class BotTests {
 
 	@Test
 	public void connectionTest() throws IOException {
-		Bot bot = new Bot();
+		Bot bot = new Bot(System.getenv(Bot.TOKEN_NAME));
 		assertFalse(bot.isConnected());
 		bot.connect();
 		assertTrue(bot.isConnected());
