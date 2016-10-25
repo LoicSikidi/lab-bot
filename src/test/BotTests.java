@@ -21,7 +21,7 @@ public class BotTests {
 		assertFalse(bot.isConnected());
 	}
 
-	//TODO: vérification de bonne récéption de messages
+	//TODO: vÃ©rification de bonne rÃ©cÃ©ption de messages
 	
-	//TODO: vérification de bons envois de messages
+	//TODO: vÃ©rification de bons envois de messages
 }
