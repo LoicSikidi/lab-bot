@@ -3,4 +3,3 @@ before_install: mvn install -DskipTests=true
 install: mvn test
 jdk:
   - oraclejdk8
-  - oraclejdk7
