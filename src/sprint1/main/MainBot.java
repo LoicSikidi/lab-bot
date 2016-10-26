@@ -1,8 +1,8 @@
-package main;
+package sprint1.main;
 
 import java.io.IOException;
 
-import bot.Bot;
+import sprint1.bot.Bot;
 
 public class MainBot {
 
@@ -11,10 +11,12 @@ public class MainBot {
 		if(token==null || token.isEmpty()){
 			throw new Error("Add LAB_BOT with the token to your environment variables. (see in resources/init.sh)");
 		} else {
-			Bot bot = new Bot(token);
-			bot.connect();
-			bot.listenMessages();
+			System.out.println("LAB_BOT environment variable : "+token);
 		}
+		
+		Bot bot = new Bot(token);
+		bot.connect();
+		bot.listenMessages();
 	}
 
 }

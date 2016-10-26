@@ -1,4 +1,4 @@
-package bot;
+package sprint1.bot;
 import java.io.IOException;
 
 import com.ullink.slack.simpleslackapi.SlackSession;
