@@ -1,6 +1,9 @@
 language: java
-before_install: 
- - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+before_install:
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 install: mvn package
 jdk:
-  - oraclejdk8
+- oraclejdk8
+env:
+  matrix:
+    secure: FwEI0sb1fwUCAt7WM14q8XmOZ0du4+iyVUvflPhdxa6gnPZc5ur7lydigJpSatd7/AaGWiQkYc8K8BMqITpNHt8pR6Z3WXXeIhCodj1t5V8wJ0lUR9eYtIDp9EdYxdWYeO6wu0LkE8X0i/gudnEMqMrr0JrjvDnD7XfoFvkiY7u3w40Kh8ddektP8D44m2aKcEYHfQ30x2oxDIyfBDM3kia4qZpgYUBI2jnoCLLn5v7CohVCPrgW/9EFuqNyLJiztLY7iJntnTgTI3XZLKrZHlJhoJMFOoZC/6xXbIJVOLU+0ggGEKo4hgturlP+LpS17kn3HZaA0NC2rDXwK5eGJcjOS7gIANlZvhSKY4SIBaSqeBjTx607Q991NDpJmaz41F2FFXtk25Clbf7jnQT3uOyDc5lng/PkQtqEjJWnlDQAxaK7E0yrQf2ar3WyqpLUBsTYZx70XonDYrrpRO06vPrM+mEARIG24/iNKvWr2+qVRFRGP1qk76bznvnjheeQmvpkEevS8rcJAKErt7KCU2RADD1dcjYHo7zMTsYn+O0RLJ351eZwzkMpSdvsBBBZbe8lZByrwNusQRimvIZ7DyVrluJEUiraL6Z9v9HlrzC1RziOuaQ+pbtRAqYIsoXHVkuKuDKBt3jFFaBzpZTVRULkFQcvqIFScy/R6XptHJg=
