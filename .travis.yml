@@ -1,7 +1,7 @@
 language: java
 before_install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-install: mvn package
+install: mvn install
 jdk:
 - oraclejdk8
 env:
