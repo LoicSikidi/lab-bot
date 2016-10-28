@@ -1,6 +1,6 @@
 language: java
 before_install:
-- apt-get --assume-yes install sshpass
+- apt-get install sshpass
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 install: mvn install
 jdk:
