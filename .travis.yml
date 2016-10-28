@@ -12,5 +12,5 @@ env:
   - secure: ElbIVxXW0IHn//of3QtA0i08KMj5p+YfPAatQT9rb3wxWHTcXW4C352LslzvxXjThoWUJzf4YvzapQQ+idlKN/o2jG8MpLfE8S/AZhQaHwzxSe8p+twzAWmYe+t4GyOmjM1pNPXH8FEQdy4dDR2zTE3iVS5R+NlEz/bAVHekuSNH6PBEAS+QVGu4MuYJAbz+K9DwyBwUNwis5Rz8/7xZT3k0vV/m/bK1oOAoHxGhVCJoHWtDs/P/cEonAV2TFWDEHOJ+C3tm3XzKcwLWi/zQD7e2bNHHHKCu9BcMR8IKikwiZfTHEY1ULgK6X87evVLXo91F0qpiiIZnmVsdXL+JdDQT6HkPY9txoGMhhEZr9pm6AOiEYomUpNDTOYp+FJf5u+FuYczf7SjecvO8rl3no8G4DZZTjMEf/wwBfwW9an3Pzm8usooeVdJ9MyW2lsOKzqqDu914qxQu/pbB1QhHV/ipRLARyDDoFR6TJd5B5QpI9T22ohXB/GQC30fyrDt03AKDim6IZibI0ZbKz/Oqb4YdZJSNAyyeDpAbD7xOZHCQfdRXtNyQliJnuCJBKZZL1VeVwrxoDF70Q0/o4iDzmOQ3JDy89grAPoObxAgN0ZfsswVpC95uLxnhWrh4xnC98Q5hQT4+qvOM4yYm1sDgjYIMWdnU85FdjbfJHALmk24=
 after_success: 
 - ls -l
-- sshpass -p "$password" scp -v target/lab-bot-0.0.1-SNAPSHOT.jar felix@$IP:/home/
+- sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/lab-bot-0.0.1-SNAPSHOT.jar felix@$IP:/home/
 - ls target
