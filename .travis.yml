@@ -13,4 +13,4 @@ env:
 after_success: 
 - ls -l
 - ls target
-- sshpass -p "$password" scp target/*.jar felix@$IP:/home/
+- sshpass -p "$password" scp target/lab-bot-0.0.1-SNAPSHOT.jar felix@$IP:/home/
