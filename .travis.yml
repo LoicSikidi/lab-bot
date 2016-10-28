@@ -7,4 +7,4 @@ jdk:
 env:
   matrix:
   - secure: Y8DbJsbtrgjalEJ3t2n5IUZfM5KHgpvNXXrDDAXU+kRhgNqGmOXgPKgtgvmWs8jOiyW2p6U8MPK52+4ABRvesGLgDyTlp0tvwsQD7wVgWW6Zh0jv2Uc3nL/1iu5EqMFmvKjblXYBt4oxKk+0K/kvzU5mfWeVYx1zmhrKEAMRC5hYzkySxP15PE5EV+tTQmvrWzX9VCi2ZUt/LjKCu0d9YpwkQXsXDwZVJV4qGc3DYF/mV3ncJdsz9fdeokRHuUQOXS0sEPimkKUFk5k88/Nlg2iLSxyfnYjg+DUlwFJ2SDt93MSj3N2J62H1kuD/TY1Ljo18ZVRSAxsTrnftg3cjFv/7erKNeNORh0Qb3pG7bYTyDdYxC406itupjEHMiKxBdL7UrAFEi9nKS8y1F76ymg4hyqMsBD/OE3paAMI3hpkYqPEi3jM++TfHbQi/HJXFjcYuPLwK8MJ+oeOAmMg63sOGTzEVd3RR/WOc7kaEMfrae2AcyLCpcxp+9Bl/WXTkpbTzUk3XQ0iAh9a1Am3m1Q9ZUY5IlKAlt/A1+1+Tw0hSosBzGzQNat5pBAuJh5cr201q+p/9ctLCoRdKK+5dWYuIHSwf5LnSNVlAIu4IEPSIqXlrOWX0Mw3pBHoYSDUKXUnwFYUiz+Y9cO9Aruc4ZOwLwXF/n6X7/z5LywM+6qo=
-after_success: scp -o -P 12345 CheckHostIP=no target/lab-bot-0.0.1-SNAPSHOT.jar $ALL_IP
+after_success: scp -o CheckHostIP=no target/lab-bot-0.0.1-SNAPSHOT.jar $ALL_IP
