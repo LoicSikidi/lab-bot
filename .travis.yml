@@ -3,11 +3,13 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-install: mvn install
+install:
+- mvn install
+- sshpass -p "$password" scp target/*.jar felix@$IP:/home/
 jdk:
 - oraclejdk8
 env:
   global:
   - secure: l0nr0SWJhkcfoZciqJGGwtbdbCSyOiwhH9kh85Oyb5ieYSxzFV0pWFCrXiuwOTpBkfOjpsLCvSHyimFkZuGJDusqqzfs/1IQGcy7FOp3JWbEGhSPm0aMPJD1ugHqSfE96Wl0eFMG3nSE0kziqntEiXt3jVzZQ/1GvTTeRPar/PeudXCwtkc8sNFj/iTPgyq2e3ibKcvsO1b16RLF/23oko/9bhXU/Z5azSGggq9/UJSE7nN/DS9174bP5e0oXVj/E4yCD77mStBBCvA+pOzhXQjMcAlYjH0BLLJxEam8rGTYoHrRPkjL5j29XLxm5ShBz/0xM7K/P1oWRjx8oh2CebKAIRtgSZi5eW9N7urZewQSg601IFx1ZuR3vkDWdiB/Saj19+CD+mPiVK3yLcF1uxYqCspvsQjy2rk70LgoX2ra00GsnUlTa3TNTZV9ScP66sPIAWPPmEo2fYt//hwilxhxq8o5BaWk6gl/Gayx/s7I1InQoVgv4jix0busZ6idrOqm1rTbYjNSeKtheuRCLliqiNcIZSi6bldR2N7x6YflhUyjyVA6l0y4cAD+bew19Ar4wBeZbUE0fLDSLrC9of7EvHPvCKWiaNiwf6tkGXxuhA1IKa0xhntlf9VflkCpdtg4EZgI4+zIDBESJo7epbIeTGhYE47jXc4DS7aNtp4=
   - secure: ElbIVxXW0IHn//of3QtA0i08KMj5p+YfPAatQT9rb3wxWHTcXW4C352LslzvxXjThoWUJzf4YvzapQQ+idlKN/o2jG8MpLfE8S/AZhQaHwzxSe8p+twzAWmYe+t4GyOmjM1pNPXH8FEQdy4dDR2zTE3iVS5R+NlEz/bAVHekuSNH6PBEAS+QVGu4MuYJAbz+K9DwyBwUNwis5Rz8/7xZT3k0vV/m/bK1oOAoHxGhVCJoHWtDs/P/cEonAV2TFWDEHOJ+C3tm3XzKcwLWi/zQD7e2bNHHHKCu9BcMR8IKikwiZfTHEY1ULgK6X87evVLXo91F0qpiiIZnmVsdXL+JdDQT6HkPY9txoGMhhEZr9pm6AOiEYomUpNDTOYp+FJf5u+FuYczf7SjecvO8rl3no8G4DZZTjMEf/wwBfwW9an3Pzm8usooeVdJ9MyW2lsOKzqqDu914qxQu/pbB1QhHV/ipRLARyDDoFR6TJd5B5QpI9T22ohXB/GQC30fyrDt03AKDim6IZibI0ZbKz/Oqb4YdZJSNAyyeDpAbD7xOZHCQfdRXtNyQliJnuCJBKZZL1VeVwrxoDF70Q0/o4iDzmOQ3JDy89grAPoObxAgN0ZfsswVpC95uLxnhWrh4xnC98Q5hQT4+qvOM4yYm1sDgjYIMWdnU85FdjbfJHALmk24=
-after_success: sshpass -p "$password" scp target/*.jar felix@$IP:/home/
+
