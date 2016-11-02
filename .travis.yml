@@ -2,7 +2,6 @@ language: java
 before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 install: mvn install
 jdk:
 - oraclejdk8

@@ -1,5 +1,3 @@
 Le bot se lance avec la classe main.MainBot.java
-
-Une fois lancé, celui-ci apparait comme connecté sur Slack, dans la Team "Pre Suricats", avec comme nom pistl_bot.
-
+Une fois lancÃ©, celui-ci apparait comme connectÃ© sur Slack, dans la Team "Pre Suricats", avec comme nom pistl_bot.
 Vous pouvez lui envoyer des "direct messages", en tapant par exemple "Hi".

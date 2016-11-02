@@ -10,6 +10,15 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.1.RELEASE</version>
 	</parent>
+
+	<repositories>
+		<repository>
+			<id>bintray-bots4j-maven-repo</id>
+			<name>bintray</name>
+			<url>http://dl.bintray.com/bots4j/maven-repo</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -24,6 +33,26 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.bots4j</groupId>
+			<artifactId>msbotframework</artifactId>
+			<version>0.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.5</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.5</version><!--$NO-MVN-MAN-VER$-->
+        </dependency>
 
 		<!-- Sprint 1 -->
 		<dependency>

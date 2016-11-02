@@ -1,2 +1,0 @@
-Le Slack Bot Token est : xoxb - 91352476245 - IRGv4OMFC2fn92Ehf0zDzXzX 
-(retirer les espaces, Slack scanne les projets Github et répère ses tokens)
