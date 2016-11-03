@@ -1,23 +1,25 @@
 package restAPI;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 public class Application {
 	
-	@RequestMapping(value ="/")
-	public String getURLValue(HttpServletRequest request){
-	    String test = request.getRequestURI();
-	    System.out.println(test);
-	    return test;
-	}
-	
     public static void main(String[] args) {
+    	checkEnvVar();
     	SpringApplication.run(Application.class, "--server.port=${static.port:12345}");
+    }
+    
+    private static void checkEnvVar(){
+    	String appid = System.getenv("APPID");
+		String appsecret = System.getenv("APPSECRET");
+		if(appid == null) System.err.println("Check your environment var APPID...");
+		if(appsecret == null) System.err.println("Check your environment var APPSECRET...");
+		
+		if(appid==null || appsecret==null){
+			System.exit(0);
+		}
     }
     
 }
