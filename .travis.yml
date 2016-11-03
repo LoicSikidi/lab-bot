@@ -12,5 +12,5 @@ env:
 after_success:
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP pkill java
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-  target/lab-bot-0.0.1-SNAPSHOT.jar travis@$IP:/home/travis
+  target/lab-bot-1.0.jar travis@$IP:/home/travis
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar *.jar
