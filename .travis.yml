@@ -10,7 +10,8 @@ env:
   - secure: c3gfpIi3XZl5KVv54sJGCgkVqeU7/fqnk0G4fqe2ZLiY2mlcsyhmzjcyCejOgUYHmkY8MLXXliDF2uRSkejVT3MNoHQ7W2b9Ao7Y9diprVlf908UqPDX6thRZpvQ9e55cYGxIGDqvBGTuyeMO5fIS36gtE6t93Hkt5VJmxP67s3TZT5Dm+7dAyK/iySYHAmVIfCB+M0SWzGVXU+TW5Uw5tfBO0JJ7ABAR+EopJqTuWkakpqq+r8n5+9LA9I1GxPjmAEMG9n96JjMrLbzVhAY+qlJaNJsaCerFgttS15AjjureNtjym05Po6K9ZmXdezCt7W62IEjiddhBkdehqquBugp1S1u8w46pHWZP+ucb2/H7ynv+F+rIaw/jHOOFYC1Rq6211pGj+7VbUdL0gsheNH6oGJqi3N/XbZXyo7q142vSrQbiIacgknjUZ+OjJKto+ZAWh24AWnH8a/li6icyC0/XxteIpS12IvbkhEVj7oBSuUH2KJiGcbXAgXOJStc0F/Les1kn9FzVcEdHWB8o+wyxcSmgrIb/4fdNDyIrq6Eu2buKaZWkZGN/OaeGCqckuTghFsn3SrfWgYJn11KCJURifPGsnk3BA6omOhZ8nI4YhgECQweFfNqjddYE7Pz/GqatcmIZHSew/lJT7hUQChzmVQUf8sPLuJv7hT9YFA=
   - secure: AViGCKNuwvxaywxhSXQs4e2rVwtLdjhJrZHzUdBtXpp96Vo+DCVvL5FYKBuJjcEXZcCPoTf1xRnTrFcOvfXD3jVEe7KNTsCGWZbt678byxnFOAyKWhiXvH8OUMWCkksDZ3xkLyJeDoiJ3awJtpT/O0jAwHeD9Giiu9eIp/shfS7yeWiFAufI46kRWSoajvWvY6VMkTdG3wW38xpGlAtA/ukA8XeEv6B/C4OVNhbs9dRd4EDUvXdGc9Z2SckSZmAOjXf95RukS3AHN3NXT+0NK88NohF7Mgd7zPed3o7IwZfYNZ1iMB88BMQB0mQTnETvo+0xAap62nO4GoTOtXeDcKZVpqwoHDiTN2pgLQrwmNlU6XKepXyHSxctykEU1F1O5HxKPfLy8uG2VPIpua09eTfAxwfdr9ENxyFZYa3xNA3Td5sn7Nc4dz/1Gz8Bs412uIPRBqIKv9DWrR12MO1o3mWlDdJp17ATiaX6Dlf320hQbWbyPyyzpaMWDNlBTjvFveHnumU0zyHYelRVBjkH5IYk6nnrYnYQr9bxiR/vqvLJ1dAOCUHTd2p9WE5EAAXCEedmkA54ZoTlqZYxAgoYczTNwPhyZl32px8y9Kva7zhe+g8Qq5MCoCSSzKrTMJEnsumKT2QquOQJIUB0U2PAkAMWZikXeKDMqTptGYpe3I4=
 after_success:
-- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP pkill java
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP ./killLabBot.sh
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   target/lab-bot-1.0.jar travis@$IP:/home/travis
-- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar *.jar
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar lab-bot-1.0.jar &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP cd
