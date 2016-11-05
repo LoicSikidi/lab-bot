@@ -19,6 +19,7 @@ public class ReceivingMessagesController {
 	public int receivingMessage(HttpServletRequest request){
 	    
 		JSONObject json = null;
+		
 	    try {
 			Reader body = request.getReader();
 			BufferedReader reader = new BufferedReader(body);
