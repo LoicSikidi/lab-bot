@@ -3,6 +3,7 @@ package hello.suribot.communication.recast;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.IntentsAnalyzer;
+import hello.suribot.analyze.JSONKey;
 import hello.suribot.interfaces.IHttpSender;
 
 /**
@@ -33,6 +34,24 @@ public class RecastAiController implements IHttpSender{
 		} catch (Exception e) {
 			System.out.println("RecastAiController : Message "+message+" not send... ("+e+")");
 		}
+	}
+	
+	public static JSONObject fakeRecast(String messageUser, String idUser){
+		JSONObject js= new JSONObject();
+		js.put(JSONKey.IDUSER.name(), idUser);
+		if(messageUser.contains("contract")){
+			js.put(JSONKey.CONTEXTE.name(), "demande");
+			
+			if(messageUser.contains("IDID")) js.put(JSONKey.IDENTIFICATION.name(), "ID-5935697");
+			
+			if(messageUser.contains("risk")) js.put(JSONKey.QUOI.name(), "risk");
+			else if(messageUser.contains("billing")) js.put(JSONKey.QUOI.name(), "billings");
+			else if(messageUser.contains("partyRole")) js.put(JSONKey.QUOI.name(), "role");
+			
+			if(messageUser.contains("IDC")) js.put(JSONKey.COMPLEMENT.name(), "ID-731119");
+		}
+		
+		return js;
 	}
 	
 }
