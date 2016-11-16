@@ -1,4 +1,4 @@
-package utils.msbotframework;
+package hello.suribot.utils.msbotframework;
 
 import java.io.IOException;
 import java.net.URI;
