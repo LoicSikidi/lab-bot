@@ -11,46 +11,46 @@ public class JSonMemoryTests {
 	////////////////// GETTERS /////////////////////////
 	@Test
 	public void getIdContrat(){
-		String iduser = "iduser";
-		JSonMemory.deleteFile(iduser);
-		assertEquals(null, JSonMemory.getIdContrat(iduser));
+		String testUser = "testUser";
+		JSonMemory.deleteFile(testUser);
+		assertEquals(null, JSonMemory.getIdContrat(testUser));
 		
-		JSonMemory.putIdContrat(iduser, "7613");
-		assertEquals("7613", JSonMemory.getIdContrat(iduser));
-		JSonMemory.deleteFile(iduser);
+		JSonMemory.putIdContrat(testUser, "7613");
+		assertEquals("7613", JSonMemory.getIdContrat(testUser));
+		JSonMemory.deleteFile(testUser);
 	}
 	
 	@Test
 	public void getPrenom(){
-		String iduser = "iduser";
-		JSonMemory.deleteFile(iduser);
-		assertEquals(null, JSonMemory.getPrenom(iduser));
+		String testUser = "testUser";
+		JSonMemory.deleteFile(testUser);
+		assertEquals(null, JSonMemory.getPrenom(testUser));
 		
-		JSonMemory.putPrenom(iduser, "testPrenom");
-		assertEquals("testPrenom", JSonMemory.getPrenom(iduser));
-		JSonMemory.deleteFile(iduser);
+		JSonMemory.putPrenom(testUser, "testPrenom");
+		assertEquals("testPrenom", JSonMemory.getPrenom(testUser));
+		JSonMemory.deleteFile(testUser);
 	}
 	
 	@Test
 	public void getNom(){
-		String iduser = "iduser";
-		JSonMemory.deleteFile(iduser);
-		assertEquals(null, JSonMemory.getNom(iduser));
+		String testUser = "testUser";
+		JSonMemory.deleteFile(testUser);
+		assertEquals(null, JSonMemory.getNom(testUser));
 		
-		JSonMemory.putNom(iduser, "testNom");
-		assertEquals("testNom", JSonMemory.getNom(iduser));
-		JSonMemory.deleteFile(iduser);
+		JSonMemory.putNom(testUser, "testNom");
+		assertEquals("testNom", JSonMemory.getNom(testUser));
+		JSonMemory.deleteFile(testUser);
 	}
 	
 	@Test
 	public void getIntents(){
-		String iduser = "iduser";
-		JSonMemory.deleteFile(iduser);
-		assertEquals(null, JSonMemory.getLastIntents(iduser));
+		String testUser = "testUser";
+		JSonMemory.deleteFile(testUser);
+		assertEquals(null, JSonMemory.getLastIntents(testUser));
 		
-		JSonMemory.putLastIntents(iduser, "{\"IDUSER\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}");
-		assertEquals("{\"IDUSER\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}", JSonMemory.getLastIntents(iduser));
-		JSonMemory.deleteFile(iduser);
+		JSonMemory.putLastIntents(testUser, "{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}");
+		assertEquals("{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}", JSonMemory.getLastIntents(testUser));
+		JSonMemory.deleteFile(testUser);
 	}
 	
 	///////////////// SETTERS  ///////////////////////////
