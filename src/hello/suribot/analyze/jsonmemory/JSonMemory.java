@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -20,15 +20,15 @@ public class JSonMemory {
 	
 	////////////////// GETTERS /////////////////////////
 	public static String getIdContrat(String idUser){
-		return getValueFromJson(idUser+EXTENSION_FILE, "contrat");
+		return getValueFromJson(idUser+EXTENSION_FILE, "contract");
 	}
 	
 	public static String getPrenom(String idUser){
-		return getValueFromJson(idUser+EXTENSION_FILE, "prenom");
+		return getValueFromJson(idUser+EXTENSION_FILE, "firstname");
 	}
 	
 	public static String getNom(String idUser){
-		return getValueFromJson(idUser+EXTENSION_FILE, "nom");
+		return getValueFromJson(idUser+EXTENSION_FILE, "lastname");
 	}
 	
 	public static String getLastIntents(String idUser) {
@@ -62,27 +62,42 @@ public class JSonMemory {
 	//////////////// UTILS //////////////
 	private static String getValueFromJson(String fileName, String name){
 		try {
-			JSONObject object = (JSONObject) parser.parse(new FileReader(fileName));
-			return object.getString(name);	
+			Object object = parser.parse(new FileReader(fileName));
+			JSONObject json = (JSONObject) object;
+			return (String) json.get(name);	
 		} catch (IOException | JSONException | ParseException e) {
 			return null;
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void putValuesInJson(String idUser, Map<String, String> values){
 		if(idUser==null || idUser.isEmpty() || values==null || values.isEmpty()) return;
 		
 		String fileName = idUser + EXTENSION_FILE;
 		createJsonFileIfNotExists(idUser);
 		try (FileWriter file = new FileWriter(fileName)){
-			JSONObject object = (JSONObject) parser.parse(new FileReader(fileName));
-			
+			Object object = parser.parse(new FileReader(fileName));
+			JSONObject json = (JSONObject) object;
 			for(String key : values.keySet()){
-				object.put(key, values.get(key));
+				json.put((String) key, (String) values.get(key));
 			}
 			
-			file.write(object.toString());
-		} catch (IOException | JSONException | ParseException e) {}
+			file.write(json.toString());
+		} catch (IOException | JSONException | ParseException e) { // empty file
+			
+			try (FileWriter file = new FileWriter(fileName)){
+				JSONObject object = new JSONObject();
+				
+				for(String key : values.keySet()){
+					object.put(key, values.get(key));
+				}
+				file.write(object.toString());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
 	}
 	
 	private static void putValueInJson(String idUser, String key, String value){
@@ -109,5 +124,5 @@ public class JSonMemory {
 			System.out.println("Cannot create "+idUser+EXTENSION_FILE+" file");
 		}
 	}
-
+	
 }
