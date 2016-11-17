@@ -27,12 +27,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 
 	public void analyzeRecastIntents(JSONObject mbc_json, JSONObject recastJson) {
 		System.out.println("IntentsAnalyzer analyzeRecastIntents");
-		//TODO: get url and parameters
-		String apiResponse = null;
-//		if(intents!=null) apiResponse = apicontroller.sendMessageAndReturnResponse("", intents);
-//		String generatedResponse = responsegenerator.generateUnderstoodMessage(apiResponse);
-		
-//		nextToCall.sendMessage(json, generatedResponse);
 		
 		String idUser = recastJson.getString(FakeRecastKeys.IDUSER.getName());
 		try{
@@ -43,11 +37,9 @@ public class IntentsAnalyzer implements IJsonDecoder{
 				JSONObject js = ContractAnalyzer.contractAnalyzer(recastJson);
 				if(js.getBoolean("success")){
 					JSonMemory.removeLastIntents(idUser);
-					APIController api = new APIController();
-					String rep = api.sendMessageAndReturnResponse(js.getString(FakeRecastKeys.URITOCALL.name()), "");
-					ResponseGenerator reponseGenerator= new ResponseGenerator();
-					String responseToMBC= reponseGenerator.generateUnderstoodMessage(rep);
-					System.out.println("responseToMBC = "+responseToMBC);
+					String rep = apicontroller.sendMessageAndReturnResponse(js.getString(FakeRecastKeys.URITOCALL.name()), "");
+					String responseToMBC = responsegenerator.generateUnderstoodMessage(rep);
+					nextToCall.sendMessage(mbc_json, responseToMBC);
 					demandeComprise= true;
 				}
 			} else if (true) {
@@ -58,43 +50,36 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			//avec l'ancienne demande
 			if(!demandeComprise){
 				String stringLastIntent = JSonMemory.getLastIntents(idUser);
-				System.out.println("stringLastIntent == "+stringLastIntent);
 				if(stringLastIntent==null||stringLastIntent.isEmpty()){
-					System.out.println(recastJson.toString());
-					System.out.println("in if");
-					//Demande incomprise donc on arrete le traitement  et envoie une erreur a SS5
+					//Demande incomprise et il n'y a pas d'ancienne demande en attente
+					//donc on arrete le traitement  et envoie une erreur a SS5
 					JSonMemory.putLastIntents(idUser, recastJson.toString());
-					ResponseGenerator reponseGenerator= new ResponseGenerator();
-					String responseToMBC= reponseGenerator.generateUnderstoodMessage("erreur");
-					System.out.println(responseToMBC);
+					String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
+					nextToCall.sendMessage(mbc_json, responseToMBC);
 					return;
 				}
+				//On essaye de completer l'ancienne demande présente avec les nouvelles données reçus
 				JSONObject lastIntent = new JSONObject(stringLastIntent);
-				System.out.println("lastIntent == "+lastIntent);
-				System.out.println("recastJson == "+recastJson);
 				JSONObject newRequest = generateNewRequestWithLastIntent(recastJson, lastIntent);
-				System.out.println("newRequest == "+newRequest);
 				JSonMemory.removeLastIntents(idUser);
 				analyzeRecastIntents(mbc_json, newRequest);
 			}
-			//ENVOYER A SS4
 		}catch(JSONException e){
 			//Il y a eu une exception lors de la lecture de la recuperation du contexte,
 			//on essaye de completer une ancienne demande avec les nouvelles données
 			String stringLastIntent = JSonMemory.getLastIntents(idUser);
 			if(stringLastIntent==null||stringLastIntent.isEmpty()){
-				//Demande incomprise donc on arrete le traitement  et envoie une erreur a SS5
+				//Demande incomprise et il n'y a pas d'ancienne demande en attente
+				//donc on arrete le traitement  et envoie une erreur a SS5
 				JSonMemory.putLastIntents(idUser, recastJson.toString());
-				ResponseGenerator reponseGenerator= new ResponseGenerator();
-				String responseToMBC= reponseGenerator.generateUnderstoodMessage("erreur");
-				System.out.println(responseToMBC);
+				String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
+				nextToCall.sendMessage(mbc_json, responseToMBC);
 				return;
 			}
 			JSONObject lastIntent = new JSONObject(stringLastIntent);
 			JSONObject newRequest = generateNewRequestWithLastIntent(recastJson, lastIntent);
 			JSonMemory.removeLastIntents(idUser);
 			analyzeRecastIntents(mbc_json, newRequest);
-			//CALL SS5
 		}
 	}
 	
@@ -103,7 +88,8 @@ public class IntentsAnalyzer implements IJsonDecoder{
 		String[] keys = JSONObject.getNames(newDemande);
 		
 		for(String key: keys){
-			//on insere les nouvelle données de la demande à la derniere demande incomprises pour essayer de la completer
+			//on insere les nouvelle données de la demande à la derniere demande incomprises
+			//spour essayer de la completer
 			lastDemande.put(key, newDemande.getString(key));
 		}
 		

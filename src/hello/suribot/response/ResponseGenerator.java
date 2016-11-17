@@ -15,15 +15,15 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 	}
 	
 	public String generateNotUnderstoodMessage() {
-		return "GeneratedResponse";
+		return "generateNotUnderstoodMessage";
 	}
 	
 	public String generateMessageButMissOneArg(String argName) {
-		return "GeneratedResponse";
+		return "generateMessageButMissOneArg";
 	}
 	
 	public String generateMessageButMissArgs(String...args) {
-		return "GeneratedResponse";
+		return "generateMessageButMissArgs";
 	}
 	
 }
