@@ -11,6 +11,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import hello.suribot.analyze.jsonmemory.JSonMemory;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.mbc.NodeJsMBCSender;
 import hello.suribot.interfaces.IJsonDecoder;
@@ -36,9 +37,21 @@ public class IntentsAnalyzer implements IJsonDecoder{
 		String apiResponse = null;
 		if(intents!=null) apiResponse = apicontroller.sendMessageAndReturnResponse("", intents);
 		
-		String generatedResponse = responsegenerator.generateMessage(apiResponse);
+		String generatedResponse = responsegenerator.generateUnderstoodMessage(apiResponse);
 		
 		nextToCall.sendMessage(json, generatedResponse);
+	}
+	
+	public static JSONObject generateNewRequestWithLastIntent(JSONObject newDemande, JSONObject lastDemande){
+
+		String[] keys = JSONObject.getNames(newDemande);
+		
+		for(String key: keys){
+			//on insere les nouvelle données de la demande à la derniere demande incomprises pour essayer de la completer
+			lastDemande.put(key, newDemande.getString(key));
+		}
+		
+		return lastDemande;
 	}
 	
 	public static void writeDemandeIncomplete(JSONObject js){
@@ -51,7 +64,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 	}
 	
 	public static String getIdContratUserByIdSlack(String idUser){
-		System.out.println(idUser);
 		Path path = Paths.get(idUser+".txt");
 		Charset charset = Charset.forName("UTF-8");
 		String idContrat="";
@@ -97,7 +109,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 	}
 	
 	private static void writeIdContratUserInFile(String idContrat, String idUser) {
-		System.out.println(idUser);
 		Path path = Paths.get(idUser+".txt");
 		Charset charset = Charset.forName("UTF-8");
 		JSONObject js = new JSONObject(); 
@@ -121,61 +132,70 @@ public class IntentsAnalyzer implements IJsonDecoder{
 		}
 	}
 
-	public static String interpretIntentRecast(JSONObject recastJson){
-		String identifiant;
-		String uriToCall="";
+	public static void interpretIntentRecast(JSONObject recastJson){
+		String idUser = recastJson.getString(JSONKey.IDUSER.getName());
 		try{
 			String contexte = recastJson.getString(JSONKey.CONTEXTE.getName());
+			Boolean demandeComprise = false;
 			if(contexte.equals("demande")){
-				
-				identifiant = getIDContratUserAndStockIt(recastJson);
-				if(identifiant == ""){
-					//stocker demande utilisateur
-					writeDemandeIncomplete(recastJson);
-					
-					//puis appeler SS5
-					
-				}else{
-					uriToCall+=PreferenceAPI.valueOf(contexte).getName()+identifiant+"/";
-					String quelMethodeAppeler = recastJson.getString(JSONKey.QUOI.getName());
-					if(quelMethodeAppeler.equals("risk")){
-						uriToCall+=PreferenceAPI.valueOf(quelMethodeAppeler).getName();
-						try{
-							String complement =recastJson.getString(JSONKey.COMPLEMENT.getName());
-							complement=(PreferenceAPI.IDOBJ.getName().replaceAll(PreferenceAPI.IDREPLACE.getName(), complement));
-							uriToCall+=complement+"/";
-						}catch (JSONException e2){
-							
-						}
-					}else if(quelMethodeAppeler.equals("billings")||quelMethodeAppeler.equals("role")){
-						uriToCall+=PreferenceAPI.valueOf(quelMethodeAppeler).getName();
-						try{
-							String complement =recastJson.getString(JSONKey.COMPLEMENT.getName());
-							complement=(PreferenceAPI.IDBILLING.getName().replaceAll(PreferenceAPI.IDREPLACE.getName(), complement));
-							uriToCall+=complement+"/";
-						}catch (JSONException e2){
-							
-						}
-					}else {
-						JSONObject js = getDataPreviousDemande(recastJson.getString(JSONKey.IDUSER.name()));
-						//Methode non comprise stocker demande et envoyer flag à SS5
-					}
+				//Traitement pour l'api lab-bot-api
+				JSONObject js = ContractAnalyzer.contractAnalyser(recastJson);
+				if(js.getBoolean("success")){
+					JSonMemory.removeLastIntents(idUser);
+					APIController api = new APIController();
+					String rep = api.sendMessageAndReturnResponse(js.getString(JSONKey.URITOCALL.name()), "");
+					ResponseGenerator reponseGenerator= new ResponseGenerator();
+					String responseToMBC= reponseGenerator.generateUnderstoodMessage(rep);
+					System.out.println("responseToMBC = "+responseToMBC);
+					demandeComprise= true;
 				}
-			
 			}else if(true){
 				
 				//Traitement si on a d'autre contexte transport, ...
 			}
 			
+			//On a pas réussi à traiter la demande l'utilisateur on essaye de la compléter
+			//avec l'ancienne demande
+			if(!demandeComprise){
+				String stringLastIntent = JSonMemory.getLastIntents(idUser);
+				System.out.println("stringLastIntent == "+stringLastIntent);
+				if(stringLastIntent==null||stringLastIntent.isEmpty()){
+					System.out.println(recastJson.toString());
+					System.out.println("in if");
+					//Demande incomprise donc on arrete le traitement  et envoie une erreur a SS5
+					JSonMemory.putLastIntents(idUser, recastJson.toString());
+					ResponseGenerator reponseGenerator= new ResponseGenerator();
+					String responseToMBC= reponseGenerator.generateUnderstoodMessage("erreur");
+					System.out.println(responseToMBC);
+					return;
+				}
+				JSONObject lastIntent = new JSONObject(stringLastIntent);
+				System.out.println("lastIntent == "+lastIntent);
+				System.out.println("recastJson == "+recastJson);
+				JSONObject newRequest = generateNewRequestWithLastIntent(recastJson, lastIntent);
+				System.out.println("newRequest == "+newRequest);
+				JSonMemory.removeLastIntents(idUser);
+				interpretIntentRecast(newRequest);
+			}
 			//ENVOY2 A SS4
 		}catch(JSONException e){
-			//Il n'y a eu une exception lors de la lecture du json alors on stocke la demande
-			writeDemandeIncomplete(recastJson);
-			
+			//Il n'y a eu une exception lors de la lecture de la recuperation du contexte
+			//on essaye de completer une ancienne demande avec les nouvelles données
+			String stringLastIntent = JSonMemory.getLastIntents(idUser);
+			if(stringLastIntent==null||stringLastIntent.isEmpty()){
+				//Demande incomprise donc on arrete le traitement  et envoie une erreur a SS5
+				JSonMemory.putLastIntents(idUser, recastJson.toString());
+				ResponseGenerator reponseGenerator= new ResponseGenerator();
+				String responseToMBC= reponseGenerator.generateUnderstoodMessage("erreur");
+				System.out.println(responseToMBC);
+				return;
+			}
+			JSONObject lastIntent = new JSONObject(stringLastIntent);
+			JSONObject newRequest = generateNewRequestWithLastIntent(recastJson, lastIntent);
+			JSonMemory.removeLastIntents(idUser);
+			interpretIntentRecast(newRequest);
 			//CALL SS5
 		}
-		return uriToCall;
 	}
-
 
 }

@@ -1,8 +1,10 @@
 package hello.suribot.analyze.jsonmemory;
 
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -76,27 +78,36 @@ public class JSonMemory {
 		
 		String fileName = idUser + EXTENSION_FILE;
 		createJsonFileIfNotExists(idUser);
-		try (FileWriter file = new FileWriter(fileName)){
-			Object object = parser.parse(new FileReader(fileName));
-			JSONObject json = (JSONObject) object;
+		
+		Object object;
+		JSONObject json=null;
+		try {
+			object = parser.parse(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+
+			json = (JSONObject) object;
 			for(String key : values.keySet()){
 				json.put((String) key, (String) values.get(key));
 			}
-			
-			file.write(json.toString());
-		} catch (IOException | JSONException | ParseException e) { // empty file
-			
+		} catch (IOException | ParseException e2) { // empty file
 			try (FileWriter file = new FileWriter(fileName)){
-				JSONObject object = new JSONObject();
+				JSONObject jsonObject = new JSONObject();
 				
 				for(String key : values.keySet()){
-					object.put(key, values.get(key));
+					jsonObject.put(key, values.get(key));
+					System.out.println(values.get(key));
 				}
-				file.write(object.toString());
+				file.write(jsonObject.toString());
 			} catch (IOException e1) {
+				// impossible d'écrire dans le fichier qui était vide
 				e1.printStackTrace();
 			}
-			
+		}
+		
+		// cas où fichier non vide et contient déjà du JSON
+		try (FileWriter file = new FileWriter(fileName)){
+			file.write(json.toJSONString());
+		} catch (IOException | JSONException e) {
+			// ecriture du fichier existant NOK
 		}
 	}
 	
