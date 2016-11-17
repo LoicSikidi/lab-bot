@@ -1,6 +1,6 @@
-package hello.suribot.analyze;
+package hello.suribot.communication.recast;
 
-public enum JSONKey {
+public enum FakeRecastKeys {
 	IDUSER ("IDUSER"),
 	CONTEXTE ("CONTEXTE"),
 	IDENTIFICATION ("IDENTIFICATION"),
@@ -8,9 +8,9 @@ public enum JSONKey {
 	COMPLEMENT ("COMPLEMENT"),
 	URITOCALL ("URITOCALL");
 	
-	private String name ="";
+	private String name;
 	
-	JSONKey(String name){
+	FakeRecastKeys(String name){
 		this.name=name;
 	}
 	public String getName() {

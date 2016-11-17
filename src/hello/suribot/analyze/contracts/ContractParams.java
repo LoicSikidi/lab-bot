@@ -1,10 +1,7 @@
-package hello.suribot.analyze;
+package hello.suribot.analyze.contracts;
 
-import hello.suribot.utils.API.ApiUrls;
-
-public enum PreferenceAPI {
-	deplacement (ApiUrls.RATP),
-	demande ("http://localhost:8080/insurance/contract/"),
+public enum ContractParams {
+	
 	risk ("risk/"),
 	billings ("billings/"),
 	role ("partyRoles/"),
@@ -13,11 +10,13 @@ public enum PreferenceAPI {
 	IDBILLING (IDREPLACE.getName()),
 	COMPLEMENT ("complement");
 	
-	private String name ="";
-	PreferenceAPI(String name){
+	private String name;
+	ContractParams(String name){
 		this.name=name;
 	}
+	
 	public String getName() {
 		return name;
 	}
+
 }

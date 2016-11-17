@@ -15,8 +15,8 @@ server.listen(process.env.NODEJSPORT || 12344, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
-    appId: process.env.APPID || "786fbbd4-26ce-4cb8-841f-c174b252a04a",
-    appPassword: process.env.APPSECRET || "7X9qA7KAAugsDxEoUH4bfvh"
+    appId: process.env.APPID,
+    appPassword: process.env.APPSECRET
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());

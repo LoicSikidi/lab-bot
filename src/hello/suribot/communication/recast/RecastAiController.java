@@ -3,7 +3,6 @@ package hello.suribot.communication.recast;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.IntentsAnalyzer;
-import hello.suribot.analyze.JSONKey;
 import hello.suribot.interfaces.IHttpSender;
 
 /**
@@ -21,14 +20,15 @@ public class RecastAiController implements IHttpSender{
 	 * Send message to recast.ai, and listen response
 	 * @param json 
 	 * @param message
+	 * @param idUser 
 	 */
-	public void sendMessage(final JSONObject json, String message){
+	public void sendMessage(final JSONObject json, String message, String idUser){
 		System.out.println("RecastAiController sendMessage");
 		try {
 			//TODO : transferer contenu du message à Recast, et 
 			// renvoyer response à S.S.3 pour analyse des intents de Recast.
 			//String response = sendPostAndReturnResponse(recastURI, message);
-			String intents = message;
+			JSONObject intents = fakeRecast(message, idUser);
 			nextStep.analyzeRecastIntents(json, intents);
 			
 		} catch (Exception e) {
@@ -36,19 +36,20 @@ public class RecastAiController implements IHttpSender{
 		}
 	}
 	
+	// TODO : à retirer une fois Recast OK
 	public static JSONObject fakeRecast(String messageUser, String idUser){
 		JSONObject js= new JSONObject();
-		js.put(JSONKey.IDUSER.name(), idUser);
+		js.put(FakeRecastKeys.IDUSER.name(), idUser);
 		if(messageUser.contains("contract")){
-			js.put(JSONKey.CONTEXTE.name(), "demande");
+			js.put(FakeRecastKeys.CONTEXTE.name(), "demande");
 			
-			if(messageUser.contains("IDID")) js.put(JSONKey.IDENTIFICATION.name(), "ID-5935697");
+			if(messageUser.contains("IDID")) js.put(FakeRecastKeys.IDENTIFICATION.name(), "ID-5935697");
 			
-			if(messageUser.contains("risk")) js.put(JSONKey.QUOI.name(), "risk");
-			else if(messageUser.contains("billing")) js.put(JSONKey.QUOI.name(), "billings");
-			else if(messageUser.contains("partyRole")) js.put(JSONKey.QUOI.name(), "role");
+			if(messageUser.contains("risk")) js.put(FakeRecastKeys.QUOI.name(), "risk");
+			else if(messageUser.contains("billing")) js.put(FakeRecastKeys.QUOI.name(), "billings");
+			else if(messageUser.contains("partyRole")) js.put(FakeRecastKeys.QUOI.name(), "role");
 			
-			if(messageUser.contains("IDC")) js.put(JSONKey.COMPLEMENT.name(), "ID-731119");
+			if(messageUser.contains("IDC")) js.put(FakeRecastKeys.COMPLEMENT.name(), "ID-731119");
 		}
 		
 		return js;

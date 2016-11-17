@@ -42,7 +42,8 @@ class NodeJsMBCReceiver{
 		    printUserMessage(json); // TODO: retirer à la fin de tests
 		    
 		    new Thread(() -> { // async call
-		    	 nextStep.sendMessage(json, json.getString("text"));
+		    	String idUser = json.getJSONObject("user").getString("id").split(":")[0]; // TODO : à améliorer
+		    	nextStep.sendMessage(json, json.getString("text"), idUser);
 		    }).start();
 		   
 		    
