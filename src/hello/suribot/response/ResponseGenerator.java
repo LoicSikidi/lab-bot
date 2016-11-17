@@ -10,9 +10,19 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 	
 	public ResponseGenerator() {}
 
-	//TODO : créer la ou les méthodes de génération
-	public String generateMessage(String params) {
-		System.out.println("ResponseGenerator generateMessage");
+	public String generateUnderstoodMessage(String params) {
+		return "GeneratedResponse";
+	}
+	
+	public String generateNotUnderstoodMessage() {
+		return "GeneratedResponse";
+	}
+	
+	public String generateMessageButMissOneArg(String argName) {
+		return "GeneratedResponse";
+	}
+	
+	public String generateMessageButMissArgs(String...args) {
 		return "GeneratedResponse";
 	}
 	
