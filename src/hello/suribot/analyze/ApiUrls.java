@@ -1,7 +1,7 @@
 package hello.suribot.analyze;
 
 public enum ApiUrls {
-	demande ("http://localhost:8080/insurance/contract/"),
+	demande ("http://localhost:12347/insurance/contract/"),
 	maps ("http://maps.google.com/maps");
 	
 	private String name;

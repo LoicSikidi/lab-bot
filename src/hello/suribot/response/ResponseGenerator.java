@@ -11,19 +11,26 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 	public ResponseGenerator() {}
 
 	public String generateUnderstoodMessage(String params) {
-		return "GeneratedResponse";
+		return params;
 	}
 	
 	public String generateNotUnderstoodMessage() {
-		return "generateNotUnderstoodMessage";
+		return "Veuillez reformuler votre question";
 	}
 	
 	public String generateMessageButMissOneArg(String argName) {
-		return "generateMessageButMissOneArg";
+		if(argName==null || argName.isEmpty()) return generateNotUnderstoodMessage();
+		return "Il manque un argument à votre demande : "+argName;
 	}
 	
 	public String generateMessageButMissArgs(String...args) {
-		return "generateMessageButMissArgs";
+		if(args==null || args.length==0) return generateNotUnderstoodMessage();
+		else if (args.length==1) return generateMessageButMissOneArg(args[0]);
+		String response = "Veuillez préciser si votre demande concerne : \n";
+		for(String arg : args){
+			if(arg!=null && !arg.isEmpty()) response+=arg+"\n";
+		}
+		return response;
 	}
 	
 }

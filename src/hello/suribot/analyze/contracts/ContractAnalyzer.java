@@ -18,7 +18,6 @@ public class ContractAnalyzer {
 		String identifiant ="";
 		try{
 			identifiant = recastJson.getString(FakeRecastKeys.IDENTIFICATION.getName());
-			System.out.println(identifiant);
 			JSonMemory.putIdContrat(idUser, identifiant);
 		}catch(JSONException e){
 			identifiant = JSonMemory.getIdContrat(idUser);
@@ -26,7 +25,6 @@ public class ContractAnalyzer {
 		
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
-			// TODO : stocker demande utilisateur ?
 			jsonReturn.put("success", false);
 			return jsonReturn;
 		}else{
@@ -36,23 +34,23 @@ public class ContractAnalyzer {
 			
 			try{
 				String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.QUOI.getName());
-				if(quelMethodeAppeler.equals("risk")){
-					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getName();
+				if(quelMethodeAppeler.equals(ContractParams.risk.toString())){
+					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
 					try{
-						String complement =recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
-						complement=(ContractParams.IDOBJ.getName().replaceAll(ContractParams.IDREPLACE.getName(), complement));
+						String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
+						complement=(ContractParams.IDOBJ.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 						uriToCall+=complement+"/";
 					}catch (JSONException e2){
 						
 					}
 					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
 				
-				}else if(quelMethodeAppeler.equals("billings")||quelMethodeAppeler.equals("role")){
-					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getName();
+				}else if(quelMethodeAppeler.equals(ContractParams.billings.toString())||quelMethodeAppeler.equals(ContractParams.role.toString())){
+					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
 					try{
 						String complement =recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
-						complement=(ContractParams.IDBILLING.getName()
-								.replaceAll(ContractParams.IDREPLACE.getName(), complement));
+						complement=(ContractParams.IDBILLING.getChemin()
+								.replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 						uriToCall+=complement+"/";
 					}catch (JSONException e2){
 						

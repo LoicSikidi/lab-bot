@@ -6,17 +6,17 @@ public enum ContractParams {
 	billings ("billings/"),
 	role ("partyRoles/"),
 	IDREPLACE ("YYYYYYY"),
-	IDOBJ (IDREPLACE.getName()+"/couverture"),
-	IDBILLING (IDREPLACE.getName()),
+	IDOBJ (IDREPLACE.getChemin()+"/couverture"),
+	IDBILLING (IDREPLACE.getChemin()),
 	COMPLEMENT ("complement");
 	
-	private String name;
-	ContractParams(String name){
-		this.name=name;
+	private String chemin;
+	ContractParams(String chemin){
+		this.chemin = chemin;
 	}
 	
-	public String getName() {
-		return name;
+	public String getChemin() {
+		return chemin;
 	}
 
 }

@@ -1,5 +1,6 @@
 package hello.suribot.communication.mbc;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.interfaces.IHttpSender;
@@ -15,6 +16,14 @@ public class NodeJsMBCSender implements IHttpSender{
 		try {
 			json.put("text", message);
 			sendPost("http://localhost:12344/mbc", json);
+		} catch (JSONException e) {
+			json.put("text", "Demande incomprise");
+			try {
+				sendPost("http://localhost:12344", json);
+			} catch (Exception e1) {
+				System.out.println("NodeJsMBCSender : Message "+message+" not send... ");
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			System.out.println("NodeJsMBCSender : Message "+message+" not send... ");
 			e.printStackTrace();

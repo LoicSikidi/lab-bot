@@ -37,12 +37,19 @@ public class IntentsAnalyzer implements IJsonDecoder{
 				JSONObject js = ContractAnalyzer.contractAnalyzer(recastJson);
 				if(js.getBoolean("success")){
 					JSonMemory.removeLastIntents(idUser);
-					String rep = apicontroller.sendMessageAndReturnResponse(js.getString(FakeRecastKeys.URITOCALL.name()), "");
-					String responseToMBC = responsegenerator.generateUnderstoodMessage(rep);
+					String rep;
+					String responseToMBC;
+					try {
+						rep = apicontroller.sendGet(js.getString(FakeRecastKeys.URITOCALL.name()));
+					} catch (Exception e) {
+						rep = null;
+					}
+					responseToMBC = responsegenerator.generateUnderstoodMessage(rep);
 					nextToCall.sendMessage(mbc_json, responseToMBC);
 					demandeComprise= true;
 				}
 			} else if (true) {
+				System.out.println();
 				//Traitement si on a d'autre contextes : transport, maps, ...
 			}
 			
@@ -84,7 +91,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 	}
 	
 	public static JSONObject generateNewRequestWithLastIntent(JSONObject newDemande, JSONObject lastDemande){
-
 		String[] keys = JSONObject.getNames(newDemande);
 		
 		for(String key: keys){
@@ -92,7 +98,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			//spour essayer de la completer
 			lastDemande.put(key, newDemande.getString(key));
 		}
-		
 		return lastDemande;
 	}
 	

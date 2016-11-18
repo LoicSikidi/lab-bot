@@ -17,13 +17,11 @@ public class APIController implements IHttpSender{
 		System.out.println("APIController sendMessageAndReturnResponse");
 		try {
 			//if(message != null) return sendPostAndReturnResponse(url, message);
-			
-			//TODO : return response to S.S.3 analyse des intents de Recast
-			return null;
+			return sendGet(url);
 		} catch (Exception e) {
 			System.out.println("APIController : Message "+message+" not send... ("+e+")");
 		}
-		return "";
+		return null;
 	}
 
 }
