@@ -11,7 +11,7 @@ install:
 - npm install --save http
 - npm install --save restify
 - npm install --save botbuilder
-- npm init -f
+- npm init --force 
 - ls
 - cd ..
 jdk:
