@@ -1,5 +1,8 @@
 package hello.suribot.analyze.contracts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +14,7 @@ public class ContractAnalyzer {
 
 	public static JSONObject contractAnalyzer(JSONObject recastJson){
 		JSONObject jsonReturn = new JSONObject();
-
+		List<String> paramManquant = new ArrayList<>();
 		String idUser = recastJson.getString(FakeRecastKeys.IDUSER.getName());
 		String uriToCall="";
 		String contexte = ApiUrls.demande.toString();
@@ -26,6 +29,8 @@ public class ContractAnalyzer {
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
 			jsonReturn.put("success", false);
+			paramManquant.add("votre identifiant de contrat");
+			jsonReturn.put("paramManquant", paramManquant);
 			return jsonReturn;
 		}else{
 			jsonReturn.put("success", true);
@@ -57,12 +62,17 @@ public class ContractAnalyzer {
 					}
 					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
 				}else {
+					paramManquant.add("methode risk");
+					paramManquant.add("methode billings");
+					paramManquant.add("methode partyRole");
 					//La demande n'a pas été comprise
 					jsonReturn.put("success", false);
+					jsonReturn.put("paramManquant", paramManquant);
 				}
 			}catch(JSONException e){
 				//Tentative de récupération de la méthode à appeler lance une exception 
 				jsonReturn.put("success", false);
+				jsonReturn.put("paramManquant", paramManquant);
 			}
 		}
 		return jsonReturn;
