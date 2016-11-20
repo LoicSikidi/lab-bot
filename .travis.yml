@@ -2,7 +2,9 @@ language: java
 before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
-install: mvn install
+install:
+- ls 
+- mvn install
 jdk:
 - oraclejdk8
 env:
