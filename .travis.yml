@@ -26,5 +26,5 @@ after_success:
   node.js/package.json travis@$IP:/home/travis
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP rm -rf node_modules
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP npm install
-- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP nodejs app.js &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP nodejs app.js 
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP cd
