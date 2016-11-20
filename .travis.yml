@@ -5,6 +5,9 @@ before_install:
 install:
 - mvn install
 - cd node.js
+- npm install --save http
+- npm install --save restify
+- npm install --save botbuilder
 - npm init
 - ls
 - cd ..
