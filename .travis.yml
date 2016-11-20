@@ -19,8 +19,10 @@ after_success:
   target/lab-bot-1.0.jar travis@$IP:/home/travis
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar -Dserver.port=$PORT
   lab-bot-1.0.jar &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP pkill node
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   node.js/app.js travis@$IP:/home/travis
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   node.js/package.json travis@$IP:/home/travis
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP npm install
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP nodejs app.js &
