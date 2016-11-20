@@ -2,13 +2,11 @@ language: java
 before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
-- node -v
 - npm install npm -g
 install:
 - mvn install
 - cd node.js
 - ls
-- node -v
 - npm install --save http
 - npm install --save restify
 - npm install --save botbuilder
