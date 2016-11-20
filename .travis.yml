@@ -7,7 +7,7 @@ install:
 - node --version
 - mvn install
 - cd node.js
-- npm init --force 
+- npm init --yes 
 - ls
 - cd ..
 jdk:
