@@ -4,6 +4,8 @@ before_install:
 - sudo apt-get install sshpass
 - npm install npm -g
 install:
+- node -v
+- node --version
 - mvn install
 - cd node.js
 - ls
