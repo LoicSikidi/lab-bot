@@ -28,7 +28,6 @@ class NodeJsMBCReceiver{
 	
 	@RequestMapping(value ="/")
 	public int receivingMessage(HttpServletRequest request){
-		System.out.println("receive");
 		StringBuilder sb = null;
 	    try {
 			Reader body = request.getReader();

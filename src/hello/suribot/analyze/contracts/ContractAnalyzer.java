@@ -7,72 +7,72 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.ApiUrls;
+import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSonMemory;
 import hello.suribot.communication.recast.FakeRecastKeys;
 
 public class ContractAnalyzer {
-
+	
 	public static JSONObject contractAnalyzer(JSONObject recastJson){
 		JSONObject jsonReturn = new JSONObject();
-		List<String> paramManquant = new ArrayList<>();
+		List<String> missingParams = new ArrayList<>(3);
 		String idUser = recastJson.getString(FakeRecastKeys.IDUSER.getName());
 		String uriToCall="";
 		String contexte = ApiUrls.demande.toString();
-		String identifiant ="";
+		String identifiant = "";
 		try{
 			identifiant = recastJson.getString(FakeRecastKeys.IDENTIFICATION.getName());
 			JSonMemory.putIdContrat(idUser, identifiant);
 		}catch(JSONException e){
-			identifiant = JSonMemory.getIdContrat(idUser);
+			identifiant = JSonMemory.getIdContrat(idUser); // récupération de l'identifiant si non renseigné
 		}
 		
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
-			jsonReturn.put("success", false);
-			paramManquant.add("votre identifiant de contrat");
-			jsonReturn.put("paramManquant", paramManquant);
+			jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
+			missingParams.add("votre identifiant de contrat");
+			jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 			return jsonReturn;
+			
 		}else{
-			jsonReturn.put("success", true);
+			jsonReturn.put(IntentsAnalyzer.SUCCESS, true);
 			uriToCall+=ApiUrls.valueOf(contexte).getName()+identifiant+"/";
 			jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
 			
 			try{
 				String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.QUOI.getName());
-				if(quelMethodeAppeler.equals(ContractParams.risk.toString())){
+				if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.risk.toString())){
 					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
 					try{
 						String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
 						complement=(ContractParams.IDOBJ.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 						uriToCall+=complement+"/";
-					}catch (JSONException e2){
-						
-					}
+					} catch (JSONException e) { }
 					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
 				
-				}else if(quelMethodeAppeler.equals(ContractParams.billings.toString())||quelMethodeAppeler.equals(ContractParams.role.toString())){
+				}else if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.billings.toString())
+						|| quelMethodeAppeler.equalsIgnoreCase(ContractParams.role.toString())){
+					
 					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
 					try{
-						String complement =recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
-						complement=(ContractParams.IDBILLING.getChemin()
-								.replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
+						String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
+						complement = (ContractParams.IDBILLING.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 						uriToCall+=complement+"/";
-					}catch (JSONException e2){
-						
-					}
+					} catch (JSONException e2){ }
 					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
+					
 				}else {
-					paramManquant.add("methode risk");
-					paramManquant.add("methode billings");
-					paramManquant.add("methode partyRole");
-					//La demande n'a pas été comprise
-					jsonReturn.put("success", false);
-					jsonReturn.put("paramManquant", paramManquant);
+					missingParams.add("méthode risk");
+					missingParams.add("méthode billings");
+					missingParams.add("méthode partyRole");
+					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
+					
+					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 				}
 			}catch(JSONException e){
 				//Tentative de récupération de la méthode à appeler lance une exception 
-				jsonReturn.put("success", false);
-				jsonReturn.put("paramManquant", paramManquant);
+				jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
+				jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 			}
 		}
 		return jsonReturn;

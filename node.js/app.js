@@ -9,7 +9,7 @@ var builder = require('botbuilder');
 // Setup Restify Server
 var server = restify.createServer();
 server.use(restify.bodyParser());
-server.listen(process.env.NODEJSPORT || 12345, function () {
+server.listen(process.env.NODEJSPORT, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
   
@@ -40,7 +40,7 @@ function sendBot(session){
 	
 	var options = {
         host: 'localhost',
-        port: 12345,
+        port: process.env.BOTPORT,
         path: '/mbc/',
         method: 'POST'
     };

@@ -23,7 +23,6 @@ public class RecastAiController implements IHttpSender{
 	 * @param idUser 
 	 */
 	public void sendMessage(final JSONObject json, String message, String idUser){
-		System.out.println("RecastAiController sendMessage");
 		try {
 			//TODO : transferer contenu du message à Recast, et 
 			// renvoyer response à S.S.3 pour analyse des intents de Recast.
@@ -40,19 +39,42 @@ public class RecastAiController implements IHttpSender{
 	public static JSONObject fakeRecast(String messageUser, String idUser){
 		JSONObject js= new JSONObject();
 		js.put(FakeRecastKeys.IDUSER.name(), idUser);
-		if(messageUser.contains("contract")){
-			js.put(FakeRecastKeys.CONTEXTE.name(), "demande");
+		if(containsContract(messageUser)){
+			js.put(FakeRecastKeys.CONTEXTE.name(), IntentsAnalyzer.DEMANDE);
 			
-			if(messageUser.contains("IDID")) js.put(FakeRecastKeys.IDENTIFICATION.name(), "ID-5935697");
+			if(messageUser.toLowerCase().contains("idid")) js.put(FakeRecastKeys.IDENTIFICATION.name(), "ID-5935697");
 			
-			if(messageUser.contains("risk")) js.put(FakeRecastKeys.QUOI.name(), "risk");
-			else if(messageUser.contains("billing")) js.put(FakeRecastKeys.QUOI.name(), "billings");
-			else if(messageUser.contains("partyRole")) js.put(FakeRecastKeys.QUOI.name(), "role");
+			if(containsRisk(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "risk");
+			else if(containsBilling(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "billings");
+			else if(containsPartyRole(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "role");
 			
-			if(messageUser.contains("IDC")) js.put(FakeRecastKeys.COMPLEMENT.name(), "ID-731119");
+			if(messageUser.toLowerCase().contains("idc")) js.put(FakeRecastKeys.COMPLEMENT.name(), "ID-731119");
 		}
 		
 		return js;
+	}
+	
+	private static boolean containsContract(String messageUser){
+		if(messageUser==null) return false;
+		return (messageUser.toLowerCase().contains("contract")) || (messageUser.toLowerCase().contains("contrat"));
+	}
+	
+	private static boolean containsRisk(String messageUser){
+		if(messageUser==null) return false;
+		return (messageUser.toLowerCase().contains("risk")) || (messageUser.toLowerCase().contains("risque"));
+	}
+	
+	private static boolean containsBilling(String messageUser){
+		if(messageUser==null) return false;
+		return (messageUser.toLowerCase().contains("billing")) 
+				|| (messageUser.toLowerCase().contains("paiement"));
+	}
+	
+	private static boolean containsPartyRole(String messageUser){
+		if(messageUser==null) return false;
+		return (messageUser.toLowerCase().contains("partyrole")) 
+				|| (messageUser.toLowerCase().contains("proprietaire"))
+				|| (messageUser.toLowerCase().contains("proprio"));
 	}
 	
 }

@@ -44,7 +44,6 @@ public interface IHttpSender {
 	 * @throws Exception
 	 */
 	default String sendPostAndReturnResponse(String url, String jsonResponse) throws Exception {
-		System.out.println("sendPost");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	    con.setRequestMethod("POST");
@@ -65,7 +64,6 @@ public interface IHttpSender {
 	    	}  
 	    	br.close();  
 
-	    	System.out.println(""+sb.toString());  
 	    	response = sb.toString();
 
 	    }else{  
@@ -82,7 +80,6 @@ public interface IHttpSender {
 	 * @throws Exception
 	 */
 	default void sendPost(String url, JSONObject jsonResponse) throws Exception {
-		System.out.println("sendPost");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	    con.setRequestMethod("POST");
@@ -93,7 +90,6 @@ public interface IHttpSender {
 	    out.flush();
 	    out.close();
 	    con.getResponseCode(); // send the request
-	    System.out.println("envoyé");
 	}
 
 }
