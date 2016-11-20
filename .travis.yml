@@ -3,8 +3,11 @@ before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
 install:
-- ls 
 - mvn install
+- cd node.js
+- npm init
+- ls
+- cd ..
 jdk:
 - oraclejdk8
 env:
