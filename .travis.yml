@@ -2,7 +2,6 @@ language: java
 before_install:
 - sudo apt-get update
 - sudo apt-get install sshpass
-- npm install npm -g
 install:
 - node -v
 - node --version
