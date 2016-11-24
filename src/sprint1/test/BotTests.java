@@ -1,4 +1,4 @@
-package test;
+package sprint1.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import bot.Bot;
+import sprint1.bot.Bot;
 
 public class BotTests {
 
@@ -21,7 +21,7 @@ public class BotTests {
 		assertFalse(bot.isConnected());
 	}
 
-	//TODO: vérification de bonne récéption de messages
+	//TODO: verification de bonne reception de messages
 	
-	//TODO: vérification de bons envois de messages
+	//TODO: verification de bons envois de messages
 }

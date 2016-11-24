@@ -1,0 +1,30 @@
+language: java
+before_install:
+- sudo apt-get update
+- sudo apt-get install sshpass
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP pkill node
+- sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+  node.js/app.js travis@$IP:/home/travis
+- sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+  node.js/package.json travis@$IP:/home/travis
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP rm -rf node_modules
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP npm install
+install:
+- mvn install
+jdk:
+- oraclejdk8
+env:
+  global:
+  - secure: c3gfpIi3XZl5KVv54sJGCgkVqeU7/fqnk0G4fqe2ZLiY2mlcsyhmzjcyCejOgUYHmkY8MLXXliDF2uRSkejVT3MNoHQ7W2b9Ao7Y9diprVlf908UqPDX6thRZpvQ9e55cYGxIGDqvBGTuyeMO5fIS36gtE6t93Hkt5VJmxP67s3TZT5Dm+7dAyK/iySYHAmVIfCB+M0SWzGVXU+TW5Uw5tfBO0JJ7ABAR+EopJqTuWkakpqq+r8n5+9LA9I1GxPjmAEMG9n96JjMrLbzVhAY+qlJaNJsaCerFgttS15AjjureNtjym05Po6K9ZmXdezCt7W62IEjiddhBkdehqquBugp1S1u8w46pHWZP+ucb2/H7ynv+F+rIaw/jHOOFYC1Rq6211pGj+7VbUdL0gsheNH6oGJqi3N/XbZXyo7q142vSrQbiIacgknjUZ+OjJKto+ZAWh24AWnH8a/li6icyC0/XxteIpS12IvbkhEVj7oBSuUH2KJiGcbXAgXOJStc0F/Les1kn9FzVcEdHWB8o+wyxcSmgrIb/4fdNDyIrq6Eu2buKaZWkZGN/OaeGCqckuTghFsn3SrfWgYJn11KCJURifPGsnk3BA6omOhZ8nI4YhgECQweFfNqjddYE7Pz/GqatcmIZHSew/lJT7hUQChzmVQUf8sPLuJv7hT9YFA=
+  - secure: AViGCKNuwvxaywxhSXQs4e2rVwtLdjhJrZHzUdBtXpp96Vo+DCVvL5FYKBuJjcEXZcCPoTf1xRnTrFcOvfXD3jVEe7KNTsCGWZbt678byxnFOAyKWhiXvH8OUMWCkksDZ3xkLyJeDoiJ3awJtpT/O0jAwHeD9Giiu9eIp/shfS7yeWiFAufI46kRWSoajvWvY6VMkTdG3wW38xpGlAtA/ukA8XeEv6B/C4OVNhbs9dRd4EDUvXdGc9Z2SckSZmAOjXf95RukS3AHN3NXT+0NK88NohF7Mgd7zPed3o7IwZfYNZ1iMB88BMQB0mQTnETvo+0xAap62nO4GoTOtXeDcKZVpqwoHDiTN2pgLQrwmNlU6XKepXyHSxctykEU1F1O5HxKPfLy8uG2VPIpua09eTfAxwfdr9ENxyFZYa3xNA3Td5sn7Nc4dz/1Gz8Bs412uIPRBqIKv9DWrR12MO1o3mWlDdJp17ATiaX6Dlf320hQbWbyPyyzpaMWDNlBTjvFveHnumU0zyHYelRVBjkH5IYk6nnrYnYQr9bxiR/vqvLJ1dAOCUHTd2p9WE5EAAXCEedmkA54ZoTlqZYxAgoYczTNwPhyZl32px8y9Kva7zhe+g8Qq5MCoCSSzKrTMJEnsumKT2QquOQJIUB0U2PAkAMWZikXeKDMqTptGYpe3I4=
+  - secure: at2gyCK5+ZKovrFmPd/ZW9ImLWXChjgO+5HqTm35D1N1FfWixbTtCU3qC3zchLSqQF9oGprlmqNruKj/Np3nQMLqZ+D43KkyQZdBYrfLfuAiv/dxP9RwYxmVU4RKBtQEDX32mXN9ll56jgKOlB1nkzhqWf6ig5b4IRTKy1ku1RF2ZPbNBGEKzXJgFteoHL7X5IC93/6R1eet29tCwnKOAcRtLsogFJ3Zni6pSzcajWVRkuUm0I84QUdWzdPyiiDOEGBN4jnLZbyAQOMfzX5ebkzae/joj6Fuf9JRdhp9b0Icd043pmk7BBLjJlMkbY6YrwBuBGLglGEcZ65tWftGRLZj7PcX81LYGd2yut10ApvgashRmuY4CIdkOIKFuVNeV/gkIeXFisrttUIopspMspyzEL258WE3QRQbybOZ3RFJA+GWvWy8xuxmUM7pbuweKhxDaWrITB77rqYo1Xkz498SgiVmx0Hl23bWToTkJcY0Uwg4Jjf74aRQLpgqfKfhSu2cmtqwNeOf+ZPjjuaa5U+e4DedevBHmifw1qSBn8Atwozmmp7b55jL3LsL/qZ6/9sjR5LP2RlgwmWnaQxCGBqtmqV/9Dm/whDkI/mhVwx/Z1kvnHHWAgJq7+RZ3TzdzMf8tLgEkcm/vUrHPC1J7jpyaifDPpIxOl+RPYPBnus=
+  - secure: Nzu1cRvKhZkWGGk9wo8pmH1kWIlZoxSzFJTp1oDl6pKqniPEzm6FlGglTq7ese46UTMSOwW2ikW9Hh2utLuA5e3G86hC1v2hdbMURolRGVodsaxmSst+cTc5lou0Q2OAGtl03VticIrU7KycNCdUDWeeLTWDXlkF97xwzMlm6zaBry9QJlt/DB/P/TvdqBCzOqEdQcTopgzqCKWVCjsdMbuLrfXMzSxw1lvuErQVzV4W3IEBsV/yFdjaqnV0EMLKYgLy7EefLb+/2EJ3BKJI/y2fCcERH7TPnaFMuGN3tO0U0QYj+5b1vuBXH7sXBcXEpn4i3bgCKuwQzPLNCCx4JCdylAqqsWNdvQ5x6GRX33t/TNA5nflIuaRpAilmpusvrPDGIOESv6KJWF5wrvp9VM3SeGL0Q45sVdwLEjyZG1m0OAMCixh02TZX4tXqOMbNaVMIPBI9hlmERm6N265I1GbvVhRkBhVHssMSDGG+lYHxQVXn/OeSMe0b4IBikaxkdZuayhzgb9EBCIyGSAoVl3dFA0aXTa+kUt7x+5uENIrLD4RdA46Te+t2/ihF2kA3S8x9tNWESZMqKcucLLuhg90J+t2L789rHADDwfqO59y5DQojTnAz9Zz/Fb3ChpLYv5OOX3wjQZ+GNM5WotsVHSQyuNW6lKgg7mU+fJWIzYM=
+  - secure: oFaGXIUZkaL44V8sI3eG+XteKfAqVTRe7WB1k0CWK7XUr0PXQVEotu7c+CuNEYv2cdW1nKHyvPJ8SLAXDFugR/bqiMtf6jQHWVOhaxC1/cVylcdjRd0SclceO+l/dQh1NU7iFXx/iHidruLUBZJUK6+MitfVm7PVmhy0FmQLf5SMBkEx0YUzJTif810PtSQcrilGqB/WnzOtKcqsxX33nLbxUhBqJvQrvC4xgNuaa29YuIbds5Chy5nK5rB+CGmakXOSZwW8L1likcCqxeYQkLB2OceAOdftgb8/udyUzlgpjPlVKMeZPWeMSG1mg85KDTe1Ei+uqSWrS/d8I+5v8+tN1PLAuTJ65+dOE1o+SGp6sljw8CGZrlcUXKP8gn+R1KG7azeu2ipeptfC/0QjQk7XbBYHA0vfWdFeRN5dNDKGqruzH3UV+MqZLj08VXBnxarlvKQ6LFlsKuxL9KuE0A45pNBxlMYlJytrH1TY+PucOZ8rM5DzUqMsfotfbHu4PlnIYuZ0o8g99/nxwLYJYaF8DBczRHn8j3gkuuf+b4LAu9Jgec01dY3qPRk0pnumxgf1VOWDr0NxaFKScHFLiJNQNmZ+rBSHoog98qJ27z5wBV83qMSgN9F59glBpipqazZfNrW3H1Kkkp/Ku7DtHoWEyQqNxI/YB/fckuHcA4I=
+after_success:
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP nodejs app.js &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP ./killLabBot.sh
+- sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+  target/lab-bot-1.0.jar travis@$IP:/home/travis
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar -Dserver.port=$PORT
+  lab-bot-1.0.jar &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP cd
