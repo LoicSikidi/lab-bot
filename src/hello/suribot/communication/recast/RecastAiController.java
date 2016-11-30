@@ -44,9 +44,9 @@ public class RecastAiController implements IHttpSender{
 			
 			if(messageUser.toLowerCase().contains("idid")) js.put(FakeRecastKeys.IDENTIFICATION.name(), "ID-5935697");
 			
-			if(containsRisk(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "risk");
-			else if(containsBilling(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "billings");
-			else if(containsPartyRole(messageUser)) js.put(FakeRecastKeys.QUOI.name(), "role");
+			if(containsRisk(messageUser)) js.put(FakeRecastKeys.METHOD.name(), "risk");
+			else if(containsBilling(messageUser)) js.put(FakeRecastKeys.METHOD.name(), "billings");
+			else if(containsPartyRole(messageUser)) js.put(FakeRecastKeys.METHOD.name(), "role");
 			
 			if(messageUser.toLowerCase().contains("idc")) js.put(FakeRecastKeys.COMPLEMENT.name(), "ID-731119");
 		}

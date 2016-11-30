@@ -5,6 +5,7 @@ public enum ContractParams {
 	risk ("risk/"),
 	billings ("billings/"),
 	role ("partyRoles/"),
+	
 	IDREPLACE ("YYYYYYY"),
 	IDOBJ (IDREPLACE.getChemin()+"/couverture"),
 	IDBILLING (IDREPLACE.getChemin()),

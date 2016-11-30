@@ -6,12 +6,13 @@ public enum ApiUrls {
 	demande ("http://localhost:"+EnvVar.CONTRACTPORT+"/insurance/contract/"),
 	maps ("http://maps.google.com/maps");
 	
-	private String name;
+	private String url;
 	
-	ApiUrls(String name){
-		this.name=name;
+	ApiUrls(String url){
+		this.url=url;
 	}
-	public String getName() {
-		return name;
+	
+	public String getUrl() {
+		return url;
 	}
 }

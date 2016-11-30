@@ -41,8 +41,10 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			boolean demandeComprise = false;
 			
 			if(contexte.equals(DEMANDE)){
+				
 				//Traitement pour l'api lab-bot-api
-				JSONObject js = ContractAnalyzer.contractAnalyzer(recastJson);
+				ContractAnalyzer analyzer = new ContractAnalyzer();
+				JSONObject js = analyzer.analyze(recastJson);
 				if(js.getBoolean(SUCCESS)){
 					JSonMemory.removeLastIntents(idUser);
 					String rep;
@@ -52,7 +54,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 					} catch (Exception e) {
 						rep = null;
 					}
-					responseToMBC = responsegenerator.generateUnderstoodMessage(rep);
+					responseToMBC = responsegenerator.generateContractUnderstoodMessage(analyzer.getCalledMethod(), analyzer.isChoice(), rep);
 					demandeComprise = true;
 					
 				} else if(js.has(MISSINGPARAMS)){

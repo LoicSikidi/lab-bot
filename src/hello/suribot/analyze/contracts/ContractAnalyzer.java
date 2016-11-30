@@ -13,13 +13,18 @@ import hello.suribot.communication.recast.FakeRecastKeys;
 
 public class ContractAnalyzer {
 	
-	public static JSONObject contractAnalyzer(JSONObject recastJson){
+	private ContractParams calledMethod;
+	private boolean choice;
+	
+	public ContractAnalyzer() {}
+	
+	public JSONObject analyze(JSONObject recastJson){
+		resetParams();
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);
+		
+		String identifiant;
 		String idUser = recastJson.getString(FakeRecastKeys.IDUSER.getName());
-		String uriToCall="";
-		String contexte = ApiUrls.demande.toString();
-		String identifiant = "";
 		try{
 			identifiant = recastJson.getString(FakeRecastKeys.IDENTIFICATION.getName());
 			JSonMemory.putIdContrat(idUser, identifiant);
@@ -34,41 +39,43 @@ public class ContractAnalyzer {
 			jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 			return jsonReturn;
 			
-		}else{
+		} else {
 			jsonReturn.put(IntentsAnalyzer.SUCCESS, true);
-			uriToCall+=ApiUrls.valueOf(contexte).getName()+identifiant+"/";
-			jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
+			String uriToCall = ApiUrls.demande.getUrl()+identifiant+"/";
 			
 			try{
-				String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.QUOI.getName());
-				if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.risk.toString())){
-					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
-					try{
-						String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
-						complement=(ContractParams.IDOBJ.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
-						uriToCall+=complement+"/";
-					} catch (JSONException e) { }
-					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
+				String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.METHOD.getName());
 				
-				}else if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.billings.toString())
-						|| quelMethodeAppeler.equalsIgnoreCase(ContractParams.role.toString())){
-					
-					uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
-					try{
-						String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
-						complement = (ContractParams.IDBILLING.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
-						uriToCall+=complement+"/";
-					} catch (JSONException e2){ }
-					jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
-					
-				}else {
+				if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.risk.toString())){
+					calledMethod = ContractParams.risk;
+				} else if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.billings.toString())){
+					calledMethod = ContractParams.billings;
+				} else if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.role.toString())){
+					calledMethod = ContractParams.role;
+				} else {
 					missingParams.add("méthode risk");
 					missingParams.add("méthode billings");
 					missingParams.add("méthode partyRole");
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
-					
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
+					return jsonReturn;
 				}
+				
+				uriToCall+=ContractParams.valueOf(quelMethodeAppeler).getChemin();
+				try{
+					String complement = recastJson.getString(FakeRecastKeys.COMPLEMENT.getName());
+					
+					if(quelMethodeAppeler.equalsIgnoreCase(ContractParams.risk.toString())){
+						complement=(ContractParams.IDOBJ.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
+					} else {
+						complement = (ContractParams.IDBILLING.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
+					}
+					uriToCall+=complement+"/";
+				} catch (JSONException e){
+					choice = true;
+					/* no complements */
+				}
+				jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
 			}catch(JSONException e){
 				//Tentative de récupération de la méthode à appeler lance une exception 
 				jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
@@ -77,4 +84,18 @@ public class ContractAnalyzer {
 		}
 		return jsonReturn;
 	}
+	
+	private void resetParams(){
+		calledMethod = null;
+		choice = false;
+	}
+
+	public ContractParams getCalledMethod() {
+		return calledMethod;
+	}
+
+	public boolean isChoice() {
+		return choice;
+	}
+
 }
