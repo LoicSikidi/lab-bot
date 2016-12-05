@@ -23,7 +23,8 @@ public class JSonMemory {
 	static final String CONTRACT = "contract";
 	static final String FIRSTNAME = "firstname";
 	static final String LASTNAME = "lastname";
-	static final String INTENTS = "intents";
+	static final String INTENTS = "entities";
+	static final String CONTEXTE = "contexte";
 	
 	////////////////// GETTERS /////////////////////////
 	public static String getIdContrat(String idUser){
@@ -56,6 +57,10 @@ public class JSonMemory {
 		putValueInJson(idUser, INTENTS, intents);
 	}
 	
+	public static void putContext(String idUser, String contexte){
+		putValueInJson(idUser, CONTEXTE, contexte);
+	}
+	
 	public static void putIdContrat(String idUser, String idContrat){
 		putValueInJson(idUser, CONTRACT, idContrat);
 	}
@@ -63,7 +68,11 @@ public class JSonMemory {
 	///////////////// REMOVE  ///////////////////////////
 	
 	public static void removeLastIntents(String idUser){
-		removeKeyInJson(idUser, "intents");
+		removeKeyInJson(idUser, INTENTS);
+	}
+	
+	public static void removeLastContexte(String idUser){
+		removeKeyInJson(idUser, CONTEXTE);
 	}
 	
 	public static void deleteFile(String idUser){

@@ -26,7 +26,7 @@ public class ContractResponseGenerator {
 	}
 	
 	public String generatePartyRolesChoiceResponse(String params) {
-		String response = "De quel propriétaire parlez-vous ? : \n\n";
+		String response = "De quel personne parlez-vous ? : \n\n";
 		for(String str : extractPartyRolesChoice(params)){
 			response += str+"\n\n";
 		}
@@ -34,7 +34,7 @@ public class ContractResponseGenerator {
 	}
 
 	public String generatePartyRoleInfosResponse(String params) {
-		String response = "Voici les informations sur le propriétaire : \n\n";
+		String response = "Voici les informations sur la personne : \n\n";
 		for(String str : extractPartyRoleInfos(params)){
 			response += str+"\n\n";
 		}
@@ -42,7 +42,7 @@ public class ContractResponseGenerator {
 	}
 	
 	public String generateRisksChoiceResponse(String params) {
-		String response = "De quel risque parlez-vous ? : \n\n";
+		String response = "De quel couverture parlez-vous ? : \n\n";
 		for(String str : extractRisksChoice(params)){
 			response += str+"\n\n";
 		}
@@ -71,7 +71,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).getJSONArray("links").getJSONObject(0).get("href").toString().split("/")[7];
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "prélèvement ");
 		}
 		
 		return results;
@@ -110,7 +110,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).getJSONArray("links").getJSONObject(0).get("href").toString().split("/")[7];
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "personne ");
 		}
 		
 		return results;
@@ -160,7 +160,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).getJSONArray("links").getJSONObject(0).get("href").toString().split("/")[7];
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "objet ");
 		}
 		
 		return results;
