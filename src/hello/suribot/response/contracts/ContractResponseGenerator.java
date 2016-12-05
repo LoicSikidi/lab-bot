@@ -41,6 +41,14 @@ public class ContractResponseGenerator {
 		return response;
 	}
 	
+	public String generateRisksChoiceResponse(String params) {
+		String response = "De quel risque parlez-vous ? : \n\n";
+		for(String str : extractRisksChoice(params)){
+			response += str+"\n\n";
+		}
+		return response;
+	}
+	
 	public String generateRisksInfosResponse(String params) {
 		String response = "Voici les informations sur la couverture de l'objet : \n\n";
 		for(String str : extractRisksInfos(params)){
@@ -139,6 +147,23 @@ public class ContractResponseGenerator {
 		}
 		if(person_results==null) return results;
 		return Stream.concat(Arrays.stream(results), Arrays.stream(person_results)) .toArray(String[]::new);
+	}
+	
+	
+	/**
+	 * [{"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"}]},
+	 * {"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"}]},
+	 * {"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-52665236/couverture"}]}]
+	 */
+	public String[] extractRisksChoice(String choices) throws JSONException{
+		JSONArray array = new JSONArray(choices);
+		String[] results = new String[array.length()];
+		
+		for(int i = 0; i<array.length(); i++){
+			results[i] = array.getJSONObject(i).getJSONArray("links").getJSONObject(0).get("href").toString().split("/")[7];
+		}
+		
+		return results;
 	}
 	
 	/**

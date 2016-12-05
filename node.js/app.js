@@ -10,7 +10,7 @@ var builder = require('botbuilder');
 var server = restify.createServer();
 server.use(restify.bodyParser());
 server.listen(process.env.NODEJSPORT, function () {
-   console.log('%s listening to %s', server.name, server.url); 
+	console.log('%s listening to %s', server.name, server.url); 
 });
   
 // Create chat bot
@@ -28,8 +28,6 @@ server.post('/api/messages', connector.listen());
 
 bot.dialog('/', function (session) {
 	sendBot(session);
-	//session.send('Hello World');
-    console.log("after sendBot");
 });
 
 //=========================================================
@@ -37,7 +35,7 @@ bot.dialog('/', function (session) {
 //=========================================================
 function sendBot(session){
 	var data = JSON.stringify(session.message);
-	
+	console.log(session.message.text);
 	var options = {
         host: 'localhost',
         port: process.env.BOTPORT,

@@ -26,15 +26,16 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 			try {
 				switch (method) {
 				case risk:
+					if(choice) return contract_gen.generateRisksChoiceResponse(params);
 					return contract_gen.generateRisksInfosResponse(params);
 					
 				case role:
 					if(choice) return contract_gen.generatePartyRolesChoiceResponse(params);
-					else return contract_gen.generatePartyRoleInfosResponse(params);
+					return contract_gen.generatePartyRoleInfosResponse(params);
 					
 				case billings:
 					if(choice) return contract_gen.generateBillingsChoiceResponse(params);
-					else return contract_gen.generateBillingInfosResponse(params);
+					return contract_gen.generateBillingInfosResponse(params);
 
 				default:
 					return generateNotUnderstoodMessage();
