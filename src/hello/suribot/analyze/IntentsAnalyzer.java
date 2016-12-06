@@ -15,7 +15,6 @@ import hello.suribot.communication.recast.FakeRecastKeys;
 import hello.suribot.communication.recast.RecastAiController;
 import hello.suribot.interfaces.IJsonDecoder;
 import hello.suribot.response.ResponseGenerator;
-import hello.suribot.utils.EnvVar;
 
 public class IntentsAnalyzer implements IJsonDecoder{
 	
@@ -38,6 +37,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 	public void analyzeRecastIntents(JSONObject mbc_json, JSONObject recastJson, String idUser) {
 		
 		String contexte;
+		boolean isChoice = false;
 		try{
 			contexte = RecastAiController.getContext(recastJson);
 			String responseToMBC = "";
@@ -58,7 +58,8 @@ public class IntentsAnalyzer implements IJsonDecoder{
 					} catch (Exception e) {
 						rep = null;
 					}
-					responseToMBC = responsegenerator.generateContractUnderstoodMessage(analyzer.getCalledMethod(), analyzer.isChoice(), rep);
+					isChoice=analyzer.isChoice();
+					responseToMBC = responsegenerator.generateContractUnderstoodMessage(analyzer.getCalledMethod(), isChoice, rep);
 					demandeComprise = true;
 				}else if(js.has(MISSINGPARAMS)){
 					try {
@@ -103,8 +104,14 @@ public class IntentsAnalyzer implements IJsonDecoder{
 				analyzeNotUnderstood(mbc_json, newRequest, idUser);
 				
 			} else {
-				JSonMemory.removeLastIntents(idUser);
-				JSonMemory.removeLastContexte(idUser);
+				if(isChoice){
+					JSONObject entities = RecastAiController.getEntities(recastJson);
+					if(entities!=null)JSonMemory.putLastIntents(idUser, entities.toString());
+					JSonMemory.putContext(idUser, contexte);
+				}else{
+					JSonMemory.removeLastIntents(idUser);
+					JSonMemory.removeLastContexte(idUser);
+				}
 				if(responseToMBC.isEmpty()){
 					nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
 				} else {
@@ -202,7 +209,6 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			nextToCall.sendMessage(mbc_json, responseToMBC);
 			return;
 		}
-		
 		
 	}
 	

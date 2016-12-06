@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.IntentsAnalyzer;
-import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.interfaces.IHttpSender;
 import hello.suribot.utils.EnvVar;
 

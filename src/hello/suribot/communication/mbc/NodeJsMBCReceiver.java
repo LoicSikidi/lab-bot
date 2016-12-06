@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hello.suribot.analyze.jsonmemory.JSonMemory;
 import hello.suribot.communication.recast.RecastAiController;
 
 /**
@@ -28,6 +29,7 @@ class NodeJsMBCReceiver{
 	
 	@RequestMapping(value ="/")
 	public int receivingMessage(HttpServletRequest request){
+		JSonMemory.putNom("test", "MessageRecu");
 		StringBuilder sb = null;
 	    try {
 			Reader body = request.getReader();

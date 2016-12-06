@@ -111,25 +111,22 @@ public class ContractAnalyzer {
 		if(cp == null ) return null;
 		if(cp.toString().equalsIgnoreCase("risk")){
 			try{
-				return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^-?0-9]+", "");
+				return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
 			}catch(JSONException e){
-				System.out.println("in catch");
 				return null;
 			}
 		}
 		if(cp.toString().equalsIgnoreCase("role")){
 			try{
-				return entities.getJSONArray("person-id").getJSONObject(0).getString("raw").replaceAll("[^-?0-9]+", "");
+				return entities.getJSONArray("person-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
 			}catch(JSONException e){
-				System.out.println("in catch");
 				return null;
 			}
 		}
 		if(cp.toString().equalsIgnoreCase("billings")){
 			try{
-				return entities.getJSONArray("prelevement-id").getJSONObject(0).getString("raw").replaceAll("[^-?0-9]+", "");
+				return entities.getJSONArray("prelevement-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
 			}catch(JSONException e){
-				System.out.println("in catch");
 				return null;
 			}
 		}
