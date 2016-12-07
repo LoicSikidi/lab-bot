@@ -1,5 +1,6 @@
 package hello.suribot.analyze.jsonmemory;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import org.json.simple.parser.ParseException;
 
 public class JSonMemory {
 	
-	static final String DIR = "jsonMemoryDir/";
+	static final String DIR = System.getProperty("user.dir")+File.separator;
 	static final String EXTENSION_FILE = ".json";
 	static JSONParser parser = new JSONParser();
 	
@@ -85,12 +86,24 @@ public class JSonMemory {
 	
 	//////////////// UTILS //////////////
 	private static String getValueFromJson(String fileName, String name){
+		
+		FileInputStream fileInput = null;
+		InputStreamReader isr = null;
 		try {
-			Object object = parser.parse(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+			fileInput = new FileInputStream(fileName);
+			isr = new InputStreamReader(fileInput, "UTF-8");
+			Object object = parser.parse(isr);
 			JSONObject json = (JSONObject) object;
 			return (String) json.get(name);	
 		} catch (IOException | JSONException | ParseException e) {
 			return null;
+		}finally{
+			try {
+				if(isr!=null)isr.close();
+				if(fileInput!=null)fileInput.close();
+			} catch (IOException e) {
+				return null;
+			}
 		}
 	}
 	
@@ -103,8 +116,12 @@ public class JSonMemory {
 		
 		Object object;
 		JSONObject json=null;
+		FileInputStream fileInput = null;
+		InputStreamReader isr = null;
 		try {
-			object = parser.parse(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
+			fileInput = new FileInputStream(fileName);
+			isr = new InputStreamReader(fileInput, "UTF-8");
+			object = parser.parse(isr);
 
 			json = (JSONObject) object;
 			for(String key : values.keySet()){
@@ -134,6 +151,11 @@ public class JSonMemory {
 				// impossible d'écrire dans le fichier qui était vide
 				e1.printStackTrace();
 			}
+		}finally{
+			try {
+				if(isr!=null)isr.close();
+				if(fileInput!=null)fileInput.close();
+			} catch (IOException e) {}
 		}
 		
 		// cas où fichier non vide et contient déjà du JSON
