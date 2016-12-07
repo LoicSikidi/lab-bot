@@ -26,4 +26,5 @@ after_success:
   target/lab-bot-1.0.jar travis@$IP:/home/travis
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar -Dserver.port=$PORT
   lab-bot-1.0.jar &
-- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP node app.js
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP node app.js &
+
