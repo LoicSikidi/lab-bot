@@ -7,8 +7,8 @@ public enum ContractParams {
 	role ("partyRoles/"),
 	
 	IDREPLACE ("YYYYYYY"),
-	IDOBJ (IDREPLACE.getChemin()+"/couverture"),
-	IDBILLING (IDREPLACE.getChemin()),
+	IDOBJ ("ID-"+IDREPLACE.chemin+"/couverture"),
+	IDBILLING ("ID-"+IDREPLACE.chemin),
 	COMPLEMENT ("complement");
 	
 	private String chemin;

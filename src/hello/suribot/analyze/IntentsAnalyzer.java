@@ -11,7 +11,6 @@ import hello.suribot.analyze.contracts.ContractAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSonMemory;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.mbc.NodeJsMBCSender;
-import hello.suribot.communication.recast.FakeRecastKeys;
 import hello.suribot.communication.recast.RecastAiController;
 import hello.suribot.interfaces.IJsonDecoder;
 import hello.suribot.response.ResponseGenerator;
@@ -54,7 +53,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 					String rep;
 					
 					try {
-						rep = apicontroller.sendGet(js.getString(FakeRecastKeys.URITOCALL.name()));
+						rep = apicontroller.sendGet(js.getString(ApiUrls.URITOCALL.name()));
 					} catch (Exception e) {
 						rep = null;
 					}
@@ -157,7 +156,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 					String rep;
 					
 					try {
-						rep = apicontroller.sendGet(js.getString(FakeRecastKeys.URITOCALL.name()));
+						rep = apicontroller.sendGet(js.getString(ApiUrls.URITOCALL.name()));
 					} catch (Exception e) {
 						rep = null;
 					}

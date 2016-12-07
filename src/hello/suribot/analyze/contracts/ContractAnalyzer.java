@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import hello.suribot.analyze.ApiUrls;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSonMemory;
-import hello.suribot.communication.recast.FakeRecastKeys;
 
 public class ContractAnalyzer {
 	
@@ -24,7 +23,6 @@ public class ContractAnalyzer {
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);
 		
-		System.out.println("entities = "+entities);
 		String identifiant;
 		try{
 			identifiant = getContractId(entities);
@@ -32,7 +30,6 @@ public class ContractAnalyzer {
 		}catch( JSONException | ClassCastException e){
 			identifiant = JSonMemory.getIdContrat(idUser); // récupération de l'identifiant si non renseigné
 		}
-
 		
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
@@ -49,9 +46,9 @@ public class ContractAnalyzer {
 				//String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.METHOD.getName());
 				calledMethod = getMethodToCall(entities);
 				if(calledMethod==null){
-					missingParams.add("méthode risk");
-					missingParams.add("méthode billings");
-					missingParams.add("méthode partyRole");
+					missingParams.add("\n\nméthode risk");
+					missingParams.add("\n\nméthode billings");
+					missingParams.add("\n\nméthode partyRole");
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 					return jsonReturn;
@@ -67,13 +64,12 @@ public class ContractAnalyzer {
 					} else {
 						complement = (ContractParams.IDBILLING.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 					}
-					uriToCall+="ID-"+complement+"/";
+					uriToCall+=complement;
 				}else{
 					choice = true;
 					/* no complements */
 				}
-				System.out.println(uriToCall);
-				jsonReturn.put(FakeRecastKeys.URITOCALL.name(), uriToCall);
+				jsonReturn.put(ApiUrls.URITOCALL.name(), uriToCall);
 			}catch(JSONException e){
 				//Tentative de récupération de la méthode à appeler lance une exception 
 				jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
