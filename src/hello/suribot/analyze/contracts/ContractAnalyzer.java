@@ -109,27 +109,11 @@ public class ContractAnalyzer {
 	
 	public String getComplement(JSONObject entities, ContractParams cp){
 		if(cp == null ) return null;
-		if(cp.toString().equalsIgnoreCase("risk")){
-			try{
-				return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
-			}catch(JSONException e){
-				return null;
-			}
-		}
-		if(cp.toString().equalsIgnoreCase("role")){
-			try{
-				return entities.getJSONArray("person-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
-			}catch(JSONException e){
-				return null;
-			}
-		}
-		if(cp.toString().equalsIgnoreCase("billings")){
-			try{
-				return entities.getJSONArray("prelevement-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
-			}catch(JSONException e){
-				return null;
-			}
-		}
+		try{
+			if(cp.toString().equalsIgnoreCase("risk")) return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
+			else if(cp.toString().equalsIgnoreCase("role")) return entities.getJSONArray("person-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
+			else if(cp.toString().equalsIgnoreCase("billings")) return entities.getJSONArray("prelevement-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
+		}catch(JSONException e){}
 		
 		return null;
 	}

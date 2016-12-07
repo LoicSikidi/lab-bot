@@ -39,9 +39,7 @@ public class RecastAiController implements IHttpSender{
 			//TODO : transferer contenu du message à Recast, et 
 			// renvoyer response à S.S.3 pour analyse des intents de Recast.
 			//String response = sendPostAndReturnResponse(recastURI, message);
-			//TODO call doAPIRequest
 			JSONObject intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
-			//JSONObject intents = fakeRecast(message, idUser);
 			nextStep.analyzeRecastIntents(json, intents, idUser);
 			
 		} catch (Exception e) {

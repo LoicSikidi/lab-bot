@@ -12,7 +12,6 @@ import hello.suribot.utils.EnvVar;
 public class NodeJsMBCSender implements IHttpSender{
 	
 	public void sendMessage(JSONObject json, String message){
-		// TODO : obtenir url du programme Node.js par getenv();
 		try {
 			json.put("text", message);
 			sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
