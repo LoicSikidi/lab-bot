@@ -22,6 +22,7 @@ env:
   - secure: oFaGXIUZkaL44V8sI3eG+XteKfAqVTRe7WB1k0CWK7XUr0PXQVEotu7c+CuNEYv2cdW1nKHyvPJ8SLAXDFugR/bqiMtf6jQHWVOhaxC1/cVylcdjRd0SclceO+l/dQh1NU7iFXx/iHidruLUBZJUK6+MitfVm7PVmhy0FmQLf5SMBkEx0YUzJTif810PtSQcrilGqB/WnzOtKcqsxX33nLbxUhBqJvQrvC4xgNuaa29YuIbds5Chy5nK5rB+CGmakXOSZwW8L1likcCqxeYQkLB2OceAOdftgb8/udyUzlgpjPlVKMeZPWeMSG1mg85KDTe1Ei+uqSWrS/d8I+5v8+tN1PLAuTJ65+dOE1o+SGp6sljw8CGZrlcUXKP8gn+R1KG7azeu2ipeptfC/0QjQk7XbBYHA0vfWdFeRN5dNDKGqruzH3UV+MqZLj08VXBnxarlvKQ6LFlsKuxL9KuE0A45pNBxlMYlJytrH1TY+PucOZ8rM5DzUqMsfotfbHu4PlnIYuZ0o8g99/nxwLYJYaF8DBczRHn8j3gkuuf+b4LAu9Jgec01dY3qPRk0pnumxgf1VOWDr0NxaFKScHFLiJNQNmZ+rBSHoog98qJ27z5wBV83qMSgN9F59glBpipqazZfNrW3H1Kkkp/Ku7DtHoWEyQqNxI/YB/fckuHcA4I=
 after_success:
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP screen node app.js &
+- sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP cd
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP ./killLabBot.sh
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   target/lab-bot-1.0.jar travis@$IP:/home/travis
