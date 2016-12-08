@@ -36,9 +36,6 @@ public class RecastAiController implements IHttpSender{
 	 */
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
-			//TODO : transferer contenu du message à Recast, et 
-			// renvoyer response à S.S.3 pour analyse des intents de Recast.
-			//String response = sendPostAndReturnResponse(recastURI, message);
 			JSONObject intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
 			nextStep.analyzeRecastIntents(json, intents, idUser);
 			
@@ -47,7 +44,8 @@ public class RecastAiController implements IHttpSender{
 		}
 	}
 
-	public static JSONObject callRecast(String text, String token, String language) throws JSONException{
+	//TODO : utiliser l'interface IHttpSender ?
+	private static JSONObject callRecast(String text, String token, String language) throws JSONException{
         URL	obj;
         HttpsURLConnection	con = null;
         OutputStream os;

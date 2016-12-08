@@ -136,6 +136,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 		}
 	}
 	
+	//TODO : supprimer code dupliqué
 	public void analyzeNotUnderstood(JSONObject mbc_json, JSONObject newDemande, String idUser){
 		String contexte = "";
 		JSONObject entities = null;
@@ -211,7 +212,7 @@ public class IntentsAnalyzer implements IJsonDecoder{
 		
 	}
 	
-	public static JSONObject generateNewRequestWithLastIntent(JSONObject newDemande, JSONObject lastDemande){
+	private static JSONObject generateNewRequestWithLastIntent(JSONObject newDemande, JSONObject lastDemande){
 		try{
 			newDemande = RecastAiController.getEntities(newDemande);
 		}catch(JSONException e){

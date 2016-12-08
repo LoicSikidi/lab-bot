@@ -15,7 +15,6 @@ public class APIController implements IHttpSender{
 	 */
 	public String sendMessageAndReturnResponse(String url, String message){
 		try {
-			//if(message != null) return sendPostAndReturnResponse(url, message);
 			return sendGet(url);
 		} catch (Exception e) {
 			System.out.println("APIController : Message "+message+" not send... ("+e+")");

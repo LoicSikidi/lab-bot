@@ -57,8 +57,9 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 	}
 	
 	private String generateInternalErrorMessage() {
-		return "Problème interne au bot. Nous sommes actuellement en train de travailler dessus."
-				+ "Veuillez nous excuser pour la gêne occasionnée";
+		return "Problème interne au bot. \n\n"
+				+ "Nous sommes actuellement en train de travailler dessus.\n\n"
+				+ "Veuillez nous excuser pour la gêne occasionnée.";
 	}
 
 	public String generateNotUnderstoodMessage() {

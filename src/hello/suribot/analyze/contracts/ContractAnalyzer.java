@@ -84,15 +84,23 @@ public class ContractAnalyzer {
 		choice = false;
 	}
 
+	/**
+	 * Retourne le nom de la méthode à appeler, detectée par l'appel de la méthode analyse.
+	 * @return calledMethod
+	 */
 	public ContractParams getCalledMethod() {
 		return calledMethod;
 	}
 
+	/**
+	 * Retourne vrai si l'appel à la méthode analyse détecte un choix à proposer à l'utilisateur
+	 * @return choice
+	 */
 	public boolean isChoice() {
 		return choice;
 	}
 
-	public ContractParams getMethodToCall(JSONObject entities){
+	private ContractParams getMethodToCall(JSONObject entities){
 		if(entities!=null){
 			Set<String> setKeyEntities = entities.keySet();
 			if(setKeyEntities==null || setKeyEntities.isEmpty()) return null;
@@ -103,7 +111,7 @@ public class ContractAnalyzer {
 		return null;
 	}
 	
-	public String getComplement(JSONObject entities, ContractParams cp){
+	private String getComplement(JSONObject entities, ContractParams cp){
 		if(cp == null ) return null;
 		try{
 			if(cp.toString().equalsIgnoreCase("risk")) return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
@@ -114,7 +122,7 @@ public class ContractAnalyzer {
 		return null;
 	}
 	
-	public String getContractId(JSONObject entities) throws JSONException,ClassCastException{
+	private String getContractId(JSONObject entities) throws JSONException,ClassCastException{
 		return entities.getJSONArray("contrat-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
 	}
 }
