@@ -35,7 +35,6 @@ bot.dialog('/', function (session) {
 //=========================================================
 function sendBot(session){
 	var data = JSON.stringify(session.message);
-	console.log(session.message.text);
 	var options = {
         host: 'localhost',
         port: process.env.BOTPORT,
