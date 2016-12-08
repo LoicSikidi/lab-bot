@@ -17,7 +17,7 @@ import org.json.simple.parser.ParseException;
 
 public class JSonMemory {
 	
-	static final String DIR = System.getProperty("user.dir")+File.separator;
+	static final String DIR = System.getProperty("user.dir")+File.separator+"JsonMemory"+File.separator;
 	static final String EXTENSION_FILE = ".json";
 	static JSONParser parser = new JSONParser();
 	
@@ -187,6 +187,13 @@ public class JSonMemory {
 	
 	private static void createJsonFileIfNotExists(String idUser) {
 		try{
+			if (!Files.exists(Paths.get(DIR))) {
+	            if (new File(DIR).mkdir()) {
+	                System.out.println("Dossier correctement créé !");
+	            } else {
+	                System.out.println("Erreur lors de la création du dossier !");
+	            }
+	        }
 			if(!Files.exists(Paths.get(DIR+idUser+EXTENSION_FILE))){
 				Files.createFile(Paths.get(DIR+idUser+EXTENSION_FILE));
 			}
