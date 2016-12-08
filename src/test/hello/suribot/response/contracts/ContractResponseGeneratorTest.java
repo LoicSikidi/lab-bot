@@ -13,8 +13,8 @@ public class ContractResponseGeneratorTest {
 	@Test
 	public void extractBillingsChoiceTest(){
 		ContractResponseGenerator generator = new ContractResponseGenerator();
-		String s = "[{ \"link\":null,\"links\":[{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-96268885\"}] },{ \"link\":null,\"links\":[{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-2355596664\"}]},{ \"link\":null,\"links\":[{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-123987456\"}]}]";
-		assertEquals("[ID-96268885, ID-2355596664, ID-123987456]", Arrays.toString(generator.extractBillingsChoice(s)));
+		String s = "[{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-96268885\"},{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-2355596664\"},{ \"rel\":\"self\",\"href\":\"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-123987456\"}]";
+		assertEquals("[prélèvement 96268885, prélèvement 2355596664, prélèvement 123987456]", Arrays.toString(generator.extractBillingsChoice(s)));
 	}
 	
 	@Test
@@ -28,8 +28,8 @@ public class ContractResponseGeneratorTest {
 	@Test
 	public void extractPartyRolesChoiceTest(){
 		ContractResponseGenerator generator = new ContractResponseGenerator();
-		String s = "[   {     \"link\": null,     \"links\": [{       \"rel\": \"self\",       \"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee78595\"     }]   },   {     \"link\": null,     \"links\": [{       \"rel\": \"self\",       \"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee787634\"     }]   } ]";
-		assertEquals("[ID-eee78595, ID-eee787634]", Arrays.toString(generator.extractPartyRolesChoice(s)));
+		String s = "[{\"rel\": \"self\",\"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee78595\"},{\"rel\":\"self\",\"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee787634\"}]";
+		assertEquals("[personne eee78595, personne eee787634]", Arrays.toString(generator.extractPartyRolesChoice(s)));
 	}
 	
 	@Test
