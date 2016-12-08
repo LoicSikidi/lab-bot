@@ -48,7 +48,7 @@ public class ContractAnalyzer {
 				if(calledMethod==null){
 					missingParams.add("\n\nvos couvertures");
 					missingParams.add("\n\nvos prélèvements");
-					missingParams.add("\n\nle rôle d'un personne");
+					missingParams.add("\n\nle rôle d'une personne");
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 					return jsonReturn;
