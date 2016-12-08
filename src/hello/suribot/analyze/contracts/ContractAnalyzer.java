@@ -46,9 +46,9 @@ public class ContractAnalyzer {
 				//String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.METHOD.getName());
 				calledMethod = getMethodToCall(entities);
 				if(calledMethod==null){
-					missingParams.add("\n\nméthode risk");
-					missingParams.add("\n\nméthode billings");
-					missingParams.add("\n\nméthode partyRole");
+					missingParams.add("\n\nvos couvertures");
+					missingParams.add("\n\nvos prélèvements");
+					missingParams.add("\n\nle rôle d'un personne");
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 					return jsonReturn;
