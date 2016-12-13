@@ -37,7 +37,7 @@ public class RecastAiController implements IHttpSender{
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
 			JSONObject intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
-			nextStep.analyzeRecastIntents(json, intents, idUser);
+			nextStep.analyzeRecastIntents(json, intents, idUser, true);
 			
 		} catch (Exception e) {
 			System.out.println("RecastAiController : Message "+message+" not send... ("+e+")");

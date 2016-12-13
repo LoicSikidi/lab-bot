@@ -18,7 +18,13 @@ public class ContractAnalyzer {
 	
 	public ContractAnalyzer() {}
 	
+	/**
+	 * Exemple 1 :{"risk":[{"confidence":0.91,"raw":"couvertures","value":"couvertures"}]}
+	 * Exemple 2 :{"prelevement-id":[{"confidence":0.39,"raw":"prélèvement 478855","value":"prélèvement 478855"}]}
+	 * Exemple 3 :{"role":[{"confidence":0.82,"raw":"role","value":"role"}]}
+	 */
 	public JSONObject analyze(JSONObject entities, String idUser){
+		System.out.println(entities);
 		resetParams();
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);

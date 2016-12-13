@@ -60,12 +60,9 @@ public class ContractResponseGenerator {
 	
 	//TODO : changer la javadoc (M.A.J)
 	/**	[
-	*	    { \"link\":null,"links":[
-	*	            { "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-96268885"}] },
-	*		{ "link":null,"links":[
-	*	            { "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-2355596664"}]},
-	*		{ "link":null,"links":[
-	*	            { "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-123987456"}]}
+	*	    { "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-96268885"},
+	*		{ "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-2355596664"},
+	*		{ "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-123987456"}
 	*	] 
 	**/	
 	public String[] extractBillingsChoice(String choices) throws JSONException{
@@ -101,10 +98,8 @@ public class ContractResponseGenerator {
 	
 	/**
 	* [
-    * 	{"link":null,"links":[
-    *   	{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee78595"}]},
-    * 	{"link":null,"links":[
-    *   	{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee787634"}]}
+    * 	{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee78595"},
+    * 	{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee787634"}
 	* ]
 	*/
 	public String[] extractPartyRolesChoice(String choices) throws JSONException{
@@ -153,9 +148,11 @@ public class ContractResponseGenerator {
 	
 	
 	/**
-	 * [{"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"}]},
-	 * {"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"}]},
-	 * {"link":null,"links":[{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-52665236/couverture"}]}]
+	 * [
+	 * 		{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"},
+	 * 		{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-kockeo/couverture"},
+	 * 		{"rel":"self","href":"http://localhost:12347/insurance/contract/ID-64767/risk/ID-52665236/couverture"}
+	 * ]
 	 */
 	public String[] extractRisksChoice(String choices) throws JSONException{
 		JSONArray array = new JSONArray(choices);
