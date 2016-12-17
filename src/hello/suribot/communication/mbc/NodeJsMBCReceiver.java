@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import hello.suribot.communication.recast.RecastAiController;
+import hello.suribot.communication.ai.AiController;
 
 /**
  * Classe controleur permettant d'écouter des messages venant du programme Node.js de communication à MBC
@@ -20,10 +20,10 @@ import hello.suribot.communication.recast.RecastAiController;
 @RestController
 class NodeJsMBCReceiver{
 	
-	private RecastAiController nextStep;
+	private AiController nextStep;
 
 	public NodeJsMBCReceiver() {
-		this.nextStep = new RecastAiController();
+		this.nextStep = new AiController();
 	}
 	
 	@RequestMapping(value ="/")

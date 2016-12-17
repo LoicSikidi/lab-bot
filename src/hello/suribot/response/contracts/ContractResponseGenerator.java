@@ -58,7 +58,6 @@ public class ContractResponseGenerator {
 	}
 
 	
-	//TODO : changer la javadoc (M.A.J)
 	/**	[
 	*	    { "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-96268885"},
 	*		{ "rel":"self","href":"http://localhost:12347/insurance/contract/ID-5935697/billings/ID-2355596664"},

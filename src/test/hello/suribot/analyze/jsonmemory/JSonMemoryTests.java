@@ -46,10 +46,10 @@ public class JSonMemoryTests {
 	public void getIntents(){
 		String testUser = "testUser";
 		JSonMemory.deleteFile(testUser);
-		assertEquals(null, JSonMemory.getLastIntents(testUser));
+		assertEquals(null, JSonMemory.getLastEntities(testUser));
 		
-		JSonMemory.putLastIntents(testUser, "{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}");
-		assertEquals("{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}", JSonMemory.getLastIntents(testUser));
+		JSonMemory.putLastEntities(testUser, "{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}");
+		assertEquals("{\"testUser\":\"felix\",\"CONTEXTE\":\"demande\",\"IDENTIFICATION\":\"ID-5935697\"}", JSonMemory.getLastEntities(testUser));
 		JSonMemory.deleteFile(testUser);
 	}
 	

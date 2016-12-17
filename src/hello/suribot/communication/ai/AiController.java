@@ -1,4 +1,4 @@
-package hello.suribot.communication.recast;
+package hello.suribot.communication.ai;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -13,6 +14,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonElement;
+
+import ai.api.AIConfiguration;
+import ai.api.AIDataService;
+import ai.api.model.AIRequest;
+import ai.api.model.AIResponse;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.interfaces.IHttpSender;
 import hello.suribot.utils.EnvVar;
@@ -20,11 +27,11 @@ import hello.suribot.utils.EnvVar;
 /**
  * Classe controleur permettant d'écouter et envoyer des messages à Recast.ai
  */
-public class RecastAiController implements IHttpSender{
+public class AiController implements IHttpSender{
 	
 	private IntentsAnalyzer nextStep;
 
-	public RecastAiController() {
+	public AiController() {
 		this.nextStep = new IntentsAnalyzer();
 	}
 	
@@ -36,7 +43,16 @@ public class RecastAiController implements IHttpSender{
 	 */
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
-			JSONObject intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
+			JSONObject intents = new JSONObject();
+			if(message.toLowerCase().contains("api")){
+				AIConfiguration ai = new AIConfiguration(EnvVar.TOKENAPIAI);
+				AIRequest request = new AIRequest(message);
+				AIDataService data = new AIDataService(ai);
+				AIResponse response = data.request(request);
+				intents = apiAiToRecast(response);
+			}else{
+				intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
+			}
 			nextStep.analyzeRecastIntents(json, intents, idUser, true);
 			
 		} catch (Exception e) {
@@ -100,9 +116,9 @@ public class RecastAiController implements IHttpSender{
 		if(recastJson != null){
 			try{
 				jsonResult = new JSONObject();
-				jsonResult = (JSONObject) recastJson.get("results");
-				JSONArray ja = (JSONArray) jsonResult.get("intents");
-				if(ja != null) return ja.getJSONObject(0).getString("slug");
+				jsonResult = (JSONObject) recastJson.get(RecastKey.RESULTS);
+				JSONArray ja = (JSONArray) jsonResult.get(RecastKey.INTENTS);
+				if(ja != null) return ja.getJSONObject(0).getString(RecastKey.KEYINTENT);
 			}catch(JSONException e){
 				return null;
 			}
@@ -113,10 +129,68 @@ public class RecastAiController implements IHttpSender{
 	public static JSONObject getEntities(JSONObject recastJson){
 		JSONObject jsonResult = new JSONObject();
 		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get("results");
-			jsonResult = (JSONObject) jsonResult.get("entities");
+			jsonResult = (JSONObject) recastJson.get(RecastKey.RESULTS);
+			jsonResult = (JSONObject) jsonResult.get(RecastKey.ENTITIES);
 			return jsonResult;
 		}
 		return null;
+	}
+	
+	/////////////PARTIE CONVERTISSEUR/////////////////
+	/**
+	 * Transforme le JSON reçu de API.Ai en un JSON de la forme de ceux envoyé par Recast.
+	 * JSONObject :
+	 * {"intents" : JSONArray[
+	 * 				JSONObject{ "slug" : String}
+	 * 			]
+		"entities" : JSONObject{
+			entities1 : JSONArray[
+				JSONObject { "raw" : String }
+					]
+			entities2 : JSONArray[
+				JSONObject { "raw" : String }
+					]
+			entitiesN : JSONArray[
+				JSONObject { "raw" : String }
+					]
+			}
+	  }
+	 */
+	public static JSONObject apiAiToRecast(AIResponse response){
+		
+		HashMap<String, JsonElement> parameter = response.getResult().getParameters();
+		JSONObject js = new JSONObject();
+		JSONObject tmp = new JSONObject();
+		JSONObject result = new JSONObject();
+		JSONObject entities = apiIntentsToRecastIntents(parameter);
+		
+		JSONArray arrayIntent = new JSONArray();
+
+		tmp.put(RecastKey.KEYINTENT, response.getResult().getMetadata().getIntentName());
+		arrayIntent.put(tmp);
+		result.put(RecastKey.INTENTS, arrayIntent);
+		result.put(RecastKey.ENTITIES, entities);
+		result.put(RecastKey.LANGUAGE, "fr");	//On met fr en langue par defaut car API.ai ne retourne pas la langue du message
+		js.put("results", result);
+		
+		return js;
+	}
+	
+	private static JSONObject apiIntentsToRecastIntents(HashMap<String, JsonElement> parameter){
+		JSONObject tmp = new JSONObject();
+		JSONObject entities = new JSONObject();
+		JSONArray arrayEntitiesTmp = new JSONArray();
+		if(parameter!=null){
+			for(String elem : parameter.keySet()){
+				//Dans la suite du code on utilise l'attribut raw de l'intent
+				tmp.put(RecastKey.KEYENTITIES, parameter.get(elem).getAsString());	arrayEntitiesTmp.put(tmp);
+				//On reinitialise le JSONObject
+				tmp = new JSONObject();								
+				entities.put(elem, arrayEntitiesTmp);
+				//On reinitialise le JSONArray
+				arrayEntitiesTmp = new JSONArray();
+			}
+		}
+		return entities;
 	}
 }

@@ -3,7 +3,7 @@ package hello.suribot.analyze.contracts;
 public enum ContractParams {
 	
 	risk ("risk/"),
-	billings ("billings/"),
+	prelevement ("billings/"),
 	role ("partyRoles/"),
 	
 	IDREPLACE ("YYYYYYY"),

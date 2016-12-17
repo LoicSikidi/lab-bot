@@ -33,7 +33,7 @@ public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
 					if(choice) return contract_gen.generatePartyRolesChoiceResponse(params);
 					return contract_gen.generatePartyRoleInfosResponse(params);
 					
-				case billings:
+				case prelevement:
 					if(choice) return contract_gen.generateBillingsChoiceResponse(params);
 					return contract_gen.generateBillingInfosResponse(params);
 

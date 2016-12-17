@@ -10,12 +10,21 @@ import org.json.JSONObject;
 import hello.suribot.analyze.ApiUrls;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSonMemory;
+import hello.suribot.communication.ai.RecastKey;
 
 public class ContractAnalyzer {
 	
 	private ContractParams calledMethod;
 	private boolean choice;
 	
+	private String COUVERTURE = "risk";
+	private String COMPLEM_COUVERTURE = "object-id";
+	private String ROLE = "role";
+	private String COMPLEM_ROLE = "person-id";
+	private String PAIEMENT = "prelevement";
+	private String COMPLEM_PAIEMENT = "prelevement-id";
+	private String CONTRATID = "contrat-id";
+
 	public ContractAnalyzer() {}
 	
 	/**
@@ -110,9 +119,9 @@ public class ContractAnalyzer {
 		if(entities!=null){
 			Set<String> setKeyEntities = entities.keySet();
 			if(setKeyEntities==null || setKeyEntities.isEmpty()) return null;
-			if(setKeyEntities.contains("role") || setKeyEntities.contains("person-id")) return ContractParams.role;
-			if(setKeyEntities.contains("risk") || setKeyEntities.contains("object-id")) return ContractParams.risk;
-			if(setKeyEntities.contains("prelevement") || setKeyEntities.contains("prelevement-id")) return ContractParams.billings;
+			if(setKeyEntities.contains(ROLE) || setKeyEntities.contains(COMPLEM_ROLE)) return ContractParams.role;
+			if(setKeyEntities.contains(COUVERTURE) || setKeyEntities.contains(COMPLEM_COUVERTURE)) return ContractParams.risk;
+			if(setKeyEntities.contains(PAIEMENT) || setKeyEntities.contains(COMPLEM_PAIEMENT)) return ContractParams.prelevement;
 		}
 		return null;
 	}
@@ -120,15 +129,15 @@ public class ContractAnalyzer {
 	private String getComplement(JSONObject entities, ContractParams cp){
 		if(cp == null ) return null;
 		try{
-			if(cp.toString().equalsIgnoreCase("risk")) return entities.getJSONArray("object-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
-			else if(cp.toString().equalsIgnoreCase("role")) return entities.getJSONArray("person-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
-			else if(cp.toString().equalsIgnoreCase("billings")) return entities.getJSONArray("prelevement-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
+			if(cp.toString().equalsIgnoreCase(COUVERTURE)) return entities.getJSONArray(COMPLEM_COUVERTURE).getJSONObject(0).getString(RecastKey.KEYENTITIES).replaceAll("[^0-9]+", "");
+			else if(cp.toString().equalsIgnoreCase(ROLE)) return entities.getJSONArray(COMPLEM_ROLE).getJSONObject(0).getString(RecastKey.KEYENTITIES).replaceAll("[^0-9]+", "");
+			else if(cp.toString().equalsIgnoreCase(PAIEMENT)) return entities.getJSONArray(COMPLEM_PAIEMENT).getJSONObject(0).getString(RecastKey.KEYENTITIES).replaceAll("[^0-9]+", "");
 		}catch(JSONException e){}
 		
 		return null;
 	}
-	
+
 	private String getContractId(JSONObject entities) throws JSONException,ClassCastException{
-		return entities.getJSONArray("contrat-id").getJSONObject(0).getString("raw").replaceAll("[^0-9]+", "");
+		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(RecastKey.KEYENTITIES).replaceAll("[^0-9]+", "");
 	}
 }

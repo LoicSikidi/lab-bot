@@ -21,11 +21,11 @@ public class JSonMemory {
 	static final String EXTENSION_FILE = ".json";
 	static JSONParser parser = new JSONParser();
 
-	static final String CONTRACT = "contract";
-	static final String FIRSTNAME = "firstname";
-	static final String LASTNAME = "lastname";
-	static final String INTENTS = "entities";
-	static final String CONTEXTE = "contexte";
+	public static final String CONTRACT = "contract";
+	public static final String FIRSTNAME = "firstname";
+	public static final String LASTNAME = "lastname";
+	public static final String ENTITIES = "entities";
+	public static final String CONTEXTE = "contexte";
 
 	////////////////// GETTERS /////////////////////////
 	public static String getIdContrat(String idUser){
@@ -40,8 +40,8 @@ public class JSonMemory {
 		return getValueFromJson(DIR+idUser+EXTENSION_FILE, LASTNAME);
 	}
 
-	public static String getLastIntents(String idUser) {
-		return getValueFromJson(DIR+idUser+EXTENSION_FILE, INTENTS);
+	public static String getLastEntities(String idUser) {
+		return getValueFromJson(DIR+idUser+EXTENSION_FILE, ENTITIES);
 	}
 
 	///////////////// SETTERS  ///////////////////////////
@@ -54,8 +54,8 @@ public class JSonMemory {
 		putValueInJson(idUser, FIRSTNAME, prenom);
 	}
 
-	public static void putLastIntents(String idUser, String intents){
-		putValueInJson(idUser, INTENTS, intents);
+	public static void putLastEntities(String idUser, String entities){
+		putValueInJson(idUser, ENTITIES, entities);
 	}
 
 	public static void putContext(String idUser, String contexte){
@@ -68,8 +68,8 @@ public class JSonMemory {
 
 	///////////////// REMOVE  ///////////////////////////
 
-	public static void removeLastIntents(String idUser){
-		removeKeyInJson(idUser, INTENTS);
+	public static void removeLastEntities(String idUser){
+		removeKeyInJson(idUser, ENTITIES);
 	}
 
 	public static void removeLastContexte(String idUser){
@@ -214,7 +214,7 @@ public class JSonMemory {
 		nothing.put(CONTRACT, null);
 		nothing.put(FIRSTNAME, null);
 		nothing.put(LASTNAME, null);
-		nothing.put(INTENTS, null);
+		nothing.put(ENTITIES, null);
 		putValuesInJson(idUser, nothing);
 	}
 
