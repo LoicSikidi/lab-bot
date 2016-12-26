@@ -15,11 +15,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class JSonMemory {
+/**
+ * Classe de mémorisation des données des utilisateurs (similaire à une BDD), sous forme de fichier ".json".
+ */
+public class JSONMemory {
 
-	static final String DIR = System.getProperty("user.dir")+File.separator+"JsonMemory"+File.separator;
-	static final String EXTENSION_FILE = ".json";
-	static JSONParser parser = new JSONParser();
+	private static final String DIR = System.getProperty("user.dir")+File.separator+"JsonMemory"+File.separator;
+	private static final String EXTENSION_FILE = ".json";
+	private static JSONParser parser = new JSONParser();
 
 	public static final String CONTRACT = "contract";
 	public static final String FIRSTNAME = "firstname";
@@ -72,7 +75,7 @@ public class JSonMemory {
 		removeKeyInJson(idUser, ENTITIES);
 	}
 
-	public static void removeLastContexte(String idUser){
+	public static void removeLastContext(String idUser){
 		removeKeyInJson(idUser, CONTEXTE);
 	}
 
@@ -194,6 +197,7 @@ public class JSonMemory {
 				Files.createFile(Paths.get(DIR+idUser+EXTENSION_FILE));
 			}
 		} catch (Exception e){
+			// TODO: Log System ?
 			System.out.println("Cannot create "+idUser+EXTENSION_FILE+" file");
 			e.printStackTrace();
 		}

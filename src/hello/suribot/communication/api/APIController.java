@@ -1,23 +1,22 @@
 package hello.suribot.communication.api;
 
-import hello.suribot.interfaces.IHttpSender;
+import hello.suribot.abstracts.AbstractHttpSender;
 
 /**
  * Classe permettant de communiquer avec différentes API externes
  */
-public class APIController implements IHttpSender{
+public class APIController extends AbstractHttpSender{
 	
 	public APIController() {}
 	
 	/**
 	 * Send message to api, and listen response
-	 * @param message
 	 */
-	public String sendMessageAndReturnResponse(String url, String message){
+	public String send(String url){
 		try {
 			return sendGet(url);
 		} catch (Exception e) {
-			System.out.println("APIController : Message "+message+" not send... ("+e+")");
+			System.out.println("APIController : Message with url \""+url+"\" not send... ("+e+")");
 		}
 		return null;
 	}

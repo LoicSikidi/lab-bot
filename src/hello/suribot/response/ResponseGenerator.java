@@ -7,14 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.contracts.ContractParams;
-import hello.suribot.interfaces.IJsonCreator;
-import hello.suribot.interfaces.IJsonDecoder;
 import hello.suribot.response.contracts.ContractResponseGenerator;
 
 /**
  * Classe permettant de générer des réponses (à S.S.1 communication MBC) suivant les données fournies.
  */
-public class ResponseGenerator implements IJsonCreator, IJsonDecoder{
+public class ResponseGenerator{
 	
 	public ResponseGenerator() {}
 

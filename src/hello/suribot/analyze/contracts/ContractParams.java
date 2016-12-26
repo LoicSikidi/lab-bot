@@ -1,5 +1,8 @@
 package hello.suribot.analyze.contracts;
 
+/**
+ * Divers paramètres et méthodes liés à l'URL de l'API à appeler.
+ */
 public enum ContractParams {
 	
 	risk ("risk/"),

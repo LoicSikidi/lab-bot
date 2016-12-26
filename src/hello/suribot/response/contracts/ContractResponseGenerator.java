@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Classe permettant la génération de message à l'utilisateur.
+ */
 public class ContractResponseGenerator {
 	
 	public String generateBillingsChoiceResponse(String params) {

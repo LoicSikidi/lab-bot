@@ -2,7 +2,14 @@ package hello.suribot.analyze;
 
 import hello.suribot.utils.EnvVar;
 
+/**
+ * Urls des API connues par le bot
+ */
 public enum ApiUrls {
+	
+	/**
+	 * Utilisé par les "Analyzer" pour former l'URL à appeler
+	 */
 	URITOCALL,
 	
 	demande ("http://localhost:"+EnvVar.CONTRACTPORT+"/insurance/contract/"),

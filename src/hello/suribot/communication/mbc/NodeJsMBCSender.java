@@ -3,13 +3,13 @@ package hello.suribot.communication.mbc;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import hello.suribot.interfaces.IHttpSender;
+import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.utils.EnvVar;
 
 /**
  * Classe controleur permettant d'envoyer des messages au programme Node.js de communication à MBC
  */
-public class NodeJsMBCSender implements IHttpSender{
+public class NodeJsMBCSender extends AbstractHttpSender{
 	
 	public void sendMessage(JSONObject json, String message){
 		try {

@@ -2,20 +2,23 @@ package hello.suribot.analyze;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.contracts.ContractAnalyzer;
-import hello.suribot.analyze.jsonmemory.JSonMemory;
-import hello.suribot.communication.ai.AiController;
+import hello.suribot.analyze.jsonmemory.JSONMemory;
+import hello.suribot.communication.ai.keys.RecastKeys;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.mbc.NodeJsMBCSender;
-import hello.suribot.interfaces.IJsonDecoder;
 import hello.suribot.response.ResponseGenerator;
 
-public class IntentsAnalyzer implements IJsonDecoder{
+/**
+ * Classe d'analyse des données fournies par un moteur d'intelligence (qui a analysé la demande d'un utilisateur), 
+ * dans le but de fournir une réponse adaptée à la demande de l'utilisateur (par exemple: des informations bancaires, d'assurance, etc...).
+ */
+public class IntentsAnalyzer{
 	
 	private NodeJsMBCSender nextToCall;
 	
@@ -34,20 +37,31 @@ public class IntentsAnalyzer implements IJsonDecoder{
 	}
 
 
-	public void analyzeRecastIntents(JSONObject mbc_json, JSONObject recastJson, String idUser, boolean firstTraitement) {
+	/**
+	 * Cette méthode analyse les données fournies par un moteur d'intelligence (qui a analysé la demande d'un utilisateur), 
+	 * et permet la production d'une réponse adaptée à la demande utilisateur.
+	 * @param mbc_json
+	 * @param recastJson
+	 * @param idUser
+	 * @param firstTraitement
+	 */
+	public void analyzeIntents(JSONObject mbc_json, JSONObject recastJson, String idUser, boolean firstTraitement) {
 		
 		String contexte = null;
 		JSONObject entities = null;
 		boolean isChoice = false;
 		try{
 			
-			if(firstTraitement) contexte = AiController.getContext(recastJson);
-			else contexte = recastJson.getString(JSonMemory.CONTEXTE);
+			if(firstTraitement){
+				contexte = getContext(recastJson);
+				entities = getEntities(recastJson);
+			} else {
+				contexte = recastJson.getString(JSONMemory.CONTEXTE);
+				entities = recastJson.getJSONObject(JSONMemory.ENTITIES);
+			}
+			
 			String responseToMBC = "";
 			boolean demandeComprise = false;
-			
-			if(firstTraitement) entities = AiController.getEntities(recastJson);
-			else entities = recastJson.getJSONObject(JSonMemory.ENTITIES);
 			
 			if(contexte != null && contexte.equals(CONTRAT)){
 				
@@ -56,11 +70,11 @@ public class IntentsAnalyzer implements IJsonDecoder{
 
 				JSONObject js = analyzer.analyze(entities, idUser);
 				if(js.getBoolean(SUCCESS)){
-					JSonMemory.removeLastEntities(idUser);
+					JSONMemory.removeLastEntities(idUser);
 					String rep;
 					
 					try {
-						rep = apicontroller.sendGet(js.getString(ApiUrls.URITOCALL.name()));
+						rep = apicontroller.send(js.getString(ApiUrls.URITOCALL.name()));
 					} catch (Exception e) {
 						rep = null;
 					}
@@ -88,13 +102,13 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			//On a pas réussi à traiter la demande l'utilisateur, on essaye de la compléter avec l'ancienne demande
 			if(!demandeComprise){
 				if(firstTraitement){
-					String stringLastIntent = JSonMemory.getLastEntities(idUser);
+					String stringLastIntent = JSONMemory.getLastEntities(idUser);
 					if(stringLastIntent==null || stringLastIntent.isEmpty()){
 						// Demande incomprise et il n'y a pas d'ancienne demande en attente, 
 						// donc on arrete le traitement  et envoie une erreur a SS5
-						recastJson = AiController.getEntities(recastJson);
-						JSonMemory.putLastEntities(idUser, recastJson.toString());
-						if(contexte != null && !contexte.isEmpty()) JSonMemory.putContext(idUser, contexte);
+						recastJson = getEntities(recastJson);
+						JSONMemory.putLastEntities(idUser, recastJson.toString());
+						if(contexte != null && !contexte.isEmpty()) JSONMemory.putContext(idUser, contexte);
 						if(responseToMBC.isEmpty()){
 							nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
 							return;
@@ -106,16 +120,16 @@ public class IntentsAnalyzer implements IJsonDecoder{
 					//On essaye de completer l'ancienne demande présente avec les nouvelles données reçues
 					JSONObject lastIntent = new JSONObject(stringLastIntent);
 					JSONObject newRequest = generateNewRequestWithLastEntities(recastJson, lastIntent);
-					JSonMemory.removeLastEntities(idUser);
-					if(contexte != null && !contexte.isEmpty()) newRequest.put(JSonMemory.CONTEXTE, contexte);
-					analyzeRecastIntents(mbc_json, newRequest, idUser, false);
+					JSONMemory.removeLastEntities(idUser);
+					if(contexte != null && !contexte.isEmpty()) newRequest.put(JSONMemory.CONTEXTE, contexte);
+					analyzeIntents(mbc_json, newRequest, idUser, false);
 				}else{
 					// Ce n'est pas le premier traitement de la demande de l'utilisateur
 					
 					// Demande incomprise et il n'y a pas d'ancienne demande en attente, 
 					// donc on arrete le traitement  et envoie une erreur a SS5
-					JSonMemory.putLastEntities(idUser, entities.toString());
-					JSonMemory.putContext(idUser, contexte);
+					JSONMemory.putLastEntities(idUser, entities.toString());
+					JSONMemory.putContext(idUser, contexte);
 					if(responseToMBC.isEmpty()) responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 					nextToCall.sendMessage(mbc_json, responseToMBC);
 					return;
@@ -123,12 +137,12 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			} else { // demande comprise
 				if(firstTraitement && isChoice){
 					//si la demande est un choix on stocke la demande pour y ajouter eventuellement 
-					entities = AiController.getEntities(recastJson);
-					if(entities!=null) JSonMemory.putLastEntities(idUser, entities.toString());
-					JSonMemory.putContext(idUser, contexte);
+					entities = getEntities(recastJson);
+					if(entities!=null) JSONMemory.putLastEntities(idUser, entities.toString());
+					JSONMemory.putContext(idUser, contexte);
 				}else{
-					JSonMemory.removeLastEntities(idUser);
-					JSonMemory.removeLastContexte(idUser);
+					JSONMemory.removeLastEntities(idUser);
+					JSONMemory.removeLastContext(idUser);
 				}
 					
 				if(responseToMBC.isEmpty()){
@@ -141,45 +155,75 @@ public class IntentsAnalyzer implements IJsonDecoder{
 			if(firstTraitement){
 				//Il y a eu une exception lors de la lecture de la recuperation du contexte,
 				//on essaye de completer une ancienne demande avec les nouvelles données
-				String stringLastEntities = JSonMemory.getLastEntities(idUser);
-				if(stringLastEntities==null||stringLastEntities.isEmpty()){
+				String stringLastEntities = JSONMemory.getLastEntities(idUser);
+				if(stringLastEntities==null || stringLastEntities.isEmpty()){
 					//Demande incomprise et il n'y a pas d'ancienne demande en attente
 					//donc on arrete le traitement  et envoie une erreur a SS5
-					JSonMemory.putLastEntities(idUser, recastJson.toString());
+					JSONMemory.putLastEntities(idUser, recastJson.toString());
 					String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 					nextToCall.sendMessage(mbc_json, responseToMBC);
 					return;
 				}
 				JSONObject lastEntities = new JSONObject(stringLastEntities);
 				JSONObject newRequest = generateNewRequestWithLastEntities(recastJson, lastEntities);
-				JSonMemory.removeLastEntities(idUser);
-				analyzeRecastIntents(mbc_json, newRequest, idUser, false);
+				JSONMemory.removeLastEntities(idUser);
+				analyzeIntents(mbc_json, newRequest, idUser, false);
 			}else{
 				//Demande incomprise et il n'y a pas d'ancienne demande en attente
 				//donc on arrete le traitement  et envoie une erreur a SS5
-				if(entities != null) JSonMemory.putLastEntities(idUser, entities.toString());
-				JSonMemory.putContext(idUser, contexte);
+				if(entities != null) JSONMemory.putLastEntities(idUser, entities.toString());
+				JSONMemory.putContext(idUser, contexte);
 				String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 				nextToCall.sendMessage(mbc_json, responseToMBC);
 			}
 		}
 	}
 	
-
-	private static JSONObject generateNewRequestWithLastEntities(JSONObject newDemande, JSONObject lastDemande){
+	/**
+	 * Forme une nouvelle demande en combinant la précédente (si existante dans les fichiers ".json", voir {@link JSONMemory}) 
+	 * et la nouvelle
+	 * @param newDemande
+	 * @param lastEntities
+	 * @return
+	 */
+	private static JSONObject generateNewRequestWithLastEntities(JSONObject newDemande, JSONObject lastEntities){
 		try{
-			newDemande = AiController.getEntities(newDemande);
+			newDemande = getEntities(newDemande);
 		}catch(JSONException e){
-			newDemande = newDemande.getJSONObject(JSonMemory.CONTEXTE);
+			return lastEntities;
 		}
-		Set<String> keys = newDemande.keySet();
-		for(String key: keys){
-			//on insere les nouvelle données de la demande à la derniere demande incomprises
-			//spour essayer de la completer
-			lastDemande.put(key, newDemande.get(key));
+		for(String key: newDemande.keySet()){
+			//on insere les nouvelles données de la demande à la derniere demande incomprise
+			//pour essayer de la completer
+			lastEntities.put(key, newDemande.get(key));
 		}
-		JSONObject js = new JSONObject(lastDemande.toString());
-		lastDemande.put(JSonMemory.ENTITIES, js);
-		return lastDemande;
+		JSONObject js = new JSONObject(lastEntities.toString());
+		lastEntities.put(JSONMemory.ENTITIES, js);
+		return lastEntities;
+	}
+	
+	private static String getContext(JSONObject recastJson){
+		JSONObject jsonResult = null;
+		if(recastJson != null){
+			try{
+				jsonResult = new JSONObject();
+				jsonResult = (JSONObject) recastJson.get(RecastKeys.RESULTS);
+				JSONArray ja = (JSONArray) jsonResult.get(RecastKeys.INTENTS);
+				if(ja != null) return ja.getJSONObject(0).getString(RecastKeys.SLUG);
+			}catch(JSONException e){
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	private static JSONObject getEntities(JSONObject recastJson){
+		JSONObject jsonResult = new JSONObject();
+		if(recastJson != null){
+			jsonResult = (JSONObject) recastJson.get(RecastKeys.RESULTS);
+			jsonResult = (JSONObject) jsonResult.get(RecastKeys.ENTITIES);
+			return jsonResult;
+		}
+		return null;
 	}
 }
