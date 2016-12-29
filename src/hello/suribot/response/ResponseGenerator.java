@@ -20,12 +20,12 @@ public class ResponseGenerator{
 	ResourceBundle messages;
 	
 	public ResponseGenerator() {
-		messages = ResourceBundle.getBundle("hello.suribot.response.message.MessagesBundle");
+		messages = ResourceBundle.getBundle("message.MessagesBundle");
 	}
 	
 	public ResponseGenerator(String langue) {
 		Locale locale = new Locale(langue,"");
-		messages = ResourceBundle.getBundle("hello.suribot.response.message.MessagesBundle", locale);
+		messages = ResourceBundle.getBundle("message.MessagesBundle", locale);
 	}
 
 	public String generateContractUnderstoodMessage(ContractParams method, boolean choice, String params) {
