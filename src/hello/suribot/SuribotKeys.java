@@ -1,4 +1,4 @@
-package hello.suribot.communication.ai.keys;
+package hello.suribot;
 
 /**
  * Toutes les clefs JSON du bot

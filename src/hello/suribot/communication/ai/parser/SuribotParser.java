@@ -1,4 +1,4 @@
-package hello.suribot.communication.ai;
+package hello.suribot.communication.ai.parser;
 
 import java.util.Map;
 
@@ -8,8 +8,7 @@ import org.json.JSONObject;
 import com.google.gson.JsonElement;
 
 import ai.api.model.AIResponse;
-import hello.suribot.communication.ai.keys.RecastKeys;
-import hello.suribot.communication.ai.keys.SuribotKeys;
+import hello.suribot.SuribotKeys;
 
 /**
  * Ce Parser permet la transformation du JSON provenant d'une intelligence externe (API.ai, Recast, ...)

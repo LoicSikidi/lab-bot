@@ -1,10 +1,13 @@
 package hello.suribot.response;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ResourceBundle;
 
 import hello.suribot.analyze.contracts.ContractParams;
 import hello.suribot.response.contracts.ContractResponseGenerator;
@@ -14,13 +17,22 @@ import hello.suribot.response.contracts.ContractResponseGenerator;
  */
 public class ResponseGenerator{
 	
-	public ResponseGenerator() {}
+	ResourceBundle messages;
+	
+	public ResponseGenerator() {
+		messages = ResourceBundle.getBundle("hello.suribot.response.message.MessagesBundle");
+	}
+	
+	public ResponseGenerator(String langue) {
+		Locale locale = new Locale(langue,"");
+		messages = ResourceBundle.getBundle("hello.suribot.response.message.MessagesBundle", locale);
+	}
 
 	public String generateContractUnderstoodMessage(ContractParams method, boolean choice, String params) {
 		if(params==null || params.isEmpty()) return generateNotUnderstoodMessage();
 		
 		if(method != null){
-			ContractResponseGenerator contract_gen = new ContractResponseGenerator();
+			ContractResponseGenerator contract_gen = new ContractResponseGenerator(messages);
 			try {
 				switch (method) {
 				case risk:
@@ -55,25 +67,23 @@ public class ResponseGenerator{
 	}
 	
 	private String generateInternalErrorMessage() {
-		return "Problème interne au bot. \n\n"
-				+ "Nous sommes actuellement en train de travailler dessus.\n\n"
-				+ "Veuillez nous excuser pour la gêne occasionnée.";
+		return messages.getString("internalErrorMessage");
 	}
 
 	public String generateNotUnderstoodMessage() {
-		return "Veuillez reformuler votre question";
+		return messages.getString("notUnderstoodMessage");
 	}
 	
 	public String generateMessageButMissOneArg(String argName) {
 		if(argName==null || argName.isEmpty()) return generateNotUnderstoodMessage();
-		return "Il manque un argument à votre demande : "+argName;
+		return messages.getString("missOneArg")+argName;
 	}
 	
 	public String generateMessageButMissArgs(List<String> args) {
 		if(args==null || args.size()==0) return generateNotUnderstoodMessage();
 		else if (args.size()==1) return generateMessageButMissOneArg(args.get(0));
 		
-		String response = "Veuillez préciser si votre demande concerne : \n";
+		String response = messages.getString("missArgs");
 		for(String arg : args){
 			if(arg!=null && !arg.isEmpty()) response+=arg+"\n";
 		}

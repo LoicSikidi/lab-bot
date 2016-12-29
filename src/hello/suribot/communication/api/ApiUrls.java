@@ -1,4 +1,4 @@
-package hello.suribot.analyze;
+package hello.suribot.communication.api;
 
 import hello.suribot.utils.EnvVar;
 

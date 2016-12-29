@@ -53,6 +53,11 @@
 		    <artifactId>libai</artifactId>
 		    <version>1.2.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.detectlanguage</groupId>
+		    <artifactId>detectlanguage</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
 
 		<!-- Sprint 1 -->
 		<dependency>

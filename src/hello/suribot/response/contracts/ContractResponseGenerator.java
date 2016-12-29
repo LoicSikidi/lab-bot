@@ -1,6 +1,7 @@
 package hello.suribot.response.contracts;
 
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import org.json.JSONArray;
@@ -12,16 +13,22 @@ import org.json.JSONObject;
  */
 public class ContractResponseGenerator {
 	
-	public String generateBillingsChoiceResponse(String params) {
-		String response = "De quel paiement parlez-vous ? : \n\n";
-		for(String str : extractBillingsChoice(params)){
+	ResourceBundle messages;
+	
+	public ContractResponseGenerator(ResourceBundle messages){
+		this.messages = messages;
+	}
+	
+	public String generateBillingsChoiceResponse(String param) {
+		String response = messages.getString("billingsChoiceResponse");
+		for(String str : extractBillingsChoice(param)){
 			response += str+"\n\n";
 		}
 		return response;
 	}
 
 	public String generateBillingInfosResponse(String params) {
-		String response = "Voici les informations sur le paiement : \n\n";
+		String response = messages.getString("billingInfosResponse");
 		for(String str : extractBillingInfos(params)){
 			response += str+"\n\n";
 		}
@@ -29,7 +36,7 @@ public class ContractResponseGenerator {
 	}
 	
 	public String generatePartyRolesChoiceResponse(String params) {
-		String response = "De quel personne parlez-vous ? : \n\n";
+		String response = messages.getString("partyRolesChoiceResponse");
 		for(String str : extractPartyRolesChoice(params)){
 			response += str+"\n\n";
 		}
@@ -37,7 +44,7 @@ public class ContractResponseGenerator {
 	}
 
 	public String generatePartyRoleInfosResponse(String params) {
-		String response = "Voici les informations sur la personne : \n\n";
+		String response = messages.getString("partyRoleInfosResponse");
 		for(String str : extractPartyRoleInfos(params)){
 			response += str+"\n\n";
 		}
@@ -45,7 +52,7 @@ public class ContractResponseGenerator {
 	}
 	
 	public String generateRisksChoiceResponse(String params) {
-		String response = "De quel couverture parlez-vous ? : \n\n";
+		String response = messages.getString("risksChoiceResponse");
 		for(String str : extractRisksChoice(params)){
 			response += str+"\n\n";
 		}
@@ -53,7 +60,7 @@ public class ContractResponseGenerator {
 	}
 	
 	public String generateRisksInfosResponse(String params) {
-		String response = "Voici les informations sur la couverture de l'objet : \n\n";
+		String response = messages.getString("risksInfosResponse");
 		for(String str : extractRisksInfos(params)){
 			response += str+"\n\n";
 		}
@@ -72,7 +79,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "prélèvement ");
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", messages.getString("billingsChoice"));
 		}
 		
 		return results;
@@ -109,7 +116,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "personne ");
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", messages.getString("partyRolesChoice"));
 		}
 		
 		return results;
@@ -161,7 +168,7 @@ public class ContractResponseGenerator {
 		String[] results = new String[array.length()];
 		
 		for(int i = 0; i<array.length(); i++){
-			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", "objet ");
+			results[i] = array.getJSONObject(i).get("href").toString().split("/")[7].replace("ID-", messages.getString("risksChoice"));
 		}
 		
 		return results;

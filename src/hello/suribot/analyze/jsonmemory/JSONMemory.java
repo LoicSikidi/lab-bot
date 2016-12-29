@@ -29,6 +29,7 @@ public class JSONMemory {
 	public static final String LASTNAME = "lastname";
 	public static final String ENTITIES = "entities";
 	public static final String CONTEXTE = "contexte";
+	public static final String LANGUAGE = "language";
 
 	////////////////// GETTERS /////////////////////////
 	public static String getIdContrat(String idUser){
@@ -45,6 +46,10 @@ public class JSONMemory {
 
 	public static String getLastEntities(String idUser) {
 		return getValueFromJson(DIR+idUser+EXTENSION_FILE, ENTITIES);
+	}
+	
+	public static String getLanguage(String idUser) {
+		return getValueFromJson(DIR+idUser+EXTENSION_FILE, LANGUAGE);
 	}
 
 	///////////////// SETTERS  ///////////////////////////
@@ -67,6 +72,10 @@ public class JSONMemory {
 
 	public static void putIdContrat(String idUser, String idContrat){
 		putValueInJson(idUser, CONTRACT, idContrat);
+	}
+	
+	public static void putLanguage(String idUser, String language){
+		putValueInJson(idUser, CONTRACT, language);
 	}
 
 	///////////////// REMOVE  ///////////////////////////
@@ -219,6 +228,7 @@ public class JSONMemory {
 		nothing.put(FIRSTNAME, null);
 		nothing.put(LASTNAME, null);
 		nothing.put(ENTITIES, null);
+		nothing.put(LANGUAGE, null);
 		putValuesInJson(idUser, nothing);
 	}
 

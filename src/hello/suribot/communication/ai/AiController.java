@@ -11,7 +11,9 @@ import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.analyze.IntentsAnalyzer;
+import hello.suribot.communication.ai.parser.SuribotParser;
 import hello.suribot.utils.EnvVar;
+import com.detectlanguage.DetectLanguage;
 
 /**
  * Classe controleur permettant de transmettre des messages utilisateur à un moteur d'intelligence (Recast.ai, API.ai, ...),
@@ -33,12 +35,15 @@ public class AiController extends AbstractHttpSender{
 	 */
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
+			//DetectLanguage.apiKey = "DETECTLANGUE TOKEN";
+			//String language = DetectLanguage.simpleDetect(message);
+			String language = "fr";
 			JSONObject intents = null;
  			if(message.toLowerCase().contains("api")){ // call API.ai
-				AIResponse response = callApiAi(message, EnvVar.TOKENAPIAI, "fr");
+				AIResponse response = callApiAi(message, EnvVar.TOKENAPIAI, language);
 				intents = new SuribotParser().parseApiAi(response);
 			} else { // call Recast.ai
-				intents = callRecast(message, EnvVar.TOKENRECAST, "fr");
+				intents = callRecast(message, EnvVar.TOKENRECAST, language);
 				intents = new SuribotParser().parseRecast(intents);
 			}
 			nextStep.analyzeIntents(json, intents, idUser, true);

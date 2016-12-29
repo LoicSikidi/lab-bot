@@ -7,11 +7,10 @@ import java.util.Set;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import hello.suribot.analyze.ApiUrls;
+import hello.suribot.SuribotKeys;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
-import hello.suribot.communication.ai.keys.RecastKeys;
-import hello.suribot.communication.ai.keys.SuribotKeys;
+import hello.suribot.communication.api.ApiUrls;
 
 /**
  * Classe d'analyse des intents dans le contexte des "contrats"
@@ -29,6 +28,7 @@ public class ContractAnalyzer {
 	private static final String PAIEMENT = "prelevement";
 	private static final String COMPLEM_PAIEMENT = "prelevement-id";
 	private static final String CONTRATID = "contrat-id";
+	private static final String NOMBRE = "nombre";
 
 	public ContractAnalyzer() {}
 
@@ -151,7 +151,13 @@ public class ContractAnalyzer {
 					break;
 				}
 				if(toApply != null){
-					return entities.getJSONArray(toApply).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+					try{
+						//On essaye de récupérer le complement bien formulé (objet {number}, prelevement {number})
+						return entities.getJSONArray(toApply).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+					}catch(JSONException e){
+						//Si le complément n'est pas formulé directement on regarde si l'utilisateur n'a pas entré qu'un numéro
+						return entities.getJSONArray(NOMBRE).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+					}
 				}
 			}catch(JSONException e){}
 		}
@@ -159,6 +165,6 @@ public class ContractAnalyzer {
 	}
 
 	private String getContractId(JSONObject entities) throws JSONException, ClassCastException{
-		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(RecastKeys.VALUES).replaceAll("[^0-9]+", "");
+		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
 	}
 }

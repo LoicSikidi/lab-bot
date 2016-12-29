@@ -7,10 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import hello.suribot.SuribotKeys;
 import hello.suribot.analyze.contracts.ContractAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
-import hello.suribot.communication.ai.keys.RecastKeys;
 import hello.suribot.communication.api.APIController;
+import hello.suribot.communication.api.ApiUrls;
 import hello.suribot.communication.mbc.NodeJsMBCSender;
 import hello.suribot.response.ResponseGenerator;
 
@@ -46,8 +47,8 @@ public class IntentsAnalyzer{
 	 * @param firstTraitement
 	 */
 	public void analyzeIntents(JSONObject mbc_json, JSONObject recastJson, String idUser, boolean firstTraitement) {
-		
 		String contexte = null;
+		String language = null;
 		JSONObject entities = null;
 		boolean isChoice = false;
 		try{
@@ -55,11 +56,16 @@ public class IntentsAnalyzer{
 			if(firstTraitement){
 				contexte = getContext(recastJson);
 				entities = getEntities(recastJson);
+				language = getLanguage(recastJson);
 			} else {
 				contexte = recastJson.getString(JSONMemory.CONTEXTE);
 				entities = recastJson.getJSONObject(JSONMemory.ENTITIES);
+				language = recastJson.getString(JSONMemory.LANGUAGE);
 			}
 			
+			//Par défaut la langue du bot est le français, si la langue détectée n'est pas le français alors 
+			//on charge un autre fichier de properties.
+			if(! language.equals("fr")) this.responsegenerator = new ResponseGenerator(language);
 			String responseToMBC = "";
 			boolean demandeComprise = false;
 			
@@ -187,18 +193,22 @@ public class IntentsAnalyzer{
 	 * @return
 	 */
 	private static JSONObject generateNewRequestWithLastEntities(JSONObject newDemande, JSONObject lastEntities){
+		String langue = null;
 		try{
+			langue = getLanguage(newDemande);
 			newDemande = getEntities(newDemande);
 		}catch(JSONException e){
 			return lastEntities;
 		}
+		JSONObject js = new JSONObject(lastEntities.toString());
 		for(String key: newDemande.keySet()){
 			//on insere les nouvelles données de la demande à la derniere demande incomprise
 			//pour essayer de la completer
-			lastEntities.put(key, newDemande.get(key));
+			js.put(key, newDemande.get(key));
 		}
-		JSONObject js = new JSONObject(lastEntities.toString());
+		lastEntities = new JSONObject();
 		lastEntities.put(JSONMemory.ENTITIES, js);
+		lastEntities.put(JSONMemory.LANGUAGE, langue);
 		return lastEntities;
 	}
 	
@@ -207,9 +217,9 @@ public class IntentsAnalyzer{
 		if(recastJson != null){
 			try{
 				jsonResult = new JSONObject();
-				jsonResult = (JSONObject) recastJson.get(RecastKeys.RESULTS);
-				JSONArray ja = (JSONArray) jsonResult.get(RecastKeys.INTENTS);
-				if(ja != null) return ja.getJSONObject(0).getString(RecastKeys.SLUG);
+				jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
+				JSONArray ja = (JSONArray) jsonResult.get(SuribotKeys.INTENTS);
+				if(ja != null) return ja.getJSONObject(0).getString(SuribotKeys.SLUG);
 			}catch(JSONException e){
 				return null;
 			}
@@ -220,9 +230,18 @@ public class IntentsAnalyzer{
 	private static JSONObject getEntities(JSONObject recastJson){
 		JSONObject jsonResult = new JSONObject();
 		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get(RecastKeys.RESULTS);
-			jsonResult = (JSONObject) jsonResult.get(RecastKeys.ENTITIES);
+			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
+			jsonResult = (JSONObject) jsonResult.get(SuribotKeys.ENTITIES);
 			return jsonResult;
+		}
+		return null;
+	}
+	
+	private static String getLanguage(JSONObject recastJson){
+		JSONObject jsonResult = new JSONObject();
+		if(recastJson != null){
+			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
+			return jsonResult.getString(SuribotKeys.LANGUAGE);
 		}
 		return null;
 	}
