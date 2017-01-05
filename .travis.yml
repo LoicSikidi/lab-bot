@@ -16,5 +16,5 @@ after_success:
 - sshpass -p "$password" scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   target/lab-bot-1.0.jar travis@$IP:/home/travis
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP java -jar -Dserver.port=$PORT
-  lab-bot-1.0.jar 
+  lab-bot-1.0.jar &
 - sshpass -p "$password" ssh -o StrictHostKeyChecking=no travis@$IP cd
