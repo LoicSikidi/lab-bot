@@ -26,7 +26,7 @@ public class ResponseGenerator implements IResponseGenerator{
 	public static final String bundleFile = "message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
-		messages = ResourceBundle.getBundle(bundleFile);
+		messages = ResourceBundle.getBundle(bundleFile, Locale.FRANCE);
 	}
 	
 	public ResponseGenerator(String langue) {
