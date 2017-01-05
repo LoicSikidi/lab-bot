@@ -24,14 +24,36 @@ public class ResponseGenerator implements IResponseGenerator{
 
 	/** public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
 	public static final String bundleFile = "message.MessagesBundle"; 
+	public static final String bundleFile2 = "MessagesBundle"; 
+	public static final String bundleFile3 = "hello.suribot.communication.recastConnector.message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
-		messages = ResourceBundle.getBundle(bundleFile);
+		try {
+			messages = ResourceBundle.getBundle(bundleFile);
+		} catch (Exception e){
+			System.out.println("\n\n\n=============Exception1 ========\n\n");
+			try {
+				messages = ResourceBundle.getBundle(bundleFile2);
+			} catch (Exception e2){
+				System.out.println("\n\n\n=============Exception2 ========\n\n");
+				messages = ResourceBundle.getBundle(bundleFile3);
+			}
+		}
 	}
 	
 	public ResponseGenerator(String langue) {
 		Locale locale = new Locale(langue);
-		messages = ResourceBundle.getBundle(bundleFile, locale);
+		try {
+			messages = ResourceBundle.getBundle(bundleFile, locale);
+		} catch (Exception e){
+			System.out.println("\n\n\n=============Exception1 ========\n\n");
+			try {
+				messages = ResourceBundle.getBundle(bundleFile2, locale);
+			} catch (Exception e2){
+				System.out.println("\n\n\n=============Exception2 ========\n\n");
+				messages = ResourceBundle.getBundle(bundleFile3, locale);
+			}
+		}
 	}
 
 	/* (non-Javadoc)
