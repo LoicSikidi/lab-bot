@@ -18,7 +18,7 @@ public class Application {
     	for(EnvVar var : EnvVar.values()){
     		System.out.println(var + " : "+ var.getValue());
     		if(var.getValue()==null){
-    			System.err.println("Check your environment var "+var.toString()+"...");
+    			System.err.println("Check your environment var "+var.toString()+"... ");
     			System.exit(0);
     		}
     	}
