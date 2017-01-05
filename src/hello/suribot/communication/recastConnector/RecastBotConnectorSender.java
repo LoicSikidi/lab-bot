@@ -1,4 +1,4 @@
-﻿package hello.suribot.communication.recastConnector;
+package hello.suribot.communication.recastConnector;
 
 import java.io.BufferedReader;
 import java.io.IOException;
