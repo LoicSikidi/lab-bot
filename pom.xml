@@ -73,7 +73,7 @@
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/hello/suribot/response/message</directory>
+				<directory>resources</directory>
 			</resource>
 		</resources>
 		<plugins>

@@ -24,47 +24,14 @@ public class ResponseGenerator implements IResponseGenerator{
 
 	/** public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
 	public static final String bundleFile = "message.MessagesBundle"; 
-	public static final String bundleFile2 = "MessagesBundle"; 
-	public static final String bundleFile3 = "hello.suribot.response.message.MessagesBundle"; 
-	public static final String bundleFile4 = "src.hello.suribot.response.message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
-		try {
-			messages = ResourceBundle.getBundle(bundleFile);
-		} catch (Exception e){
-			System.out.println("\n\n\n=============Exception1 ======== "+e+"\n");
-			try {
-				messages = ResourceBundle.getBundle(bundleFile2);
-			} catch (Exception e2){
-				System.out.println("\n\n\n=============Exception2 ========"+e2+"\n");
-				try {
-					messages = ResourceBundle.getBundle(bundleFile3);
-				} catch (Exception e3){
-					System.out.println("\n\n\n=============Exception3 ========"+e3+"\n");
-					messages = ResourceBundle.getBundle(bundleFile4);
-				}
-			}
-		}
+		messages = ResourceBundle.getBundle(bundleFile);
 	}
 	
 	public ResponseGenerator(String langue) {
 		Locale locale = new Locale(langue);
-		try {
-			messages = ResourceBundle.getBundle(bundleFile, locale);
-		} catch (Exception e){
-			System.out.println("\n\n\n=============Exception1 ========\n\n");
-			try {
-				messages = ResourceBundle.getBundle(bundleFile2, locale);
-			} catch (Exception e2){
-				System.out.println("\n\n\n=============Exception2 ========\n\n");
-				try {
-					messages = ResourceBundle.getBundle(bundleFile3, locale);
-				} catch (Exception e3){
-					System.out.println("\n\n\n=============Exception3 ========\n\n");
-					messages = ResourceBundle.getBundle(bundleFile4, locale);
-				}
-			}
-		}
+		messages = ResourceBundle.getBundle(bundleFile, locale);
 	}
 
 	/* (non-Javadoc)
