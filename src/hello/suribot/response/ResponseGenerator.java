@@ -25,8 +25,8 @@ public class ResponseGenerator implements IResponseGenerator{
 	/** public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
 	public static final String bundleFile = "message.MessagesBundle"; 
 	public static final String bundleFile2 = "MessagesBundle"; 
-	public static final String bundleFile3 = "hello.suribot.communication.response.message.MessagesBundle"; 
-	public static final String bundleFile4 = "src.hello.suribot.communication.response.message.MessagesBundle"; 
+	public static final String bundleFile3 = "hello.suribot.response.message.MessagesBundle"; 
+	public static final String bundleFile4 = "src.hello.suribot.response.message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
 		try {
