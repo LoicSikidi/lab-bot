@@ -14,19 +14,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.abstracts.AbstractHttpSender;
+import hello.suribot.interfaces.IRecastBotConnectorSender;
+import hello.suribot.utils.EnvVar;
 
 /**
- * Classe controleur permettant d'envoyer des messages au programme Node.js de communication à MBC
+ * Classe controleur permettant d'envoyer des messages à RBC (Recast Bot Connector)
  */
-public class SendMessageRecast extends AbstractHttpSender{
+public class RecastBotConnectorSender extends AbstractHttpSender implements IRecastBotConnectorSender{
 	
+	/* (non-Javadoc)
+	 * @see interfaces.IRecastBotConnectorSender#sendMessage(org.json.JSONObject, java.lang.String)
+	 */
+	@Override
 	public void sendMessage(JSONObject json, String message){
 		try {
 			String idConv = json.getJSONObject("message").getString("conversation");
 			callRecastBotConnector(message,idConv);
-			json.put("text", message);
 		} catch (JSONException e) {
-			json.put("text", "Demande incomprise");
 			try {
 				String idConv = json.getJSONObject("message").getString("conversation");
 				callRecastBotConnector("Demande incomprise",idConv);
@@ -40,6 +44,7 @@ public class SendMessageRecast extends AbstractHttpSender{
 		}
 	}
 	
+	//TODO: use AbstractHttpSender and extract tokens, parameters, ...
 	private static void callRecastBotConnector(String text, String idConv) throws JSONException{
         URL	obj;
         HttpsURLConnection	con = null;
@@ -50,16 +55,12 @@ public class SendMessageRecast extends AbstractHttpSender{
         String recastJson = "";
 
         String idConversation = idConv;
-        //TODO Remplacer les 3 valeurs par celles sur le site
-        String botId= "BOTID"; 
-        String userSlug = "UserSlug";
-        String token = "Token";
         try {
-        	obj = new URL("https://api-botconnector.recast.ai/users/"+userSlug+"/bots/"+botId+
+        	obj = new URL("https://api-botconnector.recast.ai/users/"+EnvVar.RBCSLUG.getValue()+"/bots/"+EnvVar.RBCBOTID.getValue()+
             		"/conversations/"+idConversation+"/messages/");
             con = (HttpsURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
-            con.setRequestProperty("Authorization", token);
+            con.setRequestProperty("Authorization", EnvVar.RBCTOKEN.getValue());
             con.setRequestProperty("Content-Type", "application/json");
             con.setDoOutput(true);
             text = URLEncoder.encode(text, "UTF-8");

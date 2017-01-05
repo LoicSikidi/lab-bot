@@ -1,13 +1,31 @@
 package hello.suribot.utils;
 
-public final class EnvVar {
+public enum EnvVar {
 	
-	public static final String APPID = System.getenv("APPID");
-	public static final String APPSECRET = System.getenv("APPSECRET");
-	public static final String BOTPORT = System.getenv("BOTPORT");
-	public static final String NODEJSPORT = System.getenv("NODEJSPORT");
-	public static final String CONTRACTPORT = System.getenv("CONTRACTPORT");
-	public static final String TOKENRECAST = System.getenv("TOKENRECAST");
-	public static final String TOKENAPIAI = System.getenv("TOKENAPIAI");
-
+//  OLD VAR ENV Microsoft Bot Connector
+//	APPID = System.getenv("APPID");
+//	APPSECRET = System.getenv("APPSECRET");
+	
+//  VAR ENV Recast Bot Connector
+	RBCSLUG,
+	RBCBOTID,
+	RBCTOKEN,
+	
+	BOTPORT,
+	CONTRACTPORT,
+	TOKENRECAST,
+	TOKENAPIAI;
+	
+	private String value;
+	
+	private EnvVar(){
+		try{
+			value = System.getenv(toString());
+		} catch (Exception e){
+			value = null;
+		}
+	}
+	
+	public String getValue(){ return value; }
+	
 }

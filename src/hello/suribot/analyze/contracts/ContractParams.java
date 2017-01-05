@@ -22,5 +22,5 @@ public enum ContractParams {
 	public String getChemin() {
 		return chemin;
 	}
-
+	
 }

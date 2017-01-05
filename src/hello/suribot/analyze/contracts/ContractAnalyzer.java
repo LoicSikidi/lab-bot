@@ -11,11 +11,12 @@ import hello.suribot.SuribotKeys;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
 import hello.suribot.communication.api.ApiUrls;
+import hello.suribot.response.MessagesResponses;
 
 /**
  * Classe d'analyse des intents dans le contexte des "contrats"
  */
-public class ContractAnalyzer {
+public class ContractAnalyzer implements IContractAnalyzer {
 
 	private ContractParams calledMethod;
 	private boolean choice;
@@ -32,16 +33,10 @@ public class ContractAnalyzer {
 
 	public ContractAnalyzer() {}
 
-	/**
-	 * Prend en paramètre des entities, les analyses, et retourne une instruction sous forme de
-	 * {@link JSONObject} (demande comprise ou non, url à éventuellement appeler, ...) 
-	 * Exemple 1 :{"risk":[{"confidence":0.91,"raw":"couvertures","value":"couvertures"}]}
-	 * Exemple 2 :{"prelevement-id":[{"confidence":0.39,"raw":"prélèvement 478855","value":"prélèvement 478855"}]}
-	 * Exemple 3 :{"role":[{"confidence":0.82,"raw":"role","value":"role"}]}
-	 * @param entities
-	 * @param idUser
-	 * @return
+	/* (non-Javadoc)
+	 * @see hello.suribot.analyze.contracts.IContractAnalyzer#analyze(org.json.JSONObject, java.lang.String)
 	 */
+	@Override
 	public JSONObject analyze(JSONObject entities, String idUser){
 		resetParams();
 		JSONObject jsonReturn = new JSONObject();
@@ -58,7 +53,7 @@ public class ContractAnalyzer {
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
 			jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
-			missingParams.add("votre identifiant de contrat"); // TODO: sortir les textes en dur
+			missingParams.add(MessagesResponses.idContratMissingResponse.toString());
 			jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 			return jsonReturn;
 
@@ -70,9 +65,9 @@ public class ContractAnalyzer {
 				//String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.METHOD.getName());
 				calledMethod = getMethodToCall(entities);
 				if(calledMethod==null){
-					missingParams.add("\n\nvos couvertures"); // TODO: sortir les textes en dur
-					missingParams.add("\n\nvos prélèvements");
-					missingParams.add("\n\nle rôle d'une personne");
+					missingParams.add(MessagesResponses.billingMissingResponse.toString());
+					missingParams.add(MessagesResponses.couvertureMissingResponse.toString());
+					missingParams.add(MessagesResponses.partyRoleMissingResponse.toString());
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 					return jsonReturn;
@@ -108,18 +103,18 @@ public class ContractAnalyzer {
 		choice = false;
 	}
 
-	/**
-	 * Retourne le nom de la méthode à appeler, detectée par l'appel de la méthode analyse.
-	 * @return calledMethod
+	/* (non-Javadoc)
+	 * @see hello.suribot.analyze.contracts.IContractAnalyzer#getCalledMethod()
 	 */
+	@Override
 	public ContractParams getCalledMethod() {
 		return calledMethod;
 	}
 
-	/**
-	 * Retourne vrai si l'appel à la méthode analyse détecte un choix à proposer à l'utilisateur
-	 * @return choice
+	/* (non-Javadoc)
+	 * @see hello.suribot.analyze.contracts.IContractAnalyzer#isChoice()
 	 */
+	@Override
 	public boolean isChoice() {
 		return choice;
 	}

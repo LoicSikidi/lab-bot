@@ -1,5 +1,6 @@
 package hello.suribot.analyze;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,43 +10,46 @@ import org.json.JSONObject;
 
 import hello.suribot.SuribotKeys;
 import hello.suribot.analyze.contracts.ContractAnalyzer;
+import hello.suribot.analyze.contracts.IContractAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.api.ApiUrls;
-import hello.suribot.communication.mbc.NodeJsMBCSender;
+import hello.suribot.communication.recastConnector.RecastBotConnectorSender;
+import hello.suribot.interfaces.IAPIController;
+import hello.suribot.interfaces.IIntentsAnalyzer;
+import hello.suribot.interfaces.IRecastBotConnectorSender;
+import hello.suribot.interfaces.IResponseGenerator;
+import hello.suribot.response.MessagesResponses;
 import hello.suribot.response.ResponseGenerator;
 
 /**
  * Classe d'analyse des données fournies par un moteur d'intelligence (qui a analysé la demande d'un utilisateur), 
  * dans le but de fournir une réponse adaptée à la demande de l'utilisateur (par exemple: des informations bancaires, d'assurance, etc...).
  */
-public class IntentsAnalyzer{
-	
-	private NodeJsMBCSender nextToCall;
-	
-	private ResponseGenerator responsegenerator;
-	private APIController apicontroller;
+public class IntentsAnalyzer implements IIntentsAnalyzer{
 	
 	public static final String SUCCESS = "success";
 	public static final String MISSINGPARAMS = "missingparams";
+	
 	public static final String CONTRAT = "contrat";
 	
-
+	private IRecastBotConnectorSender nextToCall;
+	
+	private IResponseGenerator responsegenerator;
+	private IAPIController apicontroller;
+	
+	
 	public IntentsAnalyzer() {
 		this.responsegenerator = new ResponseGenerator();
 		this.apicontroller = new APIController();
-		this.nextToCall = new NodeJsMBCSender();
+		this.nextToCall = new RecastBotConnectorSender();
 	}
 
 
-	/**
-	 * Cette méthode analyse les données fournies par un moteur d'intelligence (qui a analysé la demande d'un utilisateur), 
-	 * et permet la production d'une réponse adaptée à la demande utilisateur.
-	 * @param mbc_json
-	 * @param recastJson
-	 * @param idUser
-	 * @param firstTraitement
+	/* (non-Javadoc)
+	 * @see hello.suribot.analyze.IIntentsAnalyzer#analyzeIntents(org.json.JSONObject, org.json.JSONObject, java.lang.String, boolean)
 	 */
+	@Override
 	public void analyzeIntents(JSONObject mbc_json, JSONObject recastJson, String idUser, boolean firstTraitement) {
 		String contexte = null;
 		String language = null;
@@ -65,14 +69,14 @@ public class IntentsAnalyzer{
 			
 			//Par défaut la langue du bot est le français, si la langue détectée n'est pas le français alors 
 			//on charge un autre fichier de properties.
-			if(! language.equals("fr")) this.responsegenerator = new ResponseGenerator(language);
+			if( !language.equals("fr") ) this.responsegenerator = new ResponseGenerator(language);
 			String responseToMBC = "";
 			boolean demandeComprise = false;
 			
 			if(contexte != null && contexte.equals(CONTRAT)){
 				
 				//Traitement pour l'api lab-bot-api
-				ContractAnalyzer analyzer = new ContractAnalyzer();
+				IContractAnalyzer analyzer = new ContractAnalyzer();
 
 				JSONObject js = analyzer.analyze(entities, idUser);
 				if(js.getBoolean(SUCCESS)){
@@ -81,17 +85,22 @@ public class IntentsAnalyzer{
 					
 					try {
 						rep = apicontroller.send(js.getString(ApiUrls.URITOCALL.name()));
-					} catch (Exception e) {
+					} catch (IOException e) {
+						System.out.println("APIController : Message with url \""+js.getString(ApiUrls.URITOCALL.name())+"\" not send... ("+e+")");
 						rep = null;
 					}
 					isChoice=analyzer.isChoice();
-					responseToMBC = responsegenerator.generateContractUnderstoodMessage(analyzer.getCalledMethod(), isChoice, rep);
+					
+					if(rep == null  || rep.isEmpty()) responseToMBC = responsegenerator.generateInternalErrorMessage();
+					else responseToMBC = responsegenerator.generateUnderstoodMessage(CONTRAT, analyzer.getCalledMethod().toString(), isChoice, rep);
 					demandeComprise = true;
 					
 				}else if(js.has(MISSINGPARAMS)){
 					try {
-						List<String> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
-						js.getJSONArray(MISSINGPARAMS).toList().forEach(e -> missingParams.add(e.toString()));
+						List<MessagesResponses> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
+						for(Object oneMissingParam : js.getJSONArray(MISSINGPARAMS)){
+							missingParams.add(MessagesResponses.valueOf(oneMissingParam.toString()));
+						}
 						if(missingParams.size()==1){
 							responseToMBC = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));
 						} else if(missingParams.size()>1){

@@ -1,6 +1,7 @@
 package hello.suribot.abstracts;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -18,9 +19,10 @@ public abstract class AbstractHttpSender {
 	 * Send GET request and return response body
 	 * @param url
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	protected String sendGet(String url) throws Exception {
+	protected String sendGet(String url) throws IOException {
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -86,7 +88,7 @@ public abstract class AbstractHttpSender {
 
 		}else{  
 			//TODO: Log system ?
-			System.out.println(con.getResponseMessage());  
+			System.out.println("sendPost : "+con.getResponseMessage());  
 		}  
 
 		return response;

@@ -12,38 +12,37 @@ import ai.api.model.AIResponse;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.communication.ai.parser.SuribotParser;
+import hello.suribot.interfaces.IAiController;
+import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.utils.EnvVar;
-import com.detectlanguage.DetectLanguage;
 
 /**
  * Classe controleur permettant de transmettre des messages utilisateur à un moteur d'intelligence (Recast.ai, API.ai, ...),
  * et d'analyser la réponse obtenue.
  */
-public class AiController extends AbstractHttpSender{
+public class AiController extends AbstractHttpSender implements IAiController{
 
-	private IntentsAnalyzer nextStep;
+	private IIntentsAnalyzer nextStep;
 
 	public AiController() {
 		this.nextStep = new IntentsAnalyzer();
 	}
 
-	/**
-	 * Send message to Recast or API.ai, parse the response, and transfer it to {@link IntentsAnalyzer}
-	 * @param json 
-	 * @param message
-	 * @param idUser 
+	/* (non-Javadoc)
+	 * @see hello.suribot.communication.ai.IAiController#sendMessage(org.json.JSONObject, java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
-			//DetectLanguage.apiKey = "DETECTLANGUE TOKEN";
-			//String language = DetectLanguage.simpleDetect(message);
+//			DetectLanguage.apiKey = System.getenv("TOKEN_DETECTLANGUAGE"); TODO: Trouver une bonne API d'analyse détectant la langue
+//			String language = DetectLanguage.simpleDetect(message);
 			String language = "fr";
 			JSONObject intents = null;
  			if(message.toLowerCase().contains("api")){ // call API.ai
-				AIResponse response = callApiAi(message, EnvVar.TOKENAPIAI, language);
+				AIResponse response = callApiAi(message, EnvVar.TOKENAPIAI.getValue(), language);
 				intents = new SuribotParser().parseApiAi(response);
 			} else { // call Recast.ai
-				intents = callRecast(message, EnvVar.TOKENRECAST, language);
+				intents = callRecast(message, EnvVar.TOKENRECAST.getValue(), language);
 				intents = new SuribotParser().parseRecast(intents);
 			}
 			nextStep.analyzeIntents(json, intents, idUser, true);
