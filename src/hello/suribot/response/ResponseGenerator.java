@@ -32,15 +32,15 @@ public class ResponseGenerator implements IResponseGenerator{
 		try {
 			messages = ResourceBundle.getBundle(bundleFile);
 		} catch (Exception e){
-			System.out.println("\n\n\n=============Exception1 ========\n\n");
+			System.out.println("\n\n\n=============Exception1 ======== "+e+"\n");
 			try {
 				messages = ResourceBundle.getBundle(bundleFile2);
 			} catch (Exception e2){
-				System.out.println("\n\n\n=============Exception2 ========\n\n");
+				System.out.println("\n\n\n=============Exception2 ========"+e2+"\n");
 				try {
 					messages = ResourceBundle.getBundle(bundleFile3);
 				} catch (Exception e3){
-					System.out.println("\n\n\n=============Exception3 ========\n\n");
+					System.out.println("\n\n\n=============Exception3 ========"+e3+"\n");
 					messages = ResourceBundle.getBundle(bundleFile4);
 				}
 			}
