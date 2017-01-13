@@ -29,6 +29,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	private static final String PAIEMENT = "prelevement";
 	private static final String COMPLEM_PAIEMENT = "prelevement-id";
 	private static final String CONTRATID = "contrat-id";
+	private static final String RIB = "rib";
 	private static final String NOMBRE = "nombre";
 
 	public ContractAnalyzer() {}
@@ -80,7 +81,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 				if(complement != null){
 					if(quelleMethodeAppeler.equalsIgnoreCase(ContractParams.risk.toString())){
 						complement=(ContractParams.IDOBJ.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
-					} else {
+					} else if( !complement.isEmpty()){
 						complement = (ContractParams.IDBILLING.getChemin().replaceAll(ContractParams.IDREPLACE.getChemin(), complement));
 					}
 					uritoCall+=complement;
@@ -126,6 +127,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 			if(setKeyEntities.contains(ROLE) || setKeyEntities.contains(COMPLEM_ROLE)) return ContractParams.role;
 			if(setKeyEntities.contains(COUVERTURE) || setKeyEntities.contains(COMPLEM_COUVERTURE)) return ContractParams.risk;
 			if(setKeyEntities.contains(PAIEMENT) || setKeyEntities.contains(COMPLEM_PAIEMENT)) return ContractParams.prelevement;
+			if(setKeyEntities.contains(RIB)) return ContractParams.rib;
 		}
 		return null;
 	}
@@ -144,6 +146,8 @@ public class ContractAnalyzer implements IContractAnalyzer {
 				case PAIEMENT:
 					toApply = COMPLEM_PAIEMENT;
 					break;
+				case RIB:
+					return "";
 				}
 				if(toApply != null){
 					try{

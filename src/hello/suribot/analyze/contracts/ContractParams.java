@@ -8,6 +8,7 @@ public enum ContractParams {
 	risk ("risk/"),
 	prelevement ("billings/"),
 	role ("partyRoles/"),
+	rib ("rib/"),
 	
 	IDREPLACE ("YYYYYYY"),
 	IDOBJ ("ID-"+IDREPLACE.chemin+"/couverture"),

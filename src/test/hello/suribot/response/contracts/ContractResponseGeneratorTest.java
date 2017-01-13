@@ -29,8 +29,8 @@ public class ContractResponseGeneratorTest {
 		ResourceBundle messages = ResourceBundle.getBundle(ResponseGenerator.bundleFile);
 		ContractResponseGenerator generator = new ContractResponseGenerator(messages);
 		String s = "{   \"methode\": \"cheque\",   \"amount\": 542.97,   \"identifiant\": \"123987456\",   \"frequency\": \"hebdomadaire\",   \"next_date\": \"2017-11-10\" }";
-		assertEquals("[methode : cheque, amount : 542.97, identifiant : 123987456, frequency : hebdomadaire, next_date : 2017-11-10]", 
-				Arrays.toString(generator.extractBillingInfos(s)));
+		assertEquals("methode : cheque\namount : 542.97\nidentifiant : 123987456\nfrequency : hebdomadaire\nnext_date : 2017-11-10\n", 
+				(generator.extractBillingInfos(s).getMessage()));
 	}
 	
 	@Test
@@ -48,8 +48,8 @@ public class ContractResponseGeneratorTest {
 		ResourceBundle messages = ResourceBundle.getBundle(ResponseGenerator.bundleFile);
 		ContractResponseGenerator generator = new ContractResponseGenerator(messages);
 		String s = "{   \"end_date\": \"2016-12-25\",   \"person\": {     \"client_number\": \"7596055\",     \"birth_date\": \"1994-12-05\",     \"last_name\": \"dupuit\",     \"postal_code\": \"75005\",     \"first_name\": \"eric\"   },   \"identifiant\": \"eee787634\",   \"type\": \"owner\" }";
-		assertEquals("[end_date : 2016-12-25, identifiant : eee787634, type : owner, person_client_number : 7596055, person_birth_date : 1994-12-05, person_last_name : dupuit, person_postal_code : 75005, person_first_name : eric]", 
-				Arrays.toString(generator.extractPartyRoleInfos(s)));
+		assertEquals("end_date : 2016-12-25\nperson_client_number : 7596055\nperson_birth_date : 1994-12-05\nperson_last_name : dupuit\nperson_postal_code : 75005\nperson_first_name : eric\nidentifiant : eee787634\ntype : owner\n", 
+				generator.extractPartyRoleInfos(s).getMessage());
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class ContractResponseGeneratorTest {
 		ResourceBundle messages = ResourceBundle.getBundle(ResponseGenerator.bundleFile);
 		ContractResponseGenerator generator = new ContractResponseGenerator(messages);
 		String s = "{   \"incendie\": false,   \"vandalisme\": true,   \"inondation\": true }";
-		assertEquals("[incendie : false, vandalisme : true, inondation : true]", Arrays.toString(generator.extractRisksInfos(s)));
+		assertEquals("incendie : false\nvandalisme : true\ninondation : true\n", generator.extractRisksInfos(s).getMessage());
 	}
 	
 }

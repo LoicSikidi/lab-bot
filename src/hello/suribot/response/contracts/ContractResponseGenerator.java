@@ -41,6 +41,9 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		case prelevement:
 			if(choice) return generateChoiceResponse(MessagesResponses.billingsChoiceResponse, params);
 			return generateInfosResponse(MessagesResponses.billingInfosResponse, params);
+			
+		case rib: //TODO: Ajouter value key
+			return generateInfosResponse(MessagesResponses.ribInfosResponse, params);
 		
 		default:
 			throw new IllegalArgumentException(calledMethod + "not a "+ContractParams.class.getName()) ;
@@ -84,12 +87,11 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	 */
 	public Response generateInfosResponse(MessagesResponses key, String params) throws MissingResourceException {
 		if(key == null || params == null || params.isEmpty()) return null;
-		String response = messages.getString(key.toString());
+		String mess = messages.getString(key.toString());
 		
-		for(String str : extractInfos(key, params)){
-			response += str+"\n";
-		}
-		return new Response(response);
+		Response response = extractInfos(key, params);
+		response.addNewTextAtTheBegin(mess);
+		return response;
 	}
 
 	
@@ -130,7 +132,7 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	}
 	
 	
-	private String[] extractInfos(MessagesResponses key, String params) throws JSONException, MissingResourceException {
+	private Response extractInfos(MessagesResponses key, String params) throws JSONException, MissingResourceException {
 		if(key == null) return null;
 
 		switch (key) {
@@ -140,6 +142,8 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 			return extractPartyRoleInfos(params);
 		case risksInfosResponse:
 			return extractRisksInfos(params);
+		case ribInfosResponse:
+			return extractRibInfos(params);
 
 		default:
 			return null;
@@ -154,20 +158,16 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	 * "frequency": "hebdomadaire",  
 	 * "next_date": "2017-11-10" }
 	 */
-	public String[] extractBillingInfos(String billing) throws JSONException {
+	public Response extractBillingInfos(String billing) throws JSONException {
 		if(billing == null || billing.isEmpty()) return null;
 		JSONObject obj = new JSONObject(billing);
-		String[] results = new String[obj.length()];
-
-		int cpt = 0;
+		String response ="";
 		for(String key : obj.keySet()){
-			results[cpt] = key + " : " +obj.get(key).toString();
-			cpt++;
+			response += key + " : " +obj.get(key).toString()+"\n";
 		}
 
-		return results;
+		return new Response(response);
 	}
-
 
 	/**
 	 * {
@@ -177,32 +177,27 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	 *   "type":"owner"
 	 * }
 	 */
-	public String[] extractPartyRoleInfos(String role) throws JSONException {
+	public Response extractPartyRoleInfos(String role){
 		if(role == null || role.isEmpty()) return null;
+		String response ="";
+		String urlImage ="";
 		JSONObject obj = new JSONObject(role);
-		String[] results = new String[obj.length()-1];
-		String[] person_results = null;
 
-		int cpt = 0;
 		for(String key : obj.keySet()){
-
 			if(key.equals("person")){
 				JSONObject person = obj.getJSONObject(key);
-				person_results = new String[person.length()];
-				int cpt_person = 0;
 				for(String person_key : person.keySet()){
-					person_results[cpt_person] = "person_"+person_key+" : "+person.get(person_key).toString();
-					cpt_person++;
+					response+="person_"+person_key+" : "+person.get(person_key).toString()+"\n";
 				}
-			} else {
-				results[cpt] = key + " : " +obj.get(key).toString();
-				cpt++;
+			} else if(key.equalsIgnoreCase("image")){
+				urlImage = obj.get(key).toString();
+			}else{
+				response += key + " : " +obj.get(key).toString()+"\n";
 			}
 		}
-		if(person_results==null) return results;
-		return Stream.concat(Arrays.stream(results), Arrays.stream(person_results)) .toArray(String[]::new);
+		return new Response(response, urlImage);
 	}
-
+	
 	/**
 	 * {   
 	 * "incendie": false,   
@@ -210,18 +205,36 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	 * "inondation": true 
 	 * }
 	 */
-	public String[] extractRisksInfos(String risks) throws JSONException {
+	public Response extractRisksInfos(String risks) throws JSONException {
 		if(risks == null || risks.isEmpty()) return null;
 		JSONObject obj = new JSONObject(risks);
-		String[] results = new String[obj.length()];
-
-		int cpt = 0;
+		String response = "";
 		for(String key : obj.keySet()){
-			results[cpt] = key + " : " +obj.get(key).toString();
-			cpt++;
+			response += key + " : " +obj.get(key).toString()+"\n";
 		}
-
-		return results;
+		return new Response(response);
 	}
+	
+	/**
+	 *{
+	 *"image":"https://mabanque.bnpparibas/rsc/contrib/image/particuliers/gabarits-libres/rib.jpg"
+	 *}
+	 */
+	public Response extractRibInfos(String risks) throws JSONException {
+		if(risks == null || risks.isEmpty()) return null;
+		JSONObject obj = new JSONObject(risks);
+		String response = "";
+		String urlImage = "";
+		for(String key : obj.keySet()){
+			if(key.equalsIgnoreCase("image")){
+				urlImage = obj.get(key).toString();
+			}else{
+				response += key + " : " +obj.get(key).toString()+"\n";
+			}
+		}
+		return new Response(response,urlImage);
+	}
+	
+	//TODO:Ajouter un extractRibInfo
 
 }

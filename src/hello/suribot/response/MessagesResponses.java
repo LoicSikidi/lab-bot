@@ -18,6 +18,7 @@ public enum MessagesResponses {
 	partyRoleInfosResponse,
 	risksChoiceResponse,
 	risksInfosResponse,
+	ribInfosResponse,
 	billingsChoice, 
 	partyRolesChoice, 
 	risksChoice,
@@ -25,5 +26,5 @@ public enum MessagesResponses {
 	couvertureMissingResponse,
 	billingMissingResponse,
 	partyRoleMissingResponse
-	
+	//TODO: Ajouter value rib
 }
