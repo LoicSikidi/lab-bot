@@ -1,8 +1,10 @@
 package hello.suribot.response.contracts;
 
+import hello.suribot.response.Response;
+
 public interface IContractResponseGenerator {
 	
 	//TODO: javadoc
-	String generateContractMessage(String calledMethod, boolean choice, String params) throws IllegalArgumentException;
+	Response generateContractMessage(String calledMethod, boolean choice, String params) throws IllegalArgumentException;
 
 }

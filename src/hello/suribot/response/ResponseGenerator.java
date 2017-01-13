@@ -38,7 +38,7 @@ public class ResponseGenerator implements IResponseGenerator{
 	 * @see hello.suribot.response.IResponseGenerator#generateContractUnderstoodMessage(hello.suribot.analyze.contracts.ContractParams, boolean, java.lang.String)
 	 */
 	@Override
-	public String generateUnderstoodMessage(String context, String calledMethod, boolean choice, String params) {
+	public Response generateUnderstoodMessage(String context, String calledMethod, boolean choice, String params) {
 		if(params==null || params.isEmpty()) return generateInternalErrorMessage();
 		
 		if(context != null && context.equals(IntentsAnalyzer.CONTRAT)){
@@ -50,48 +50,48 @@ public class ResponseGenerator implements IResponseGenerator{
 			}
 		} else { // Par sécurité
 			try {
-				return new JSONObject(params).toString(2);
+				return new Response(new JSONObject(params).toString(2));
 			} catch (JSONException e){ /* not a json object */ }
 			
 			try {
-				return new JSONArray(params).toString(2);
+				return new Response(new JSONArray(params).toString(2));
 			} catch (JSONException e){ /* not a json array */ }
 		}
 		
-		return params;
+		return new Response(params);
 	}
 	
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.IResponseGenerator#generateInternalErrorMessage()
 	 */
 	@Override
-	public String generateInternalErrorMessage() {
-		return messages.getString("internalErrorMessage");
+	public Response generateInternalErrorMessage() {
+		return new Response(messages.getString("internalErrorMessage"));
 	}
 
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.IResponseGenerator#generateNotUnderstoodMessage()
 	 */
 	@Override
-	public String generateNotUnderstoodMessage() {
-		return messages.getString("notUnderstoodMessage");
+	public Response generateNotUnderstoodMessage() {
+		return new Response(messages.getString("notUnderstoodMessage"));
 	}
 	
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.IResponseGenerator#generateMessageButMissOneArg(hello.suribot.response.MessagesResponses)
 	 */
 	@Override
-	public String generateMessageButMissOneArg(MessagesResponses key) {
+	public Response generateMessageButMissOneArg(MessagesResponses key) {
 		if(key==null) return generateNotUnderstoodMessage();
 		if(!messages.containsKey(key.toString())) return generateInternalErrorMessage();
-		return messages.getString("missOneArg")+messages.getString(key.toString());
+		return new Response(messages.getString("missOneArg")+messages.getString(key.toString()));
 	}
 	
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.IResponseGenerator#generateMessageButMissArgs(java.util.List)
 	 */
 	@Override
-	public String generateMessageButMissArgs(List<MessagesResponses> keys) {
+	public Response generateMessageButMissArgs(List<MessagesResponses> keys) {
 		if(keys==null || keys.size()==0) return generateNotUnderstoodMessage();
 		else if (keys.size()==1) return generateMessageButMissOneArg(keys.get(0));
 		
@@ -99,7 +99,7 @@ public class ResponseGenerator implements IResponseGenerator{
 		for(MessagesResponses key : keys){
 			if(key!=null && messages.containsKey(key.toString())) response += messages.getString(key.toString())+"\n";
 		}
-		return response;
+		return new Response(response);
 	}
 	
 }

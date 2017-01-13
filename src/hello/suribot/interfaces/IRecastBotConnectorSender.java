@@ -2,6 +2,8 @@ package hello.suribot.interfaces;
 
 import org.json.JSONObject;
 
+import hello.suribot.response.Response;
+
 public interface IRecastBotConnectorSender {
 	
 	/**
@@ -9,6 +11,6 @@ public interface IRecastBotConnectorSender {
 	 * @param json
 	 * @param message
 	 */
-	void sendMessage(JSONObject json, String message);
+	void sendMessage(JSONObject json, Response response);
 
 }

@@ -1,6 +1,8 @@
 package hello.suribot.response.contracts;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 
 import hello.suribot.analyze.contracts.ContractParams;
 import hello.suribot.response.MessagesResponses;
+import hello.suribot.response.Response;
 
 /**
  * Classe permettant la génération de message à l'utilisateur.
@@ -23,7 +26,7 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		this.messages = messages;
 	}
 	
-	public String generateContractMessage(String calledMethod, boolean choice, String params) throws IllegalArgumentException {
+	public Response generateContractMessage(String calledMethod, boolean choice, String params) throws IllegalArgumentException {
 		ContractParams param = ContractParams.valueOf(calledMethod);
 		
 		switch (param) {
@@ -48,7 +51,7 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.contracts.IContractResponseGenerator#generateChoiceResponse(hello.suribot.response.MessagesResponses, java.lang.String)
 	 */
-	public String generateChoiceResponse(MessagesResponses key, String params) throws MissingResourceException {
+	public Response generateChoiceResponse(MessagesResponses key, String params) throws MissingResourceException {
 		if(key == null || params == null || params.isEmpty()) return null;
 		String response = messages.getString(key.toString());
 		
@@ -69,22 +72,24 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 			return null;
 		}
 		
+		List<String> listChoice = new ArrayList<>();
 		for(String str : extractChoice(key, params)){
-			response += str+"\n"; // TODO :  adapter la mise en page en fonction du channel
+			listChoice.add(str);
 		}
-		return response;
+		return new Response(response, listChoice);
 	}
 
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.contracts.IContractResponseGenerator#generateInfosResponse(hello.suribot.response.MessagesResponses, java.lang.String)
 	 */
-	public String generateInfosResponse(MessagesResponses key, String params) throws MissingResourceException {
+	public Response generateInfosResponse(MessagesResponses key, String params) throws MissingResourceException {
 		if(key == null || params == null || params.isEmpty()) return null;
 		String response = messages.getString(key.toString());
+		
 		for(String str : extractInfos(key, params)){
 			response += str+"\n";
 		}
-		return response;
+		return new Response(response);
 	}
 
 	

@@ -3,17 +3,18 @@ package hello.suribot.interfaces;
 import java.util.List;
 
 import hello.suribot.response.MessagesResponses;
+import hello.suribot.response.Response;
 
 public interface IResponseGenerator {
 	
-	String generateUnderstoodMessage(String context, String calledMethod, boolean choice, String params);
+	Response generateUnderstoodMessage(String context, String calledMethod, boolean choice, String params);
 
-	String generateInternalErrorMessage();
+	Response generateInternalErrorMessage();
 
-	String generateNotUnderstoodMessage();
+	Response generateNotUnderstoodMessage();
 
-	String generateMessageButMissOneArg(MessagesResponses key);
+	Response generateMessageButMissOneArg(MessagesResponses key);
 
-	String generateMessageButMissArgs(List<MessagesResponses> keys);
+	Response generateMessageButMissArgs(List<MessagesResponses> keys);
 
 }

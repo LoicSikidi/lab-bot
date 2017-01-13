@@ -20,6 +20,7 @@ import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.interfaces.IRecastBotConnectorSender;
 import hello.suribot.interfaces.IResponseGenerator;
 import hello.suribot.response.MessagesResponses;
+import hello.suribot.response.Response;
 import hello.suribot.response.ResponseGenerator;
 
 /**
@@ -70,7 +71,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 			//Par défaut la langue du bot est le français, si la langue détectée n'est pas le français alors 
 			//on charge un autre fichier de properties.
 			if( !language.equals("fr") ) this.responsegenerator = new ResponseGenerator(language);
-			String responseToMBC = "";
+			Response responseToMBC = null;
 			boolean demandeComprise = false;
 			
 			if(contexte != null && contexte.equals(CONTRAT)){
@@ -124,7 +125,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 						recastJson = getEntities(recastJson);
 						JSONMemory.putLastEntities(idUser, recastJson.toString());
 						if(contexte != null && !contexte.isEmpty()) JSONMemory.putContext(idUser, contexte);
-						if(responseToMBC.isEmpty()){
+						if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()){
 							nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
 							return;
 						} else {
@@ -145,7 +146,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					// donc on arrete le traitement  et envoie une erreur a SS5
 					JSONMemory.putLastEntities(idUser, entities.toString());
 					JSONMemory.putContext(idUser, contexte);
-					if(responseToMBC.isEmpty()) responseToMBC = responsegenerator.generateNotUnderstoodMessage();
+					if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()) responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 					nextToCall.sendMessage(mbc_json, responseToMBC);
 					return;
 				}
@@ -160,7 +161,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					JSONMemory.removeLastContext(idUser);
 				}
 					
-				if(responseToMBC.isEmpty()){
+				if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()){
 					nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
 				} else {
 					nextToCall.sendMessage(mbc_json, responseToMBC);
@@ -175,7 +176,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					//Demande incomprise et il n'y a pas d'ancienne demande en attente
 					//donc on arrete le traitement  et envoie une erreur a SS5
 					JSONMemory.putLastEntities(idUser, recastJson.toString());
-					String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
+					Response responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 					nextToCall.sendMessage(mbc_json, responseToMBC);
 					return;
 				}
@@ -188,7 +189,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 				//donc on arrete le traitement  et envoie une erreur a SS5
 				if(entities != null) JSONMemory.putLastEntities(idUser, entities.toString());
 				JSONMemory.putContext(idUser, contexte);
-				String responseToMBC = responsegenerator.generateNotUnderstoodMessage();
+				Response responseToMBC = responsegenerator.generateNotUnderstoodMessage();
 				nextToCall.sendMessage(mbc_json, responseToMBC);
 			}
 		}
