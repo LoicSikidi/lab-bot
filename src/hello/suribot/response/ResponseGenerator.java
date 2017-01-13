@@ -21,9 +21,13 @@ public class ResponseGenerator implements IResponseGenerator{
 	
 	private ResourceBundle messages;
 	
+	/** public pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
+	public ResourceBundle getMessages() {
+		return messages;
+	}
 
 	/** public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
-	public static final String bundleFile = "message.MessagesBundle"; 
+	private String bundleFile = "message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
 		messages = ResourceBundle.getBundle(bundleFile, Locale.FRANCE);
