@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
@@ -106,6 +108,30 @@ public abstract class AbstractHttpSender {
 		con.setRequestMethod("POST");
 		con.setDoOutput(true);
 		con.setRequestProperty("Content-Type", "application/json");
+		OutputStreamWriter out = new  OutputStreamWriter(con.getOutputStream());
+		out.write(text.toString());
+		out.flush();
+		out.close();
+		con.getResponseCode(); // send the request
+	}
+	
+	/**
+	 * Send POST request
+	 * @param url 
+	 * @param property 
+	 * @param text 
+	 * @throws Exception 
+	 */
+	protected static void sendPost(String url, Map<String,String> property, JSONObject text) throws Exception {
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setDoOutput(true);
+		if(property != null){
+			for(Entry<String, String> entry: property.entrySet()){
+				con.setRequestProperty(entry.getKey(), entry.getValue());
+			}
+		}
 		OutputStreamWriter out = new  OutputStreamWriter(con.getOutputStream());
 		out.write(text.toString());
 		out.flush();

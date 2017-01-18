@@ -1,11 +1,9 @@
 package hello.suribot.response.contracts;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,31 +148,32 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		}
 	}
 	
-	
 	/**
-	 * { "methode": "cheque",   
+	 * { 
+	 * "methode": "cheque",   
 	 * "amount": 542.97,   
 	 * "identifiant": "123987456",   
 	 * "frequency": "hebdomadaire",  
-	 * "next_date": "2017-11-10" }
+	 * "next_date": "2017-11-10" 
+	 * }
 	 */
 	public Response extractBillingInfos(String billing) throws JSONException {
 		if(billing == null || billing.isEmpty()) return null;
 		JSONObject obj = new JSONObject(billing);
 		String response ="";
 		for(String key : obj.keySet()){
-			response += key + " : " +obj.get(key).toString()+"\n";
+			response += adaptInfo(key, obj.get(key).toString());
 		}
-
 		return new Response(response);
 	}
 
 	/**
 	 * {
 	 * 	"end_date":"2016-12-25",
+	 *  "image":"http://www.suricats-consulting.com/wp-content/uploads/2016/05/A1-01-150x150.png",
 	 * 	"person":{ "client_number":"7596055","birth_date":"1994-12-05","last_name":"dupuit","postal_code":"75005","first_name":"eric"},
-	 *   "identifiant":"eee787634",
-	 *   "type":"owner"
+	 *  "identifiant":"eee787634",
+	 *  "type":"owner"
 	 * }
 	 */
 	public Response extractPartyRoleInfos(String role){
@@ -187,12 +186,12 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 			if(key.equals("person")){
 				JSONObject person = obj.getJSONObject(key);
 				for(String person_key : person.keySet()){
-					response+="person_"+person_key+" : "+person.get(person_key).toString()+"\n";
+					response += adaptInfo(person_key, person.get(person_key).toString());
 				}
 			} else if(key.equalsIgnoreCase("image")){
 				urlImage = obj.get(key).toString();
 			}else{
-				response += key + " : " +obj.get(key).toString()+"\n";
+				response += adaptInfo(key, obj.get(key).toString());
 			}
 		}
 		return new Response(response, urlImage);
@@ -210,14 +209,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		JSONObject obj = new JSONObject(risks);
 		String response = "";
 		for(String key : obj.keySet()){
-			response += key + " : " +obj.get(key).toString()+"\n";
+			response += adaptInfo(key, obj.get(key).toString()+"_risk");
 		}
 		return new Response(response);
 	}
 	
 	/**
 	 *{
-	 *"image":"https://mabanque.bnpparibas/rsc/contrib/image/particuliers/gabarits-libres/rib.jpg"
+	 * "image":"https://mabanque.bnpparibas/rsc/contrib/image/particuliers/gabarits-libres/rib.jpg"
 	 *}
 	 */
 	public Response extractRibInfos(String risks) throws JSONException {
@@ -228,13 +227,18 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		for(String key : obj.keySet()){
 			if(key.equalsIgnoreCase("image")){
 				urlImage = obj.get(key).toString();
-			}else{
-				response += key + " : " +obj.get(key).toString()+"\n";
 			}
 		}
 		return new Response(response,urlImage);
 	}
 	
-	//TODO:Ajouter un extractRibInfo
-
+	private String adaptInfo(String key, String value){
+		try{
+			key=messages.getString(key);
+		}catch(MissingResourceException e){}
+		try{
+			value=messages.getString(value);
+		}catch(MissingResourceException e){}
+		return key + " : " +value+"\n";
+	}
 }
