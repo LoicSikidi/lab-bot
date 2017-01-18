@@ -19,7 +19,6 @@ import hello.suribot.interfaces.IAPIController;
 import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.interfaces.IRecastBotConnectorSender;
 import hello.suribot.interfaces.IResponseGenerator;
-import hello.suribot.response.MessagesResponses;
 import hello.suribot.response.Response;
 import hello.suribot.response.ResponseGenerator;
 
@@ -98,9 +97,9 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					
 				}else if(js.has(MISSINGPARAMS)){
 					try {
-						List<MessagesResponses> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
+						List<MissingAnalyzerParam> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
 						for(Object oneMissingParam : js.getJSONArray(MISSINGPARAMS)){
-							missingParams.add(MessagesResponses.valueOf(oneMissingParam.toString()));
+							missingParams.add(MissingAnalyzerParam.valueOf(oneMissingParam.toString()));
 						}
 						if(missingParams.size()==1){
 							responseToMBC = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));

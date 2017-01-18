@@ -2,9 +2,10 @@ package hello.suribot.interfaces;
 
 import java.util.List;
 
-import hello.suribot.response.MessagesResponses;
+import hello.suribot.analyze.MissingAnalyzerParam;
 import hello.suribot.response.Response;
 
+//TODO: JAVADOC
 public interface IResponseGenerator {
 	
 	Response generateUnderstoodMessage(String context, String calledMethod, boolean choice, String params);
@@ -13,8 +14,8 @@ public interface IResponseGenerator {
 
 	Response generateNotUnderstoodMessage();
 
-	Response generateMessageButMissOneArg(MessagesResponses key);
+	Response generateMessageButMissOneArg(MissingAnalyzerParam key);
 
-	Response generateMessageButMissArgs(List<MessagesResponses> keys);
+	Response generateMessageButMissArgs(List<MissingAnalyzerParam> keys);
 
 }

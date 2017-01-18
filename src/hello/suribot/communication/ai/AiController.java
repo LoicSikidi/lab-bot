@@ -34,8 +34,6 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	@Override
 	public void sendMessage(final JSONObject json, String message, String idUser){
 		try {
-//			DetectLanguage.apiKey = System.getenv("TOKEN_DETECTLANGUAGE"); TODO: Trouver une bonne API d'analyse détectant la langue
-//			String language = DetectLanguage.simpleDetect(message);
 			String language = "fr";
 			JSONObject intents = null;
  			if(message.toLowerCase().contains("api")){ // call API.ai

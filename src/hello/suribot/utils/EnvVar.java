@@ -2,11 +2,11 @@ package hello.suribot.utils;
 
 public enum EnvVar {
 	
-//  OLD VAR ENV Microsoft Bot Connector
-//	APPID = System.getenv("APPID");
-//	APPSECRET = System.getenv("APPSECRET");
-	
-//  VAR ENV Recast Bot Connector
+//  Old env var Microsoft Bot Connector
+//	APPID
+//	APPSECRET
+	NODEJSPORT,
+
 	RBCSLUG,
 	RBCBOTID,
 	RBCTOKEN,

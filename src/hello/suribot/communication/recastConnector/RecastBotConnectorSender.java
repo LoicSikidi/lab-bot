@@ -32,8 +32,7 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 		} catch (JSONException e) {
 			if(idConv.isEmpty()){ //Impossible de récupérer l'id de la conversation
 				System.out.println("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
-			}else{  //Erreur lors de la création du JSON dans callRecastBotConnector on envoie donc
-					//un message à l'utilisateur
+			}else{  //Erreur lors de la création du JSON dans callRecastBotConnector on envoie donc un message à l'utilisateur
 				try {
 					callRecastBotConnector(new Response("Demande incomprise"),idConv);
 				} catch (Exception e2) { //Impossible d'envoyer le message

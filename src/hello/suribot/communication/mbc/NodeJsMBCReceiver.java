@@ -1,4 +1,4 @@
-package hello.suribot.communication.recastConnector;
+package hello.suribot.communication.mbc;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -12,22 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.suribot.communication.ai.AiController;
-import hello.suribot.interfaces.IAiController;
 
 /**
- * Classe controleur permettant d'écouter des messages venant de RBC (Recast Bot Connector)
+ * Classe controleur permettant d'écouter des messages venant du programme Node.js de communication à MBC
  */
-@RequestMapping("rbc")
+@RequestMapping("mbc")
 @RestController
-class RecastBotConnectorReceiver {
+class NodeJsMBCReceiver{
 	
-	private IAiController nextStep;
+	private AiController nextStep;
 
-	public RecastBotConnectorReceiver() {
+	public NodeJsMBCReceiver() {
 		this.nextStep = new AiController();
 	}
 	
-	@RequestMapping(value ={"/",""})
+	@RequestMapping(value ="/")
 	public int receivingMessage(HttpServletRequest request){
 		StringBuilder sb = null;
 	    try {
@@ -39,12 +38,13 @@ class RecastBotConnectorReceiver {
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
-		    System.out.println(json);
-		    printUserMessage(json);
+		    printUserMessage(json); // TODO: retirer à la fin de tests
 		    
-	    	String idUser = json.getString("senderId");
-	    	String message = json.getJSONObject("message").getJSONObject("attachment").getString("content");
-	    	nextStep.sendMessage(json, message, idUser);
+		    new Thread(() -> { // async call
+		    	String idUser = json.getJSONObject("user").getString("id").split(":")[0]; // TODO : à améliorer
+		    	nextStep.sendMessage(json, json.getString("text"), idUser);
+		    }).start();
+		   
 		    
 	    } catch (JSONException e){
 	    	e.printStackTrace();
@@ -58,7 +58,7 @@ class RecastBotConnectorReceiver {
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
-		System.out.println("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
+		System.out.println("User message : "+json.getString("text"));
 	}
 	
 }

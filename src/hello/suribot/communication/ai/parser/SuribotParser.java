@@ -50,7 +50,7 @@ public class SuribotParser {
 		JSONObject result = new JSONObject();
 		result.put(SuribotKeys.INTENTS, arrayIntent);
 		result.put(SuribotKeys.ENTITIES, entities);
-		result.put(SuribotKeys.LANGUAGE, "fr");	//TODO: On met fr en langue par defaut car API.ai ne retourne pas la langue du message
+		result.put(SuribotKeys.LANGUAGE, "fr");
 		
 		JSONObject parsed = new JSONObject();
 		parsed.put(SuribotKeys.RESULTS, result);

@@ -40,7 +40,7 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 			if(choice) return generateChoiceResponse(MessagesResponses.billingsChoiceResponse, params);
 			return generateInfosResponse(MessagesResponses.billingInfosResponse, params);
 			
-		case rib: //TODO: Ajouter value key
+		case rib:
 			return generateInfosResponse(MessagesResponses.ribInfosResponse, params);
 		
 		default:
@@ -148,16 +148,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		}
 	}
 	
-	/**
-	 * { 
+	/** { 
 	 * "methode": "cheque",   
 	 * "amount": 542.97,   
 	 * "identifiant": "123987456",   
 	 * "frequency": "hebdomadaire",  
 	 * "next_date": "2017-11-10" 
-	 * }
-	 */
-	public Response extractBillingInfos(String billing) throws JSONException {
+	 * } */
+	private Response extractBillingInfos(String billing) throws JSONException {
 		if(billing == null || billing.isEmpty()) return null;
 		JSONObject obj = new JSONObject(billing);
 		String response ="";
@@ -167,16 +165,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return new Response(response);
 	}
 
-	/**
-	 * {
+	/** {
 	 * 	"end_date":"2016-12-25",
 	 *  "image":"http://www.suricats-consulting.com/wp-content/uploads/2016/05/A1-01-150x150.png",
 	 * 	"person":{ "client_number":"7596055","birth_date":"1994-12-05","last_name":"dupuit","postal_code":"75005","first_name":"eric"},
 	 *  "identifiant":"eee787634",
 	 *  "type":"owner"
-	 * }
-	 */
-	public Response extractPartyRoleInfos(String role){
+	 * } */
+	private Response extractPartyRoleInfos(String role){
 		if(role == null || role.isEmpty()) return null;
 		String response ="";
 		String urlImage ="";
@@ -197,14 +193,12 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return new Response(response, urlImage);
 	}
 	
-	/**
-	 * {   
+	/** {   
 	 * "incendie": false,   
 	 * "vandalisme": true,   
 	 * "inondation": true 
-	 * }
-	 */
-	public Response extractRisksInfos(String risks) throws JSONException {
+	 * } */
+	private Response extractRisksInfos(String risks) throws JSONException {
 		if(risks == null || risks.isEmpty()) return null;
 		JSONObject obj = new JSONObject(risks);
 		String response = "";
@@ -214,12 +208,10 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return new Response(response);
 	}
 	
-	/**
-	 *{
+	/** {
 	 * "image":"https://mabanque.bnpparibas/rsc/contrib/image/particuliers/gabarits-libres/rib.jpg"
-	 *}
-	 */
-	public Response extractRibInfos(String risks) throws JSONException {
+	 * } */
+	private Response extractRibInfos(String risks) throws JSONException {
 		if(risks == null || risks.isEmpty()) return null;
 		JSONObject obj = new JSONObject(risks);
 		String response = "";
@@ -234,11 +226,11 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 	
 	private String adaptInfo(String key, String value){
 		try{
-			key=messages.getString(key);
-		}catch(MissingResourceException e){}
-		try{
-			value=messages.getString(value);
-		}catch(MissingResourceException e){}
+			key = messages.getString(key);
+		} catch (MissingResourceException e){}
+		try {
+			value = messages.getString(value);
+		} catch (MissingResourceException e){}
 		return key + " : " +value+"\n";
 	}
 }

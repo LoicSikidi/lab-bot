@@ -9,10 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.analyze.IntentsAnalyzer;
+import hello.suribot.analyze.MissingAnalyzerParam;
 import hello.suribot.interfaces.IResponseGenerator;
 import hello.suribot.response.contracts.ContractResponseGenerator;
 import hello.suribot.response.contracts.IContractResponseGenerator;
-import test.hello.suribot.response.contracts.ContractResponseGeneratorTest;
 
 /**
  * Classe permettant de générer des réponses (à S.S.1 communication MBC) suivant les données fournies.
@@ -21,12 +21,7 @@ public class ResponseGenerator implements IResponseGenerator{
 	
 	private ResourceBundle messages;
 	
-	/** public pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
-	public ResourceBundle getMessages() {
-		return messages;
-	}
-
-	/** public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
+	// public static pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
 	private String bundleFile = "message.MessagesBundle"; 
 	
 	public ResponseGenerator() {
@@ -36,6 +31,11 @@ public class ResponseGenerator implements IResponseGenerator{
 	public ResponseGenerator(String langue) {
 		Locale locale = new Locale(langue);
 		messages = ResourceBundle.getBundle(bundleFile, locale);
+	}
+	
+	// public pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
+	public ResourceBundle getMessages() {
+		return messages;
 	}
 
 	/* (non-Javadoc)
@@ -85,23 +85,26 @@ public class ResponseGenerator implements IResponseGenerator{
 	 * @see hello.suribot.response.IResponseGenerator#generateMessageButMissOneArg(hello.suribot.response.MessagesResponses)
 	 */
 	@Override
-	public Response generateMessageButMissOneArg(MessagesResponses key) {
-		if(key==null) return generateNotUnderstoodMessage();
-		if(!messages.containsKey(key.toString())) return generateInternalErrorMessage();
-		return new Response(messages.getString("missOneArg")+messages.getString(key.toString()));
+	public Response generateMessageButMissOneArg(MissingAnalyzerParam key) {
+		MessagesResponses messResp = MessagesResponses.adapt(key);
+		if(messResp==null) return generateNotUnderstoodMessage();
+		if(!messages.containsKey(messResp.toString())) return generateInternalErrorMessage();
+		return new Response(messages.getString("missOneArg")+messages.getString(messResp.toString()));
 	}
 	
 	/* (non-Javadoc)
 	 * @see hello.suribot.response.IResponseGenerator#generateMessageButMissArgs(java.util.List)
 	 */
 	@Override
-	public Response generateMessageButMissArgs(List<MessagesResponses> keys) {
+	public Response generateMessageButMissArgs(List<MissingAnalyzerParam> keys) {
 		if(keys==null || keys.size()==0) return generateNotUnderstoodMessage();
 		else if (keys.size()==1) return generateMessageButMissOneArg(keys.get(0));
 		
-		String response = messages.getString("missArgs") + "\n"; // TODO: changer toutes les mises en forme par une méthode s'adaptant au channel appelant
-		for(MessagesResponses key : keys){
-			if(key!=null && messages.containsKey(key.toString())) response += messages.getString(key.toString())+"\n";
+		String response = messages.getString("missArgs") + "\n"; // TODO: changer toutes les mises en forme par une méthode s'adaptant au channel appelant (RBC, MBC,...)
+		MessagesResponses messResp;
+		for(MissingAnalyzerParam key : keys){
+			messResp = MessagesResponses.adapt(key);
+			if(messResp!=null && messages.containsKey(messResp.toString())) response += messages.getString(messResp.toString())+"\n";
 		}
 		return new Response(response);
 	}

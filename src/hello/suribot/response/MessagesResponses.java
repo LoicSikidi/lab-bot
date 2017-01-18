@@ -1,5 +1,7 @@
 package hello.suribot.response;
 
+import hello.suribot.analyze.MissingAnalyzerParam;
+
 /**
  * Enum des clefs de bundle.properties permettant de manipuler les messages pré-formé à fournir
  */
@@ -25,6 +27,23 @@ public enum MessagesResponses {
 	idContratMissingResponse,
 	couvertureMissingResponse,
 	billingMissingResponse,
-	partyRoleMissingResponse
-	//TODO: Ajouter value rib
+	partyRoleMissingResponse;
+	
+	public static MessagesResponses adapt(MissingAnalyzerParam param){
+		if(param != null){
+			switch (param) {
+			case idContrat:
+				return idContratMissingResponse;
+			case billing:
+				return billingMissingResponse;
+			case couverture:
+				return couvertureMissingResponse;
+			case partyRole:
+				return partyRoleMissingResponse;
+			default:
+				return null;
+			}
+		}
+		return null;
+	}
 }

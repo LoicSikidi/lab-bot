@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import hello.suribot.SuribotKeys;
 import hello.suribot.analyze.IntentsAnalyzer;
+import hello.suribot.analyze.MissingAnalyzerParam;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
 import hello.suribot.communication.api.ApiUrls;
-import hello.suribot.response.MessagesResponses;
 
 /**
  * Classe d'analyse des intents dans le contexte des "contrats"
@@ -54,7 +54,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		if(identifiant==null || identifiant.isEmpty()){
 			//L'identifiant du contrat n'est ni renseigné par l'utilisateur ni stocké dans son fichier
 			jsonReturn.put(IntentsAnalyzer.SUCCESS, false);
-			missingParams.add(MessagesResponses.idContratMissingResponse.toString());
+			missingParams.add(MissingAnalyzerParam.idContrat.toString());
 			jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 			return jsonReturn;
 
@@ -66,9 +66,9 @@ public class ContractAnalyzer implements IContractAnalyzer {
 				//String quelMethodeAppeler = recastJson.getString(FakeRecastKeys.METHOD.getName());
 				calledMethod = getMethodToCall(entities);
 				if(calledMethod==null){
-					missingParams.add(MessagesResponses.billingMissingResponse.toString());
-					missingParams.add(MessagesResponses.couvertureMissingResponse.toString());
-					missingParams.add(MessagesResponses.partyRoleMissingResponse.toString());
+					missingParams.add(MissingAnalyzerParam.billing.toString());
+					missingParams.add(MissingAnalyzerParam.couverture.toString());
+					missingParams.add(MissingAnalyzerParam.partyRole.toString());
 					jsonReturn.put(IntentsAnalyzer.MISSINGPARAMS, missingParams);
 					jsonReturn.put(IntentsAnalyzer.SUCCESS, false); //La demande n'a pas été comprise
 					return jsonReturn;
@@ -158,7 +158,9 @@ public class ContractAnalyzer implements IContractAnalyzer {
 						return entities.getJSONArray(NOMBRE).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
 					}
 				}
-			}catch(JSONException e){}
+			}catch(JSONException e){
+				return null;
+			}
 		}
 		return null;
 	}
