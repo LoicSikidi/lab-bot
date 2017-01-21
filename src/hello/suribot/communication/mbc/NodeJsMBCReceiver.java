@@ -42,7 +42,7 @@ class NodeJsMBCReceiver{
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
-		    printUserMessage(json); // TODO: retirer à la fin de tests
+		    printUserMessage(json);
 		    
 		    new Thread(() -> { // async call
 		    	String idUser = json.getJSONObject("user").getString("id").split(":")[0]; // TODO : à améliorer

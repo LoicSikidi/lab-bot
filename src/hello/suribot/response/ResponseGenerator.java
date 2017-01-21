@@ -100,7 +100,7 @@ public class ResponseGenerator implements IResponseGenerator{
 		if(keys==null || keys.size()==0) return generateNotUnderstoodMessage();
 		else if (keys.size()==1) return generateMessageButMissOneArg(keys.get(0));
 		
-		String response = messages.getString("missArgs") + "\n"; // TODO: changer toutes les mises en forme par une méthode s'adaptant au channel appelant (RBC, MBC,...)
+		String response = messages.getString("missArgs") + "\n";
 		MessagesResponses messResp;
 		for(MissingAnalyzerParam key : keys){
 			messResp = MessagesResponses.adapt(key);
