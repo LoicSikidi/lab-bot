@@ -10,15 +10,6 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.1.RELEASE</version>
 	</parent>
-	
-	<repositories>
-		<repository>
-			<id>bintray-bots4j-maven-repo</id>
-			<name>bintray</name>
-			<url>http://dl.bintray.com/bots4j/maven-repo</url>
-		</repository>
-	</repositories>
-	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,11 +41,6 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.bots4j</groupId>
-			<artifactId>msbotframework</artifactId>
-			<version>0.11</version>
-		</dependency>
-		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version><!--$NO-MVN-MAN-VER$ -->
@@ -77,7 +63,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>hello.suribot.Application</start-class>
+		<start-class>hello/suribot/Application</start-class>
 	</properties>
 
 	<build>

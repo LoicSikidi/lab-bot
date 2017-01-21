@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.Reader;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
@@ -56,9 +56,9 @@ class NodeJsMBCReceiver{
 	    	logger.info(sb.toString());
 	    } catch (Exception e){
 	    	e.printStackTrace();
-	    	return HttpStatus.SC_INTERNAL_SERVER_ERROR;
+	    	return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 	    }
-	    return HttpStatus.SC_OK;
+	    return HttpServletResponse.SC_OK;
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
