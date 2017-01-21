@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="warn" monitorInterval="60">
+<Configuration status="trace" monitorInterval="60">
 	<Properties>
-		<Property name="log-path">logs</Property>
+		<Property name="log-path">logs2</Property>
 	</Properties>
 	<Appenders>
 		<RollingFile name="file-log" fileName="${log-path}/suribot.log"
@@ -21,9 +21,9 @@
         </Console>
 	</Appenders>
 	<Loggers>
-		<Root level="info">
-			<AppenderRef ref="console"/>
-			<AppenderRef ref="file-log"/>
+		<Root level="trace">
+			<AppenderRef ref="console" level="trace"/>
+			<AppenderRef ref="file-log" level="trace"/>
 		</Root>
 	</Loggers>
 </Configuration>

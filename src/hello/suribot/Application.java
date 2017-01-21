@@ -20,7 +20,7 @@ public class Application {
     private static void checkEnvVar(){
 		
     	for(EnvVar var : EnvVar.values()){
-    		logger.info(var + " : "+ var.getValue());
+    		logger.error(var + " : "+ var.getValue());
     		if(var.getValue()==null){
     			logger.error("Check your environment var "+var.toString()+"... ");
     			System.exit(0);
