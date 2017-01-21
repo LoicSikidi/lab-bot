@@ -22,7 +22,7 @@ public class Application {
     	for(EnvVar var : EnvVar.values()){
     		logger.info(var + " : "+ var.getValue());
     		if(var.getValue()==null){
-    			System.err.println("Check your environment var "+var.toString()+"... ");
+    			logger.error("Check your environment var "+var.toString()+"... ");
     			System.exit(0);
     		}
     	}
