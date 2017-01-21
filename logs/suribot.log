@@ -1,0 +1,141 @@
+[INFO ] 2017-01-21 16:03:29,005 : Application - NODEJSPORT :  
+[INFO ] 2017-01-21 16:03:29,006 : Application - RBCSLUG : feligo
+[INFO ] 2017-01-21 16:03:29,006 : Application - RBCBOTID : 586a672747657279ddb4af4f
+[INFO ] 2017-01-21 16:03:29,006 : Application - RBCTOKEN : 7293393424e44093866da50414352aad
+[INFO ] 2017-01-21 16:03:29,007 : Application - BOTPORT : 12345
+[INFO ] 2017-01-21 16:03:29,007 : Application - CONTRACTPORT : 12346
+[INFO ] 2017-01-21 16:03:29,007 : Application - TOKENRECAST : 6788f3d6da91de512258480e11fd02e7
+[INFO ] 2017-01-21 16:03:29,007 : Application - TOKENAPIAI : 97bfcb160e1245aa94c4f1528d19f52e
+[INFO ] 2017-01-21 16:03:29,554 : Application - Starting Application on JulienM with PID 2768 (C:\Users\JulienM\Dev\git\lab-bot\target\classes started by JulienM in C:\Users\JulienM\Dev\git\lab-bot)
+[INFO ] 2017-01-21 16:03:29,562 : Application - No active profile set, falling back to default profiles: default
+[INFO ] 2017-01-21 16:03:29,654 : AnnotationConfigEmbeddedWebApplicationContext - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@a530d0a: startup date [Sat Jan 21 16:03:29 CET 2017]; root of context hierarchy
+[INFO ] 2017-01-21 16:03:29,792 : Version - HV000001: Hibernate Validator 5.2.4.Final
+[INFO ] 2017-01-21 16:03:32,162 : TomcatEmbeddedServletContainer - Tomcat initialized with port(s): 12345 (http)
+[INFO ] 2017-01-21 16:03:32,182 : StandardService - Starting service Tomcat
+[INFO ] 2017-01-21 16:03:32,184 : StandardEngine - Starting Servlet Engine: Apache Tomcat/8.5.5
+[INFO ] 2017-01-21 16:03:32,318 : [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2017-01-21 16:03:32,319 : ContextLoader - Root WebApplicationContext: initialization completed in 2669 ms
+[INFO ] 2017-01-21 16:03:32,668 : ServletRegistrationBean - Mapping servlet: 'dispatcherServlet' to [/]
+[INFO ] 2017-01-21 16:03:32,674 : FilterRegistrationBean - Mapping filter: 'metricsFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,674 : FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,674 : FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,674 : FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,675 : FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,675 : FilterRegistrationBean - Mapping filter: 'webRequestLoggingFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:32,675 : FilterRegistrationBean - Mapping filter: 'applicationContextIdFilter' to: [/*]
+[INFO ] 2017-01-21 16:03:33,117 : RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@a530d0a: startup date [Sat Jan 21 16:03:29 CET 2017]; root of context hierarchy
+[INFO ] 2017-01-21 16:03:33,186 : RequestMappingHandlerMapping - Mapped "{[/mbc/]}" onto public int hello.suribot.communication.mbc.NodeJsMBCReceiver.receivingMessage(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:03:33,187 : RequestMappingHandlerMapping - Mapped "{[/rbc/ || /rbc]}" onto public int hello.suribot.communication.recastConnector.RecastBotConnectorReceiver.receivingMessage(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:03:33,189 : RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:03:33,190 : RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO ] 2017-01-21 16:03:33,239 : SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:03:33,239 : SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:03:33,307 : SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:03:33,766 : EndpointHandlerMapping - Mapped "{[/trace || /trace.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,768 : EndpointHandlerMapping - Mapped "{[/metrics/{name:.*}],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.MetricsMvcEndpoint.value(java.lang.String)
+[INFO ] 2017-01-21 16:03:33,768 : EndpointHandlerMapping - Mapped "{[/metrics || /metrics.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,769 : EndpointHandlerMapping - Mapped "{[/mappings || /mappings.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,771 : EndpointHandlerMapping - Mapped "{[/autoconfig || /autoconfig.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,775 : EndpointHandlerMapping - Mapped "{[/env/{name:.*}],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EnvironmentMvcEndpoint.value(java.lang.String)
+[INFO ] 2017-01-21 16:03:33,775 : EndpointHandlerMapping - Mapped "{[/env || /env.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,776 : EndpointHandlerMapping - Mapped "{[/dump || /dump.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,779 : EndpointHandlerMapping - Mapped "{[/beans || /beans.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,781 : EndpointHandlerMapping - Mapped "{[/info || /info.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,782 : EndpointHandlerMapping - Mapped "{[/configprops || /configprops.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:03:33,783 : EndpointHandlerMapping - Mapped "{[/heapdump || /heapdump.json],methods=[GET],produces=[application/octet-stream]}" onto public void org.springframework.boot.actuate.endpoint.mvc.HeapdumpMvcEndpoint.invoke(boolean,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.io.IOException,javax.servlet.ServletException
+[INFO ] 2017-01-21 16:03:33,784 : EndpointHandlerMapping - Mapped "{[/health || /health.json],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(java.security.Principal)
+[INFO ] 2017-01-21 16:03:33,921 : AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+[INFO ] 2017-01-21 16:03:33,930 : EndpointMBeanExporter - Registering beans for JMX exposure on startup
+[INFO ] 2017-01-21 16:03:33,936 : DefaultLifecycleProcessor - Starting beans in phase 0
+[INFO ] 2017-01-21 16:03:33,948 : EndpointMBeanExporter - Located managed bean 'requestMappingEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=requestMappingEndpoint]
+[INFO ] 2017-01-21 16:03:33,982 : EndpointMBeanExporter - Located managed bean 'environmentEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=environmentEndpoint]
+[INFO ] 2017-01-21 16:03:33,990 : EndpointMBeanExporter - Located managed bean 'healthEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=healthEndpoint]
+[INFO ] 2017-01-21 16:03:33,996 : EndpointMBeanExporter - Located managed bean 'beansEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=beansEndpoint]
+[INFO ] 2017-01-21 16:03:34,001 : EndpointMBeanExporter - Located managed bean 'infoEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=infoEndpoint]
+[INFO ] 2017-01-21 16:03:34,007 : EndpointMBeanExporter - Located managed bean 'metricsEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=metricsEndpoint]
+[INFO ] 2017-01-21 16:03:34,011 : EndpointMBeanExporter - Located managed bean 'traceEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=traceEndpoint]
+[INFO ] 2017-01-21 16:03:34,015 : EndpointMBeanExporter - Located managed bean 'dumpEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=dumpEndpoint]
+[INFO ] 2017-01-21 16:03:34,026 : EndpointMBeanExporter - Located managed bean 'autoConfigurationReportEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=autoConfigurationReportEndpoint]
+[INFO ] 2017-01-21 16:03:34,030 : EndpointMBeanExporter - Located managed bean 'configurationPropertiesReportEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=configurationPropertiesReportEndpoint]
+[INFO ] 2017-01-21 16:03:34,052 : Http11NioProtocol - Initializing ProtocolHandler ["http-nio-12345"]
+[INFO ] 2017-01-21 16:03:34,064 : Http11NioProtocol - Starting ProtocolHandler [http-nio-12345]
+[INFO ] 2017-01-21 16:03:34,077 : NioSelectorPool - Using a shared selector for servlet write/read
+[INFO ] 2017-01-21 16:03:34,092 : TomcatEmbeddedServletContainer - Tomcat started on port(s): 12345 (http)
+[INFO ] 2017-01-21 16:03:34,096 : Application - Started Application in 4.978 seconds (JVM running for 5.758)
+[INFO ] 2017-01-21 16:04:00,132 : Application - NODEJSPORT :  
+[INFO ] 2017-01-21 16:04:00,132 : Application - NODEJSPORT :  
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCSLUG : feligo
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCSLUG : feligo
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCBOTID : 586a672747657279ddb4af4f
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCBOTID : 586a672747657279ddb4af4f
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCTOKEN : 7293393424e44093866da50414352aad
+[INFO ] 2017-01-21 16:04:00,134 : Application - RBCTOKEN : 7293393424e44093866da50414352aad
+[INFO ] 2017-01-21 16:04:00,134 : Application - BOTPORT : 12345
+[INFO ] 2017-01-21 16:04:00,134 : Application - BOTPORT : 12345
+[INFO ] 2017-01-21 16:04:00,134 : Application - CONTRACTPORT : 12346
+[INFO ] 2017-01-21 16:04:00,134 : Application - CONTRACTPORT : 12346
+[INFO ] 2017-01-21 16:04:00,135 : Application - TOKENRECAST : 6788f3d6da91de512258480e11fd02e7
+[INFO ] 2017-01-21 16:04:00,135 : Application - TOKENRECAST : 6788f3d6da91de512258480e11fd02e7
+[INFO ] 2017-01-21 16:04:00,135 : Application - TOKENAPIAI : 97bfcb160e1245aa94c4f1528d19f52e
+[INFO ] 2017-01-21 16:04:00,135 : Application - TOKENAPIAI : 97bfcb160e1245aa94c4f1528d19f52e
+[INFO ] 2017-01-21 16:04:00,638 : Application - Starting Application on JulienM with PID 7072 (C:\Users\JulienM\Dev\git\lab-bot\target\classes started by JulienM in C:\Users\JulienM\Dev\git\lab-bot)
+[INFO ] 2017-01-21 16:04:00,638 : Application - Starting Application on JulienM with PID 7072 (C:\Users\JulienM\Dev\git\lab-bot\target\classes started by JulienM in C:\Users\JulienM\Dev\git\lab-bot)
+[DEBUG] 2017-01-21 16:04:00,638 : Application - Running with Spring Boot v1.4.1.RELEASE, Spring v4.3.3.RELEASE
+[DEBUG] 2017-01-21 16:04:00,638 : Application - Running with Spring Boot v1.4.1.RELEASE, Spring v4.3.3.RELEASE
+[INFO ] 2017-01-21 16:04:00,638 : Application - No active profile set, falling back to default profiles: default
+[INFO ] 2017-01-21 16:04:00,638 : Application - No active profile set, falling back to default profiles: default
+[INFO ] 2017-01-21 16:04:00,694 : AnnotationConfigEmbeddedWebApplicationContext - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@a530d0a: startup date [Sat Jan 21 16:04:00 CET 2017]; root of context hierarchy
+[INFO ] 2017-01-21 16:04:00,882 : Version - HV000001: Hibernate Validator 5.2.4.Final
+[INFO ] 2017-01-21 16:04:02,675 : TomcatEmbeddedServletContainer - Tomcat initialized with port(s): 12345 (http)
+[INFO ] 2017-01-21 16:04:02,690 : StandardService - Starting service Tomcat
+[INFO ] 2017-01-21 16:04:02,692 : StandardEngine - Starting Servlet Engine: Apache Tomcat/8.5.5
+[INFO ] 2017-01-21 16:04:02,805 : [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2017-01-21 16:04:02,805 : ContextLoader - Root WebApplicationContext: initialization completed in 2114 ms
+[INFO ] 2017-01-21 16:04:03,117 : ServletRegistrationBean - Mapping servlet: 'dispatcherServlet' to [/]
+[INFO ] 2017-01-21 16:04:03,124 : FilterRegistrationBean - Mapping filter: 'metricsFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,124 : FilterRegistrationBean - Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,124 : FilterRegistrationBean - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,125 : FilterRegistrationBean - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,125 : FilterRegistrationBean - Mapping filter: 'requestContextFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,125 : FilterRegistrationBean - Mapping filter: 'webRequestLoggingFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,126 : FilterRegistrationBean - Mapping filter: 'applicationContextIdFilter' to: [/*]
+[INFO ] 2017-01-21 16:04:03,506 : RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@a530d0a: startup date [Sat Jan 21 16:04:00 CET 2017]; root of context hierarchy
+[INFO ] 2017-01-21 16:04:03,594 : RequestMappingHandlerMapping - Mapped "{[/mbc/]}" onto public int hello.suribot.communication.mbc.NodeJsMBCReceiver.receivingMessage(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:04:03,596 : RequestMappingHandlerMapping - Mapped "{[/rbc/ || /rbc]}" onto public int hello.suribot.communication.recastConnector.RecastBotConnectorReceiver.receivingMessage(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:04:03,598 : RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO ] 2017-01-21 16:04:03,599 : RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO ] 2017-01-21 16:04:03,654 : SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:04:03,654 : SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:04:03,710 : SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO ] 2017-01-21 16:04:04,115 : EndpointHandlerMapping - Mapped "{[/info || /info.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,117 : EndpointHandlerMapping - Mapped "{[/metrics/{name:.*}],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.MetricsMvcEndpoint.value(java.lang.String)
+[INFO ] 2017-01-21 16:04:04,117 : EndpointHandlerMapping - Mapped "{[/metrics || /metrics.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,118 : EndpointHandlerMapping - Mapped "{[/dump || /dump.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,119 : EndpointHandlerMapping - Mapped "{[/health || /health.json],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.HealthMvcEndpoint.invoke(java.security.Principal)
+[INFO ] 2017-01-21 16:04:04,120 : EndpointHandlerMapping - Mapped "{[/trace || /trace.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,121 : EndpointHandlerMapping - Mapped "{[/mappings || /mappings.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,123 : EndpointHandlerMapping - Mapped "{[/beans || /beans.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,124 : EndpointHandlerMapping - Mapped "{[/autoconfig || /autoconfig.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,128 : EndpointHandlerMapping - Mapped "{[/env/{name:.*}],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EnvironmentMvcEndpoint.value(java.lang.String)
+[INFO ] 2017-01-21 16:04:04,128 : EndpointHandlerMapping - Mapped "{[/env || /env.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,129 : EndpointHandlerMapping - Mapped "{[/heapdump || /heapdump.json],methods=[GET],produces=[application/octet-stream]}" onto public void org.springframework.boot.actuate.endpoint.mvc.HeapdumpMvcEndpoint.invoke(boolean,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.io.IOException,javax.servlet.ServletException
+[INFO ] 2017-01-21 16:04:04,131 : EndpointHandlerMapping - Mapped "{[/configprops || /configprops.json],methods=[GET],produces=[application/json]}" onto public java.lang.Object org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter.invoke()
+[INFO ] 2017-01-21 16:04:04,251 : AnnotationMBeanExporter - Registering beans for JMX exposure on startup
+[INFO ] 2017-01-21 16:04:04,256 : EndpointMBeanExporter - Registering beans for JMX exposure on startup
+[INFO ] 2017-01-21 16:04:04,261 : DefaultLifecycleProcessor - Starting beans in phase 0
+[INFO ] 2017-01-21 16:04:04,268 : EndpointMBeanExporter - Located managed bean 'requestMappingEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=requestMappingEndpoint]
+[INFO ] 2017-01-21 16:04:04,296 : EndpointMBeanExporter - Located managed bean 'environmentEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=environmentEndpoint]
+[INFO ] 2017-01-21 16:04:04,302 : EndpointMBeanExporter - Located managed bean 'healthEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=healthEndpoint]
+[INFO ] 2017-01-21 16:04:04,306 : EndpointMBeanExporter - Located managed bean 'beansEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=beansEndpoint]
+[INFO ] 2017-01-21 16:04:04,311 : EndpointMBeanExporter - Located managed bean 'infoEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=infoEndpoint]
+[INFO ] 2017-01-21 16:04:04,316 : EndpointMBeanExporter - Located managed bean 'metricsEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=metricsEndpoint]
+[INFO ] 2017-01-21 16:04:04,328 : EndpointMBeanExporter - Located managed bean 'traceEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=traceEndpoint]
+[INFO ] 2017-01-21 16:04:04,358 : EndpointMBeanExporter - Located managed bean 'dumpEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=dumpEndpoint]
+[INFO ] 2017-01-21 16:04:04,368 : EndpointMBeanExporter - Located managed bean 'autoConfigurationReportEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=autoConfigurationReportEndpoint]
+[INFO ] 2017-01-21 16:04:04,372 : EndpointMBeanExporter - Located managed bean 'configurationPropertiesReportEndpoint': registering with JMX server as MBean [org.springframework.boot:type=Endpoint,name=configurationPropertiesReportEndpoint]
+[INFO ] 2017-01-21 16:04:04,392 : Http11NioProtocol - Initializing ProtocolHandler ["http-nio-12345"]
+[INFO ] 2017-01-21 16:04:04,404 : Http11NioProtocol - Starting ProtocolHandler [http-nio-12345]
+[INFO ] 2017-01-21 16:04:04,420 : NioSelectorPool - Using a shared selector for servlet write/read
+[INFO ] 2017-01-21 16:04:04,437 : TomcatEmbeddedServletContainer - Tomcat started on port(s): 12345 (http)
+[INFO ] 2017-01-21 16:04:04,442 : Application - Started Application in 4.19 seconds (JVM running for 4.961)
+[INFO ] 2017-01-21 16:04:04,442 : Application - Started Application in 4.19 seconds (JVM running for 4.961)

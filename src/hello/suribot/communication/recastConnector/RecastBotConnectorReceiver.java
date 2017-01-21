@@ -23,7 +23,9 @@ import hello.suribot.interfaces.IAiController;
 @RestController
 class RecastBotConnectorReceiver {
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getRootLogger();
+	private static final Logger logger2 = LogManager.getLogger();
+	private static final Logger logger3 = LogManager.getFormatterLogger();
 	
 	private IAiController nextStep;
 
@@ -44,6 +46,8 @@ class RecastBotConnectorReceiver {
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
 		    logger.info(json);
+		    logger2.info(json);
+		    logger3.info(json);
 		    printUserMessage(json);
 		    
 	    	String idUser = json.getString("senderId");
@@ -51,9 +55,12 @@ class RecastBotConnectorReceiver {
 	    	nextStep.sendMessage(json, message, idUser);
 		    
 	    } catch (JSONException e){
-	    	e.printStackTrace();
 	    	logger.info("No user message but a request has been received : ");
 	    	logger.info(sb.toString());
+	    	logger2.info("No user message but a request has been received : ");
+	    	logger2.info(sb.toString());
+	    	logger3.info("No user message but a request has been received : ");
+	    	logger3.info(sb.toString());
 	    } catch (Exception e){
 	    	e.printStackTrace();
 	    	return HttpStatus.SC_INTERNAL_SERVER_ERROR;
