@@ -139,3 +139,16 @@
 [INFO ] 2017-01-21 16:04:04,437 : TomcatEmbeddedServletContainer - Tomcat started on port(s): 12345 (http)
 [INFO ] 2017-01-21 16:04:04,442 : Application - Started Application in 4.19 seconds (JVM running for 4.961)
 [INFO ] 2017-01-21 16:04:04,442 : Application - Started Application in 4.19 seconds (JVM running for 4.961)
+[INFO ] 2017-01-21 16:13:29,631 : [/] - Initializing Spring FrameworkServlet 'dispatcherServlet'
+[INFO ] 2017-01-21 16:13:29,632 : DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization started
+[INFO ] 2017-01-21 16:13:29,652 : DispatcherServlet - FrameworkServlet 'dispatcherServlet': initialization completed in 20 ms
+[INFO ] 2017-01-21 16:13:29,829 :  - No user message but a request has been received : 
+[INFO ] 2017-01-21 16:13:29,829 :  - 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - No user message but a request has been received : 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - No user message but a request has been received : 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - No user message but a request has been received : 
+[INFO ] 2017-01-21 16:13:29,829 : RecastBotConnectorReceiver - No user message but a request has been received : 
+[INFO ] 2017-01-21 16:13:29,830 : RecastBotConnectorReceiver - 
+[INFO ] 2017-01-21 16:13:29,830 : RecastBotConnectorReceiver - 

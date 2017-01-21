@@ -21,7 +21,7 @@
         </Console>
 	</Appenders>
 	<Loggers>
-		<Logger name="hello.suribot" level="debug">
+		<Logger name="suribot" level="debug">
 			<AppenderRef ref="file-log"/>
 		</Logger>
 		<Root level="info">

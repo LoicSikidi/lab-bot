@@ -45,9 +45,9 @@ class RecastBotConnectorReceiver {
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
-		    logger.info(json);
-		    logger2.info(json);
-		    logger3.info(json);
+		    logger.info("1"+json);
+		    logger2.info("2"+json);
+		    logger3.info("3"+json);
 		    printUserMessage(json);
 		    
 	    	String idUser = json.getString("senderId");
@@ -55,11 +55,11 @@ class RecastBotConnectorReceiver {
 	    	nextStep.sendMessage(json, message, idUser);
 		    
 	    } catch (JSONException e){
-	    	logger.info("No user message but a request has been received : ");
+	    	logger.info("1No user message but a request has been received : ");
 	    	logger.info(sb.toString());
-	    	logger2.info("No user message but a request has been received : ");
+	    	logger2.info("2No user message but a request has been received : ");
 	    	logger2.info(sb.toString());
-	    	logger3.info("No user message but a request has been received : ");
+	    	logger3.info("3No user message but a request has been received : ");
 	    	logger3.info(sb.toString());
 	    } catch (Exception e){
 	    	e.printStackTrace();
