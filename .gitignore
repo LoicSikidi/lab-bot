@@ -6,4 +6,4 @@
 */node_modules/
 .buildpath
 /JsonMemory/*.json
-/logs/*
+/logs/*.log
