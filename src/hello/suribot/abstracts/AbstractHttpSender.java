@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 /**
@@ -16,6 +18,8 @@ import org.json.JSONObject;
  * L'utilisation de ces méthodes se fait en étandant ces méthodes.
  */
 public abstract class AbstractHttpSender {
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	/**
 	 * Send GET request and return response body
@@ -51,7 +55,7 @@ public abstract class AbstractHttpSender {
 	 * @param requestPropertyKey
 	 * @param requestProperty
 	 * @param params
-	 * @return
+	 * @return the response
 	 * @throws Exception
 	 */
 	protected String sendPost(String url, String text, String requestPropertyKey, 
@@ -89,8 +93,7 @@ public abstract class AbstractHttpSender {
 			response = sb.toString();
 
 		}else{  
-			//TODO: Log system ?
-			System.out.println("sendPost : "+con.getResponseMessage());  
+			logger.error("sendPost : "+con.getResponseMessage());  
 		}  
 
 		return response;

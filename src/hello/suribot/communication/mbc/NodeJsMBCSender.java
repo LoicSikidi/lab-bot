@@ -1,5 +1,7 @@
 package hello.suribot.communication.mbc;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,8 @@ import hello.suribot.utils.EnvVar;
  */
 public class NodeJsMBCSender extends AbstractHttpSender{
 	
+	private static final Logger logger = LogManager.getLogger();
+	
 	public void sendMessage(JSONObject json, String message){
 		try {
 			json.put("text", message);
@@ -20,11 +24,11 @@ public class NodeJsMBCSender extends AbstractHttpSender{
 			try {
 				sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
 			} catch (Exception e1) {
-				System.out.println("NodeJsMBCSender : Message "+message+" not send... ");
+				logger.error("NodeJsMBCSender : Message "+message+" not send... ");
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
-			System.out.println("NodeJsMBCSender : Message "+message+" not send... ");
+			logger.error("NodeJsMBCSender : Message "+message+" not send... ");
 			e.printStackTrace();
 		}
 	}

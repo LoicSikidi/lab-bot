@@ -6,6 +6,8 @@ import java.io.Reader;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import hello.suribot.interfaces.IAiController;
 @RequestMapping("rbc")
 @RestController
 class RecastBotConnectorReceiver {
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	private IAiController nextStep;
 
@@ -39,7 +43,7 @@ class RecastBotConnectorReceiver {
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
-		    System.out.println(json);
+		    logger.info(json);
 		    printUserMessage(json);
 		    
 	    	String idUser = json.getString("senderId");
@@ -48,8 +52,8 @@ class RecastBotConnectorReceiver {
 		    
 	    } catch (JSONException e){
 	    	e.printStackTrace();
-	    	System.out.println("No user message but a request has been received : ");
-	    	System.out.println(sb.toString());
+	    	logger.info("No user message but a request has been received : ");
+	    	logger.info(sb.toString());
 	    } catch (Exception e){
 	    	e.printStackTrace();
 	    	return HttpStatus.SC_INTERNAL_SERVER_ERROR;
@@ -58,7 +62,7 @@ class RecastBotConnectorReceiver {
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
-		System.out.println("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
+		logger.info("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
 	}
 	
 }

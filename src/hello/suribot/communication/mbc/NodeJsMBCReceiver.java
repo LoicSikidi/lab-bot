@@ -6,6 +6,8 @@ import java.io.Reader;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import hello.suribot.communication.ai.AiController;
 @RequestMapping("mbc")
 @RestController
 class NodeJsMBCReceiver{
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	private AiController nextStep;
 
@@ -48,8 +52,8 @@ class NodeJsMBCReceiver{
 		    
 	    } catch (JSONException e){
 	    	e.printStackTrace();
-	    	System.out.println("No user message but a request has been received : ");
-	    	System.out.println(sb.toString());
+	    	logger.info("No user message but a request has been received : ");
+	    	logger.info(sb.toString());
 	    } catch (Exception e){
 	    	e.printStackTrace();
 	    	return HttpStatus.SC_INTERNAL_SERVER_ERROR;
@@ -58,7 +62,7 @@ class NodeJsMBCReceiver{
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
-		System.out.println("User message : "+json.getString("text"));
+		logger.info("User message : "+json.getString("text"));
 	}
 	
 }

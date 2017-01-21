@@ -1,6 +1,8 @@
 package hello.suribot.communication.ai;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,8 @@ import hello.suribot.utils.EnvVar;
  * et d'analyser la réponse obtenue.
  */
 public class AiController extends AbstractHttpSender implements IAiController{
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	private IIntentsAnalyzer nextStep;
 
@@ -46,8 +50,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 			nextStep.analyzeIntents(json, intents, idUser, true);
 
 		} catch (Exception e) {
-			// TODO: Log System ?
-			System.out.println("AiController : Message \""+message+"\" not send... ("+e+")");
+			logger.error("AiController : Message \""+message+"\" not send... ("+e+")");
 		}
 	}
 

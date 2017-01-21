@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,8 @@ import hello.suribot.utils.EnvVar;
  */
 public class RecastBotConnectorSender extends AbstractHttpSender implements IRecastBotConnectorSender{
 	
+	private static final Logger logger = LogManager.getLogger();
+	
 	/* (non-Javadoc)
 	 * @see interfaces.IRecastBotConnectorSender#sendMessage(org.json.JSONObject, java.lang.String)
 	 */
@@ -31,16 +35,16 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 			callRecastBotConnector(response,idConv);
 		} catch (JSONException e) {
 			if(idConv.isEmpty()){ //Impossible de récupérer l'id de la conversation
-				System.out.println("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
+				logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
 			}else{  //Erreur lors de la création du JSON dans callRecastBotConnector on envoie donc un message à l'utilisateur
 				try {
 					callRecastBotConnector(new Response("Demande incomprise"),idConv);
 				} catch (Exception e2) { //Impossible d'envoyer le message
-					System.out.println("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
+					logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
+			logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
 			e.printStackTrace();
 		}
 	}

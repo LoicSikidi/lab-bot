@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,6 +21,8 @@ import org.json.simple.parser.ParseException;
  * Classe de mémorisation des données des utilisateurs (similaire à une BDD), sous forme de fichier ".json".
  */
 public class JSONMemory {
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	private static final String DIR = System.getProperty("user.dir")+File.separator+"JsonMemory"+File.separator;
 	private static final String EXTENSION_FILE = ".json";
@@ -206,8 +210,7 @@ public class JSONMemory {
 				Files.createFile(Paths.get(DIR+idUser+EXTENSION_FILE));
 			}
 		} catch (Exception e){
-			// TODO: Log System ?
-			System.out.println("Cannot create "+idUser+EXTENSION_FILE+" file");
+			logger.error("Cannot create "+idUser+EXTENSION_FILE+" file");
 			e.printStackTrace();
 		}
 	}

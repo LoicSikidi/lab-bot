@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,9 +30,12 @@ import hello.suribot.response.ResponseGenerator;
  */
 public class IntentsAnalyzer implements IIntentsAnalyzer{
 	
+	private static final Logger logger = LogManager.getLogger();
+	
 	public static final String SUCCESS = "success";
 	public static final String MISSINGPARAMS = "missingparams";
 	
+	// voir les intents de l'AI
 	public static final String CONTRAT = "contrat";
 	
 	private IRecastBotConnectorSender nextToCall;
@@ -86,7 +91,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					try {
 						rep = apicontroller.send(js.getString(ApiUrls.URITOCALL.name()));
 					} catch (IOException e) {
-						System.out.println("APIController : Message with url \""+js.getString(ApiUrls.URITOCALL.name())+"\" not send... ("+e+")");
+						logger.error("APIController : Message with url \""+js.getString(ApiUrls.URITOCALL.name())+"\" not send... ("+e+")");
 						rep = null;
 					}
 					isChoice=analyzer.isChoice();
