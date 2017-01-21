@@ -63,7 +63,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>hello/suribot/Application</start-class>
+		<start-class>hello.suribot.Application</start-class>
 	</properties>
 
 	<build>
