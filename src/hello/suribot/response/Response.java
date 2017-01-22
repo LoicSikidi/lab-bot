@@ -39,12 +39,12 @@ public class Response {
 		this.message = message;
 	}
 	
-	public void addNewTextAtTheBegin(String text){
+	public void concatMessageAtTheBegin(String text){
 		if(message!=null) message=text+message;
 		else message = text;
 	}
 	
-	public void addNewTextAtTheEnd(String text){
+	public void concatMessageAtTheEnd(String text){
 		if(message!=null) message+=text;
 		else message = text;
 	}
@@ -66,10 +66,7 @@ public class Response {
 	}
 	
 	public void addChoice(String newChoice){
-		if(listChoice!=null)listChoice.add(newChoice);
-		else{
-			listChoice=new ArrayList<>();
-			listChoice.add(newChoice);
-		}
+		if(listChoice==null) listChoice = new ArrayList<>();
+		listChoice.add(newChoice);
 	}
 }

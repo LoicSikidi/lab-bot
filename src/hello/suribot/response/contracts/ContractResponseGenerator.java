@@ -88,7 +88,7 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		String mess = messages.getString(key.toString());
 		
 		Response response = extractInfos(key, params);
-		response.addNewTextAtTheBegin(mess);
+		response.concatMessageAtTheBegin(mess);
 		return response;
 	}
 
