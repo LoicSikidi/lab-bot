@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import ai.api.AIServiceException;
 import hello.suribot.communication.ai.AiController;
+import hello.suribot.utils.EnvVar;
 
 public class AiControllerTest {
 	
@@ -26,12 +27,11 @@ public class AiControllerTest {
 		} catch (IllegalArgumentException | AIServiceException e) {
 			assertTrue(true);
 		}
-//		TODO: trouver un moyen de faire connaitre à Travis les variables d'environnement pour les tests
-//		try {
-//			controller.callApiAi("message", EnvVar.TOKENAPIAI.getValue(), "fr");
-//		} catch (AIServiceException e) {
-//			assertTrue(true);
-//		}
+		try {
+			controller.callApiAi("message", EnvVar.TOKENAPIAI.getValue(), "fr");
+		} catch (AIServiceException e) {
+			assertTrue(true);
+		}
 	}
 	
 	@Test

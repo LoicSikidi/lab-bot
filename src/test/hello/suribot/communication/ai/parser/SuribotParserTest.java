@@ -1,10 +1,14 @@
 package test.hello.suribot.communication.ai.parser;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
+import ai.api.AIServiceException;
+import hello.suribot.communication.ai.AiController;
 import hello.suribot.communication.ai.parser.SuribotParser;
+import hello.suribot.utils.EnvVar;
 
 public class SuribotParserTest {
 	
@@ -12,23 +16,21 @@ public class SuribotParserTest {
 	public void parseApiAiTest(){
 		SuribotParser parser = new SuribotParser();
 		assertNull(parser.parseApiAi(null));
-//		TODO: trouver un moyen de faire connaitre à Travis les variables d'environnement pour les tests
-//		try {
-//			AiController controller = new AiController();
-//			controller.callApiAi("", EnvVar.TOKENAPIAI.getValue(), null);
-//		} catch (AIServiceException | IllegalStateException ise){
-//			assertTrue(true);
-//		}
+		try {
+			AiController controller = new AiController();
+			controller.callApiAi("", EnvVar.TOKENAPIAI.getValue(), null);
+		} catch (AIServiceException | IllegalStateException ise){
+			assertTrue(true);
+		}
 	}
 	
 	@Test
 	public void parseRecastTest(){
 		SuribotParser parser = new SuribotParser();
 		assertNull(parser.parseRecast(null));
-//		TODO: trouver un moyen de faire connaitre à Travis les variables d'environnement pour les tests
-//		AiController controller = new AiController();
-//		JSONObject resp = controller.callRecast("", EnvVar.TOKENRECAST.getValue(), null);
-//		assertNull(parser.parseRecast(resp));
+		AiController controller = new AiController();
+		JSONObject resp = controller.callRecast("", EnvVar.TOKENRECAST.getValue(), null);
+		assertNull(parser.parseRecast(resp));
 	}
 	
 }
