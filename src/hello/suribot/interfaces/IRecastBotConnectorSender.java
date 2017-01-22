@@ -10,7 +10,8 @@ public interface IRecastBotConnectorSender {
 	 * Send a message to RecastBotConnector (using configured tokens, etc...)
 	 * @param json
 	 * @param message
+	 * @return la reussite de l'envoi 
 	 */
-	void sendMessage(JSONObject json, Response response);
+	boolean sendMessage(JSONObject json, Response response);
 
 }

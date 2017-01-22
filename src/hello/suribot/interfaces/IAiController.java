@@ -11,7 +11,8 @@ public interface IAiController {
 	 * @param json 
 	 * @param message
 	 * @param idUser 
+	 * @return reussite ou non
 	 */
-	void sendMessage(JSONObject json, String message, String idUser);
+	boolean sendMessage(JSONObject json, String message, String idUser);
 
 }

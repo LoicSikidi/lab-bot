@@ -36,30 +36,33 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	 * @see hello.suribot.communication.ai.IAiController#sendMessage(org.json.JSONObject, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void sendMessage(final JSONObject json, String message, String idUser){
+	public boolean sendMessage(final JSONObject json, String message, String idUser){
 		try {
 			String language = "fr";
 			JSONObject intents = null;
+			SuribotParser parser = new SuribotParser();
  			if(message.toLowerCase().contains("api")){ // call API.ai
 				AIResponse response = callApiAi(message, EnvVar.TOKENAPIAI.getValue(), language);
-				intents = new SuribotParser().parseApiAi(response);
+				intents = parser.parseApiAi(response);
 			} else { // call Recast.ai
 				intents = callRecast(message, EnvVar.TOKENRECAST.getValue(), language);
-				intents = new SuribotParser().parseRecast(intents);
+				intents = parser.parseRecast(intents);
 			}
 			nextStep.analyzeIntents(json, intents, idUser, true);
+			return true;
 
 		} catch (Exception e) {
 			logger.error("AiController : Message \""+message+"\" not send... ("+e+")");
 		}
+		return false;
 	}
 
-	private AIResponse callApiAi(String message, String tokenapiai, String langue) throws AIServiceException {
+	public AIResponse callApiAi(String message, String tokenapiai, String langue) throws AIServiceException {
 		AIConfiguration ai = new AIConfiguration(tokenapiai);
 		return new AIDataService(ai).request(new AIRequest(message));
 	}
 
-	private JSONObject callRecast(String text, String token, String language) throws JSONException{
+	public JSONObject callRecast(String text, String token, String language) throws JSONException{
 		String response = null;
 		try {
 			response = sendPost("https://api.recast.ai/v2/request", text, "Authorization", "Token "+token, "language="+language);

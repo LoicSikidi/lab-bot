@@ -15,22 +15,22 @@ public class NodeJsMBCSender extends AbstractHttpSender{
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	public void sendMessage(JSONObject json, String message){
+	public boolean sendMessage(JSONObject json, String message){
 		try {
 			json.put("text", message);
 			sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
+			return true;
 		} catch (JSONException e) {
 			json.put("text", "Demande incomprise");
 			try {
 				sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
 			} catch (Exception e1) {
-				logger.error("NodeJsMBCSender : Message "+message+" not send... ");
-				e.printStackTrace();
+				logger.error("NodeJsMBCSender : Message "+message+" not send... : "+e);
 			}
 		} catch (Exception e) {
-			logger.error("NodeJsMBCSender : Message "+message+" not send... ");
-			e.printStackTrace();
+			logger.error("NodeJsMBCSender : Message "+message+" not send... : "+e);
 		}
+		return false;
 	}
 
 }

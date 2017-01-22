@@ -74,7 +74,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 			
 			//Par défaut la langue du bot est le français, si la langue détectée n'est pas le français alors 
 			//on charge un autre fichier de properties.
-			if( !language.equals("fr") ) this.responsegenerator = new ResponseGenerator(language);
+			if( !language.equals("fr") ) this.responsegenerator = new ResponseGenerator();
 			Response responseToMBC = null;
 			boolean demandeComprise = false;
 			

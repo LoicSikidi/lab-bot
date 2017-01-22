@@ -28,11 +28,12 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 	 */
 	@Override
 	//TODO: A modifier
-	public void sendMessage(JSONObject json, Response response){
+	public boolean sendMessage(JSONObject json, Response response){
 		String idConv = "";
 		try {
 			idConv = json.getJSONObject("message").getString("conversation");
 			callRecastBotConnector(response,idConv);
+			return true;
 		} catch (JSONException e) {
 			if(idConv.isEmpty()){ //Impossible de récupérer l'id de la conversation
 				logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
@@ -40,16 +41,16 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 				try {
 					callRecastBotConnector(new Response("Demande incomprise"),idConv);
 				} catch (Exception e2) { //Impossible d'envoyer le message
-					logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
+					logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... : "+e);
 				}
 			}
 		} catch (Exception e) {
-			logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
-			e.printStackTrace();
+			logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... : "+e);
 		}
+		return false;
 	}
 	
-	public void callRecastBotConnector(Response response, String idConv) throws Exception {
+	private void callRecastBotConnector(Response response, String idConv) throws Exception {
 		Map<String, String> property = new HashMap<String,String>();
 		property.put("Authorization", EnvVar.RBCTOKEN.getValue());
 		property.put("Content-Type", "application/json");
