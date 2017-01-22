@@ -3,14 +3,18 @@ package hello.suribot.communication.ai.parser;
 /**
  * Toutes les clefs JSON des réponses de Recast.ai
  */
-public abstract class RecastKeys {
+public enum RecastKeys {
 
-	private RecastKeys(){}
+	RESULTS("results"),
+	ENTITIES("entities"),
+	INTENTS("intents"),
+	SLUG("slug"),
+	VALUES("raw"),
+	LANGUAGE("language");
 	
-	static final String RESULTS = "results";
-	static final String ENTITIES = "entities";
-	static final String INTENTS = "intents";
-	static final String SLUG = "slug";
-	static final String VALUES = "raw";
-	static final String LANGUAGE = "language";
+	public String value;
+	
+	RecastKeys(String val){
+		this.value=val;
+	}
 }

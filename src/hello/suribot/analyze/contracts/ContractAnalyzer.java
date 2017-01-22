@@ -152,10 +152,10 @@ public class ContractAnalyzer implements IContractAnalyzer {
 				if(toApply != null){
 					try{
 						//On essaye de récupérer le complement bien formulé (objet {number}, prelevement {number})
-						return entities.getJSONArray(toApply).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+						return entities.getJSONArray(toApply).getJSONObject(0).getString(SuribotKeys.VALUES.value).replaceAll("[^0-9]+", "");
 					}catch(JSONException e){
 						//Si le complément n'est pas formulé directement on regarde si l'utilisateur n'a pas entré qu'un numéro
-						return entities.getJSONArray(NOMBRE).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+						return entities.getJSONArray(NOMBRE).getJSONObject(0).getString(SuribotKeys.VALUES.value).replaceAll("[^0-9]+", "");
 					}
 				}
 			}catch(JSONException e){
@@ -166,6 +166,6 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	}
 
 	private String getContractId(JSONObject entities) throws JSONException, ClassCastException{
-		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(SuribotKeys.VALUES).replaceAll("[^0-9]+", "");
+		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(SuribotKeys.VALUES.value).replaceAll("[^0-9]+", "");
 	}
 }

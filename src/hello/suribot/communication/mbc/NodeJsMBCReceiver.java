@@ -44,11 +44,8 @@ class NodeJsMBCReceiver{
 		    JSONObject json = new JSONObject(sb.toString());
 		    printUserMessage(json);
 		    
-		    new Thread(() -> { // async call
-		    	String idUser = json.getJSONObject("user").getString("id").split(":")[0]; // TODO : à améliorer
-		    	nextStep.sendMessage(json, json.getString("text"), idUser);
-		    }).start();
-		   
+	    	String idUser = json.getJSONObject("user").getString("id").split(":")[0];
+	    	nextStep.sendMessage(json, json.getString("text"), idUser);
 		    
 	    } catch (JSONException e){
 	    	e.printStackTrace();

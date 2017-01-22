@@ -231,9 +231,9 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		if(recastJson != null){
 			try{
 				jsonResult = new JSONObject();
-				jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
-				JSONArray ja = (JSONArray) jsonResult.get(SuribotKeys.INTENTS);
-				if(ja != null) return ja.getJSONObject(0).getString(SuribotKeys.SLUG);
+				jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+				JSONArray ja = (JSONArray) jsonResult.get(SuribotKeys.INTENTS.value);
+				if(ja != null) return ja.getJSONObject(0).getString(SuribotKeys.SLUG.value);
 			}catch(JSONException e){
 				return null;
 			}
@@ -244,8 +244,8 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	private static JSONObject getEntities(JSONObject recastJson){
 		JSONObject jsonResult = new JSONObject();
 		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
-			jsonResult = (JSONObject) jsonResult.get(SuribotKeys.ENTITIES);
+			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+			jsonResult = (JSONObject) jsonResult.get(SuribotKeys.ENTITIES.value);
 			return jsonResult;
 		}
 		return null;
@@ -254,8 +254,8 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	private static String getLanguage(JSONObject recastJson){
 		JSONObject jsonResult = new JSONObject();
 		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS);
-			return jsonResult.getString(SuribotKeys.LANGUAGE);
+			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+			return jsonResult.getString(SuribotKeys.LANGUAGE.value);
 		}
 		return null;
 	}

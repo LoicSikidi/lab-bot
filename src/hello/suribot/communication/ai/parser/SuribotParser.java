@@ -35,7 +35,7 @@ public class SuribotParser {
 				tmp = new JSONObject();		
 				
 				//Dans la suite du code on utilise l'attribut raw de l'intent
-				tmp.put(SuribotKeys.VALUES, parameter.get(elem).getAsString());	
+				tmp.put(SuribotKeys.VALUES.value, parameter.get(elem).getAsString());	
 				arrayEntitiesTmp.put(tmp);
 
 				entities.put(elem, arrayEntitiesTmp);
@@ -44,16 +44,16 @@ public class SuribotParser {
 		
 		JSONArray arrayIntent = new JSONArray();
 		JSONObject tmp = new JSONObject();
-		tmp.put(SuribotKeys.SLUG, response.getResult().getMetadata().getIntentName());
+		tmp.put(SuribotKeys.SLUG.value, response.getResult().getMetadata().getIntentName());
 		arrayIntent.put(tmp);
 		
 		JSONObject result = new JSONObject();
-		result.put(SuribotKeys.INTENTS, arrayIntent);
-		result.put(SuribotKeys.ENTITIES, entities);
-		result.put(SuribotKeys.LANGUAGE, "fr");
+		result.put(SuribotKeys.INTENTS.value, arrayIntent);
+		result.put(SuribotKeys.ENTITIES.value, entities);
+		result.put(SuribotKeys.LANGUAGE.value, "fr");
 		
 		JSONObject parsed = new JSONObject();
-		parsed.put(SuribotKeys.RESULTS, result);
+		parsed.put(SuribotKeys.RESULTS.value, result);
 		
 		return parsed;
 	}
@@ -65,20 +65,20 @@ public class SuribotParser {
 	 */
 	public JSONObject parseRecast(JSONObject response){
 		if(response != null && response.length()!=0
-				&& response.has(RecastKeys.RESULTS)){
+				&& response.has(RecastKeys.RESULTS.value)){
 			
-			JSONObject resultObject = response.getJSONObject(RecastKeys.RESULTS);
+			JSONObject resultObject = response.getJSONObject(RecastKeys.RESULTS.value);
 
 			// récupération du slug
 			JSONArray arrayIntent = new JSONArray();
 			{
-				JSONArray intentsObject = resultObject.getJSONArray(RecastKeys.INTENTS);
+				JSONArray intentsObject = resultObject.getJSONArray(RecastKeys.INTENTS.value);
 				if(intentsObject != null && intentsObject.length()!=0){
 				
-					String slug = intentsObject.getJSONObject(0).getString(RecastKeys.SLUG);
+					String slug = intentsObject.getJSONObject(0).getString(RecastKeys.SLUG.value);
 					
 					JSONObject slugObject = new JSONObject();
-					slugObject.put(SuribotKeys.SLUG, slug);
+					slugObject.put(SuribotKeys.SLUG.value, slug);
 					arrayIntent.put(slugObject);
 				}
 			}
@@ -86,16 +86,16 @@ public class SuribotParser {
 			// récupération des entities
 			JSONObject entities = new JSONObject();
 			{
-				JSONObject entitiesObject = resultObject.getJSONObject(RecastKeys.ENTITIES);
+				JSONObject entitiesObject = resultObject.getJSONObject(RecastKeys.ENTITIES.value);
  				if(entitiesObject != null){
 					JSONObject contentEntity;
 					String raw;
 					JSONObject oneEntityRaw;
 					for(String key : entitiesObject.keySet()){
 						contentEntity = entitiesObject.getJSONArray(key).getJSONObject(0);
-						raw = contentEntity.getString(RecastKeys.VALUES);
+						raw = contentEntity.getString(RecastKeys.VALUES.value);
 						oneEntityRaw = new JSONObject();
-						oneEntityRaw.put(SuribotKeys.VALUES, raw);
+						oneEntityRaw.put(SuribotKeys.VALUES.value, raw);
 						
 						JSONArray rawArray = new JSONArray();
 						rawArray.put(oneEntityRaw);
@@ -105,15 +105,15 @@ public class SuribotParser {
 			}
 
 			// récupération du langage
-			String language = resultObject.getString(RecastKeys.LANGUAGE);
+			String language = resultObject.getString(RecastKeys.LANGUAGE.value);
 		
 			JSONObject result = new JSONObject();
-			result.put(SuribotKeys.INTENTS, arrayIntent);
-			result.put(SuribotKeys.ENTITIES, entities);
-			result.put(SuribotKeys.LANGUAGE, language);
+			result.put(SuribotKeys.INTENTS.value, arrayIntent);
+			result.put(SuribotKeys.ENTITIES.value, entities);
+			result.put(SuribotKeys.LANGUAGE.value, language);
 			
 			JSONObject parsed = new JSONObject();
-			parsed.put(SuribotKeys.RESULTS, result);
+			parsed.put(SuribotKeys.RESULTS.value, result);
 			return parsed;
 		}
 		
