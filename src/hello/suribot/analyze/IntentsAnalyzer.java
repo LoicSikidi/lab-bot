@@ -55,7 +55,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	 * @see hello.suribot.analyze.IIntentsAnalyzer#analyzeIntents(org.json.JSONObject, org.json.JSONObject, java.lang.String, boolean)
 	 */
 	@Override
-	public void analyzeIntents(JSONObject mbc_json, JSONObject recastJson, String idUser, boolean firstTraitement) {
+	public void analyzeIntents(JSONObject fullJSon, JSONObject intents, String idUser, boolean firstTraitement) {
 		String contexte = null;
 		String language = null;
 		JSONObject entities = null;
@@ -63,19 +63,19 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		try{
 			
 			if(firstTraitement){
-				contexte = getContext(recastJson);
-				entities = getEntities(recastJson);
-				language = getLanguage(recastJson);
+				contexte = getContext(intents);
+				entities = getEntities(intents);
+				language = getLanguage(intents);
 			} else {
-				contexte = recastJson.getString(JSONMemory.CONTEXTE);
-				entities = recastJson.getJSONObject(JSONMemory.ENTITIES);
-				language = recastJson.getString(JSONMemory.LANGUAGE);
+				contexte = intents.getString(JSONMemory.CONTEXTE);
+				entities = intents.getJSONObject(JSONMemory.ENTITIES);
+				language = intents.getString(JSONMemory.LANGUAGE);
 			}
 			
 			//Par défaut la langue du bot est le français, si la langue détectée n'est pas le français alors 
 			//on charge un autre fichier de properties.
 			if( !language.equals("fr") ) this.responsegenerator = new ResponseGenerator();
-			Response responseToMBC = null;
+			Response responseToSender = null;
 			boolean demandeComprise = false;
 			
 			if(contexte != null && contexte.equals(CONTRAT)){
@@ -96,8 +96,8 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					}
 					isChoice=analyzer.isChoice();
 					
-					if(rep == null  || rep.isEmpty()) responseToMBC = responsegenerator.generateInternalErrorMessage();
-					else responseToMBC = responsegenerator.generateUnderstoodMessage(CONTRAT, analyzer.getCalledMethod().toString(), isChoice, rep);
+					if(rep == null  || rep.isEmpty()) responseToSender = responsegenerator.generateInternalErrorMessage();
+					else responseToSender = responsegenerator.generateUnderstoodMessage(CONTRAT, analyzer.getCalledMethod().toString(), isChoice, rep);
 					demandeComprise = true;
 					
 				}else if(js.has(MISSINGPARAMS)){
@@ -107,9 +107,9 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 							missingParams.add(MissingAnalyzerParam.valueOf(oneMissingParam.toString()));
 						}
 						if(missingParams.size()==1){
-							responseToMBC = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));
+							responseToSender = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));
 						} else if(missingParams.size()>1){
-							responseToMBC = responsegenerator.generateMessageButMissArgs(missingParams);
+							responseToSender = responsegenerator.generateMessageButMissArgs(missingParams);
 						}
 					} catch (Exception e){}
 				
@@ -126,23 +126,23 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					if(stringLastIntent==null || stringLastIntent.isEmpty()){
 						// Demande incomprise et il n'y a pas d'ancienne demande en attente, 
 						// donc on arrete le traitement  et envoie une erreur a SS5
-						recastJson = getEntities(recastJson);
-						JSONMemory.putLastEntities(idUser, recastJson.toString());
+						intents = getEntities(intents);
+						JSONMemory.putLastEntities(idUser, intents.toString());
 						if(contexte != null && !contexte.isEmpty()) JSONMemory.putContext(idUser, contexte);
-						if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()){
-							nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
+						if(responseToSender==null || responseToSender.getMessage()==null || responseToSender.getMessage().isEmpty()){
+							nextToCall.sendMessage(fullJSon, responsegenerator.generateNotUnderstoodMessage());
 							return;
 						} else {
-							nextToCall.sendMessage(mbc_json, responseToMBC);
+							nextToCall.sendMessage(fullJSon, responseToSender);
 							return;
 						}
 					}
 					//On essaye de completer l'ancienne demande présente avec les nouvelles données reçues
 					JSONObject lastIntent = new JSONObject(stringLastIntent);
-					JSONObject newRequest = generateNewRequestWithLastEntities(recastJson, lastIntent);
+					JSONObject newRequest = generateNewRequestWithLastEntities(intents, lastIntent);
 					JSONMemory.removeLastEntities(idUser);
 					if(contexte != null && !contexte.isEmpty()) newRequest.put(JSONMemory.CONTEXTE, contexte);
-					analyzeIntents(mbc_json, newRequest, idUser, false);
+					analyzeIntents(fullJSon, newRequest, idUser, false);
 				}else{
 					// Ce n'est pas le premier traitement de la demande de l'utilisateur
 					
@@ -150,14 +150,14 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					// donc on arrete le traitement  et envoie une erreur a SS5
 					JSONMemory.putLastEntities(idUser, entities.toString());
 					JSONMemory.putContext(idUser, contexte);
-					if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()) responseToMBC = responsegenerator.generateNotUnderstoodMessage();
-					nextToCall.sendMessage(mbc_json, responseToMBC);
+					if(responseToSender==null || responseToSender.getMessage()==null || responseToSender.getMessage().isEmpty()) responseToSender = responsegenerator.generateNotUnderstoodMessage();
+					nextToCall.sendMessage(fullJSon, responseToSender);
 					return;
 				}
 			} else { // demande comprise
 				if(firstTraitement && isChoice){
 					//si la demande est un choix on stocke la demande pour y ajouter eventuellement 
-					entities = getEntities(recastJson);
+					entities = getEntities(intents);
 					if(entities!=null) JSONMemory.putLastEntities(idUser, entities.toString());
 					JSONMemory.putContext(idUser, contexte);
 				}else{
@@ -165,10 +165,10 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					JSONMemory.removeLastContext(idUser);
 				}
 					
-				if(responseToMBC==null || responseToMBC.getMessage()==null || responseToMBC.getMessage().isEmpty()){
-					nextToCall.sendMessage(mbc_json, responsegenerator.generateNotUnderstoodMessage());
+				if(responseToSender==null || responseToSender.getMessage()==null || responseToSender.getMessage().isEmpty()){
+					nextToCall.sendMessage(fullJSon, responsegenerator.generateNotUnderstoodMessage());
 				} else {
-					nextToCall.sendMessage(mbc_json, responseToMBC);
+					nextToCall.sendMessage(fullJSon, responseToSender);
 				}
 			}
 		}catch(JSONException e){
@@ -179,22 +179,22 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 				if(stringLastEntities==null || stringLastEntities.isEmpty()){
 					//Demande incomprise et il n'y a pas d'ancienne demande en attente
 					//donc on arrete le traitement  et envoie une erreur a SS5
-					JSONMemory.putLastEntities(idUser, recastJson.toString());
-					Response responseToMBC = responsegenerator.generateNotUnderstoodMessage();
-					nextToCall.sendMessage(mbc_json, responseToMBC);
+					JSONMemory.putLastEntities(idUser, intents.toString());
+					Response responseToSender = responsegenerator.generateNotUnderstoodMessage();
+					nextToCall.sendMessage(fullJSon, responseToSender);
 					return;
 				}
 				JSONObject lastEntities = new JSONObject(stringLastEntities);
-				JSONObject newRequest = generateNewRequestWithLastEntities(recastJson, lastEntities);
+				JSONObject newRequest = generateNewRequestWithLastEntities(intents, lastEntities);
 				JSONMemory.removeLastEntities(idUser);
-				analyzeIntents(mbc_json, newRequest, idUser, false);
+				analyzeIntents(fullJSon, newRequest, idUser, false);
 			}else{
 				//Demande incomprise et il n'y a pas d'ancienne demande en attente
 				//donc on arrete le traitement  et envoie une erreur a SS5
 				if(entities != null) JSONMemory.putLastEntities(idUser, entities.toString());
 				JSONMemory.putContext(idUser, contexte);
-				Response responseToMBC = responsegenerator.generateNotUnderstoodMessage();
-				nextToCall.sendMessage(mbc_json, responseToMBC);
+				Response responseToSender = responsegenerator.generateNotUnderstoodMessage();
+				nextToCall.sendMessage(fullJSon, responseToSender);
 			}
 		}
 	}

@@ -15,7 +15,7 @@ import hello.suribot.response.contracts.ContractResponseGenerator;
 import hello.suribot.response.contracts.IContractResponseGenerator;
 
 /**
- * Classe permettant de générer des réponses (à S.S.1 communication MBC) suivant les données fournies.
+ * Classe permettant de générer des réponses (à S.S.1 communication avec un bot connector) suivant les données fournies.
  */
 public class ResponseGenerator implements IResponseGenerator{
 	
