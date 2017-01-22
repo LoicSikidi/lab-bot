@@ -28,7 +28,6 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 	 * @see interfaces.IRecastBotConnectorSender#sendMessage(org.json.JSONObject, java.lang.String)
 	 */
 	@Override
-	//TODO: A modifier
 	public boolean sendMessage(JSONObject json, Response response){
 		String idConv = "";
 		try {
