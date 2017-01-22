@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.abstracts.AbstractHttpSender;
+import hello.suribot.response.ResponseGenerator;
 import hello.suribot.utils.EnvVar;
 
 /**
@@ -21,11 +22,11 @@ public class NodeJsMBCSender extends AbstractHttpSender{
 			sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
 			return true;
 		} catch (JSONException e) {
-			json.put("text", "Demande incomprise");
+			json.put("text", new ResponseGenerator().generateInternalErrorMessage());
 			try {
 				sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
 			} catch (Exception e1) {
-				logger.error("NodeJsMBCSender : Message "+message+" not send... : "+e);
+				logger.error("Message "+message+" not send... : "+e);
 			}
 		} catch (Exception e) {
 			logger.error("NodeJsMBCSender : Message "+message+" not send... : "+e);

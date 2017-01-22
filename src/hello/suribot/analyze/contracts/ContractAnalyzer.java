@@ -39,6 +39,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	 */
 	@Override
 	public JSONObject analyze(JSONObject entities, String idUser){
+		if(entities==null || entities.length()==0) return null;
 		resetParams();
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);
@@ -47,7 +48,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		try{
 			identifiant = getContractId(entities);
 			JSONMemory.putIdContrat(idUser, identifiant);
-		}catch( JSONException | ClassCastException e){
+		} catch(JSONException | ClassCastException e){
 			identifiant = JSONMemory.getIdContrat(idUser); // récupération de l'identifiant si non renseigné
 		}
 

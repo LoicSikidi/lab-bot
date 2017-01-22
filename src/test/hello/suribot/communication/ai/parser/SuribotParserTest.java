@@ -19,9 +19,7 @@ public class SuribotParserTest {
 		try {
 			AiController controller = new AiController();
 			controller.callApiAi("", EnvVar.TOKENAPIAI.getValue(), null);
-		} catch (AIServiceException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException ise){
+		} catch (AIServiceException | IllegalStateException ise){
 			assertTrue(true);
 		}
 	}

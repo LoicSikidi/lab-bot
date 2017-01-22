@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.interfaces.IRecastBotConnectorSender;
 import hello.suribot.response.Response;
+import hello.suribot.response.ResponseGenerator;
 import hello.suribot.utils.EnvVar;
 
 /**
@@ -35,17 +36,15 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 			callRecastBotConnector(response,idConv);
 			return true;
 		} catch (JSONException e) {
-			if(idConv.isEmpty()){ //Impossible de récupérer l'id de la conversation
-				logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... ");
-			}else{  //Erreur lors de la création du JSON dans callRecastBotConnector on envoie donc un message à l'utilisateur
-				try {
-					callRecastBotConnector(new Response("Demande incomprise"),idConv);
-				} catch (Exception e2) { //Impossible d'envoyer le message
-					logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... : "+e);
-				}
+			try {
+				callRecastBotConnector(new ResponseGenerator().generateInternalErrorMessage(), idConv);
+			} catch (Exception e2) { //Impossible d'envoyer le message
+				if(response==null) logger.info("No message : "+e);
+				else logger.info("Message "+response.getMessage()+" not send... : "+e2);
 			}
 		} catch (Exception e) {
-			logger.info("NodeJsMBCSender : Message "+response.getMessage()+" not send... : "+e);
+			if(response==null) logger.info("No message : "+e);
+			else logger.info("Message "+response.getMessage()+" not send... : "+e);
 		}
 		return false;
 	}

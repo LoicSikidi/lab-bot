@@ -164,8 +164,7 @@ public class JSONMemory {
 				file.close();
 				return;
 			} catch (IOException e1) {
-				// impossible d'écrire dans le fichier qui était vide
-				e1.printStackTrace();
+				logger.error("impossible d'écrire dans le fichier "+idUser+" : "+e1);
 			}
 		}finally{
 			try {
@@ -210,8 +209,7 @@ public class JSONMemory {
 				Files.createFile(Paths.get(DIR+idUser+EXTENSION_FILE));
 			}
 		} catch (Exception e){
-			logger.error("Cannot create "+idUser+EXTENSION_FILE+" file");
-			e.printStackTrace();
+			logger.error("Cannot create "+idUser+EXTENSION_FILE+" file : "+e);
 		}
 	}
 
