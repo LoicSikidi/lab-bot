@@ -21,7 +21,7 @@ import hello.suribot.interfaces.IAiController;
  */
 @RequestMapping("rbc")
 @RestController
-class RecastBotConnectorReceiver {
+public class RecastBotConnectorReceiver {
 	
 	private static final Logger logger = LogManager.getLogger();
 	

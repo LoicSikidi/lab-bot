@@ -125,7 +125,7 @@ public abstract class AbstractHttpSender {
 	 * @param text 
 	 * @throws Exception 
 	 */
-	protected static void sendPost(String url, Map<String,String> property, JSONObject text) throws Exception {
+	protected static int sendPost(String url, Map<String,String> property, JSONObject text) throws Exception {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
@@ -139,7 +139,7 @@ public abstract class AbstractHttpSender {
 		out.write(text.toString());
 		out.flush();
 		out.close();
-		con.getResponseCode(); // send the request
+		return con.getResponseCode(); // send the request
 	}
 
 }

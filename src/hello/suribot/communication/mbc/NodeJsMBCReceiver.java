@@ -20,7 +20,7 @@ import hello.suribot.communication.ai.AiController;
  */
 @RequestMapping("mbc")
 @RestController
-class NodeJsMBCReceiver{
+public class NodeJsMBCReceiver{
 	
 	private static final Logger logger = LogManager.getLogger();
 	
@@ -48,7 +48,6 @@ class NodeJsMBCReceiver{
 	    	nextStep.sendMessage(json, json.getString("text"), idUser);
 		    
 	    } catch (JSONException e){
-	    	e.printStackTrace();
 	    	logger.info("No user message but a request has been received : ");
 	    	logger.info(sb.toString());
 	    } catch (Exception e){
