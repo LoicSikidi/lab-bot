@@ -1,6 +1,7 @@
 package test.hello.suribot.communication.ai;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -38,9 +39,8 @@ public class AiControllerTest {
 	public void callRecastTest() {
 		AiController controller = new AiController();
 		assertEquals(controller.callRecast(null, null, null).toString(), new JSONObject().toString());
-//		TODO: trouver un moyen de faire connaitre à Travis les variables d'environnement pour les tests
-//		assertEquals(controller.callRecast("", EnvVar.TOKENRECAST.getValue(), "fr").toString(), new JSONObject().toString());
-//		assertNotEquals(controller.callRecast("message", EnvVar.TOKENRECAST.getValue().toString(), "fr"), new JSONObject().toString());
+		assertEquals(controller.callRecast("", EnvVar.TOKENRECAST.getValue(), "fr").toString(), new JSONObject().toString());
+		assertNotEquals(controller.callRecast("message", EnvVar.TOKENRECAST.getValue().toString(), "fr"), new JSONObject().toString());
 	}
 	
 }
