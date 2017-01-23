@@ -14,7 +14,7 @@ public class AiControllerTest {
 	@Test
 	public void sendMessagedTest(){
 		AiController controller = new AiController();
-		assertFalse(controller.sendMessage(null, null, null));
+		assertFalse(controller.sendMessage(null, null, null, null));
 	}
 	
 	@Test

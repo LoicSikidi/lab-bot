@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.suribot.communication.ai.AiController;
+import hello.suribot.communication.botConnector.BotConnectorIdentity;
 import hello.suribot.interfaces.IAiController;
 
 /**
@@ -46,7 +47,7 @@ public class NodeJsMBCReceiver{
 		    printUserMessage(json);
 		    
 	    	String idUser = json.getJSONObject("user").getString("id").split(":")[0];
-	    	nextStep.sendMessage(json, json.getString("text"), idUser);
+	    	nextStep.sendMessage(BotConnectorIdentity.NODEJS, json, json.getString("text"), idUser);
 		    
 	    } catch (JSONException e){
 	    	logger.info("No user message but a request has been received : ");

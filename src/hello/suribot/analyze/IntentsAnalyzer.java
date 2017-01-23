@@ -16,10 +16,12 @@ import hello.suribot.analyze.contracts.IContractAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.api.ApiUrls;
+import hello.suribot.communication.botConnector.BotConnectorIdentity;
+import hello.suribot.communication.botConnector.mbc.NodeJsMBCSender;
 import hello.suribot.communication.botConnector.rbc.RecastBotConnectorSender;
 import hello.suribot.interfaces.IAPIController;
-import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.interfaces.IBotConnectorSender;
+import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.interfaces.IResponseGenerator;
 import hello.suribot.response.Response;
 import hello.suribot.response.ResponseGenerator;
@@ -47,7 +49,6 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	public IntentsAnalyzer() {
 		this.responsegenerator = new ResponseGenerator();
 		this.apicontroller = new APIController();
-		this.nextToCall = new RecastBotConnectorSender();
 	}
 
 
@@ -55,12 +56,13 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	 * @see hello.suribot.analyze.IIntentsAnalyzer#analyzeIntents(org.json.JSONObject, org.json.JSONObject, java.lang.String, boolean)
 	 */
 	@Override
-	public void analyzeIntents(JSONObject fullJSon, JSONObject intents, String idUser, boolean firstTraitement) {
+	public void analyzeIntents(BotConnectorIdentity identity, JSONObject fullJSon, JSONObject intents, String idUser, boolean firstTraitement) {
 		String contexte = null;
 		String language = null;
 		JSONObject entities = null;
 		boolean isChoice = false;
 		try{
+			nextToCall = getSender(identity);
 			
 			if(firstTraitement){
 				contexte = getContext(intents);
@@ -142,7 +144,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 					JSONObject newRequest = generateNewRequestWithLastEntities(intents, lastIntent);
 					JSONMemory.removeLastEntities(idUser);
 					if(contexte != null && !contexte.isEmpty()) newRequest.put(JSONMemory.CONTEXTE, contexte);
-					analyzeIntents(fullJSon, newRequest, idUser, false);
+					analyzeIntents(identity, fullJSon, newRequest, idUser, false);
 				}else{
 					// Ce n'est pas le premier traitement de la demande de l'utilisateur
 					
@@ -187,7 +189,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 				JSONObject lastEntities = new JSONObject(stringLastEntities);
 				JSONObject newRequest = generateNewRequestWithLastEntities(intents, lastEntities);
 				JSONMemory.removeLastEntities(idUser);
-				analyzeIntents(fullJSon, newRequest, idUser, false);
+				analyzeIntents(identity, fullJSon, newRequest, idUser, false);
 			}else{
 				//Demande incomprise et il n'y a pas d'ancienne demande en attente
 				//donc on arrete le traitement  et envoie une erreur a SS5
@@ -199,6 +201,19 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		}
 	}
 	
+	private IBotConnectorSender getSender(BotConnectorIdentity identity) {
+		if(identity!=null){
+			switch (identity) {
+			case NODEJS:
+				return new NodeJsMBCSender();
+			case RECAST:
+				return new RecastBotConnectorSender();
+			}
+		}
+		return new RecastBotConnectorSender();
+	}
+
+
 	/**
 	 * Forme une nouvelle demande en combinant la précédente (si existante dans les fichiers ".json", voir {@link JSONMemory}) 
 	 * et la nouvelle

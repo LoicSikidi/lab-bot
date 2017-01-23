@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.suribot.communication.ai.AiController;
+import hello.suribot.communication.botConnector.BotConnectorIdentity;
 import hello.suribot.interfaces.IAiController;
 
 /**
@@ -48,7 +49,7 @@ public class RecastBotConnectorReceiver {
 		    
 	    	String idUser = json.getString("senderId");
 	    	String message = json.getJSONObject("message").getJSONObject("attachment").getString("content");
-	    	nextStep.sendMessage(json, message, idUser);
+	    	nextStep.sendMessage(BotConnectorIdentity.RECAST, json, message, idUser);
 		    
 	    } catch (JSONException e){
 	    	logger.info("No user message but a request has been received : ");

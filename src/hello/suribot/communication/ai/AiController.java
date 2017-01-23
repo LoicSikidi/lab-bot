@@ -14,6 +14,7 @@ import ai.api.model.AIResponse;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.analyze.IntentsAnalyzer;
 import hello.suribot.communication.ai.parser.SuribotParser;
+import hello.suribot.communication.botConnector.BotConnectorIdentity;
 import hello.suribot.interfaces.IAiController;
 import hello.suribot.interfaces.IIntentsAnalyzer;
 import hello.suribot.utils.EnvVar;
@@ -36,7 +37,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	 * @see hello.suribot.communication.ai.IAiController#sendMessage(org.json.JSONObject, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean sendMessage(final JSONObject json, String message, String idUser){
+	public boolean sendMessage(BotConnectorIdentity identity, JSONObject json, String message, String idUser){
 		try {
 			String language = "fr";
 			JSONObject intents = null;
@@ -48,7 +49,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 				intents = callRecast(message, EnvVar.TOKENRECAST.getValue(), language);
 				intents = parser.parseRecast(intents);
 			}
-			nextStep.analyzeIntents(json, intents, idUser, true);
+			nextStep.analyzeIntents(identity, json, intents, idUser, true);
 			return true;
 
 		} catch (Exception e) {
