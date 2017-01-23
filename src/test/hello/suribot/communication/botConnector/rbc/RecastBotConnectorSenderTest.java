@@ -1,11 +1,11 @@
-package test.hello.suribot.communication.recastConnector;
+package test.hello.suribot.communication.botConnector.rbc;
 
 import static org.junit.Assert.assertFalse;
 
 import org.json.JSONObject;
 import org.junit.Test;
 
-import hello.suribot.communication.recastConnector.RecastBotConnectorSender;
+import hello.suribot.communication.botConnector.rbc.RecastBotConnectorSender;
 
 public class RecastBotConnectorSenderTest {
 	

@@ -22,7 +22,7 @@
   </class>  
   <class id="3" language="java" name="hello.suribot.Application" project="lab-bot" 
     file="/lab-bot/src/hello/suribot/Application.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-3035" y="-56"/>    
+    <position height="-1" width="-1" x="-2973" y="-49"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -49,7 +49,7 @@
   </class>  
   <class id="6" language="java" name="hello.suribot.communication.ai.parser.SuribotParser" project="lab-bot" 
     file="/lab-bot/src/hello/suribot/communication/ai/parser/SuribotParser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-1795" y="-14"/>    
+    <position height="-1" width="-1" x="-1979" y="-16"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -75,10 +75,10 @@
       <operations public="true" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="9" language="java" name="hello.suribot.communication.recastConnector.RecastBotConnectorReceiver" 
-    project="lab-bot" file="/lab-bot/src/hello/suribot/communication/recastConnector/RecastBotConnectorReceiver.java" 
+  <class id="9" language="java" name="hello.suribot.communication.botConnector.rbc.RecastBotConnectorReceiver" 
+    project="lab-bot" file="/lab-bot/src/hello/suribot/communication/botConnector/rbc/RecastBotConnectorReceiver.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2967" y="122"/>    
+    <position height="-1" width="-1" x="-2906" y="67"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -87,7 +87,7 @@
   </class>  
   <enumeration id="10" language="java" name="hello.suribot.utils.EnvVar" project="lab-bot" 
     file="/lab-bot/src/hello/suribot/utils/EnvVar.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2871" y="-56"/>    
+    <position height="-1" width="-1" x="-2809" y="-49"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -121,19 +121,19 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="hello.suribot.communication.recastConnector.RecastBotConnectorSender" 
-    project="lab-bot" file="/lab-bot/src/hello/suribot/communication/recastConnector/RecastBotConnectorSender.java" 
+  <class id="14" language="java" name="hello.suribot.communication.botConnector.rbc.RecastBotConnectorSender" 
+    project="lab-bot" file="/lab-bot/src/hello/suribot/communication/botConnector/rbc/RecastBotConnectorSender.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2972" y="664"/>    
+    <position height="-1" width="-1" x="-2902" y="663"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <interface id="15" language="java" name="hello.suribot.interfaces.IRecastBotConnectorSender" project="lab-bot" 
-    file="/lab-bot/src/hello/suribot/interfaces/IRecastBotConnectorSender.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2972" y="558"/>    
+  <interface id="15" language="java" name="hello.suribot.interfaces.IBotConnectorSender" project="lab-bot" 
+    file="/lab-bot/src/hello/suribot/interfaces/IBotConnectorSender.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2902" y="542"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -188,7 +188,7 @@
   </enumeration>  
   <interface id="21" language="java" name="hello.suribot.interfaces.IAiController" project="lab-bot" 
     file="/lab-bot/src/hello/suribot/interfaces/IAiController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2659" y="122"/>    
+    <position height="-1" width="-1" x="-2633" y="122"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
       sort-features="false" accessors="true" visibility="false">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -233,196 +233,242 @@
   </enumeration>  
   <enumeration id="26" language="java" name="hello.suribot.communication.ai.parser.RecastKeys" project="lab-bot" 
     file="/lab-bot/src/hello/suribot/communication/ai/parser/RecastKeys.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-2036" y="-16"/>    
+    <position height="-1" width="-1" x="-1789" y="-15"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="true" signature="false" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </enumeration>  
-  <realization id="27">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="25"/>  
-  </dependency>  
+  <class id="27" language="java" name="hello.suribot.communication.botConnector.mbc.NodeJsMBCReceiver" project="lab-bot" 
+    file="/lab-bot/src/hello/suribot/communication/botConnector/mbc/NodeJsMBCReceiver.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2905" y="168"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="hello.suribot.communication.botConnector.mbc.NodeJsMBCSender" project="lab-bot" 
+    file="/lab-bot/src/hello/suribot/communication/botConnector/mbc/NodeJsMBCSender.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2902" y="393"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="true" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
   <dependency id="29">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="24"/>  
-  </dependency>  
-  <dependency id="30">    
-    <bendpoint x="-2016" y="626"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="23"/>  
-  </dependency>  
-  <dependency id="31">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <dependency id="33">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="10"/>  
-  </dependency>  
-  <dependency id="34">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <dependency id="35">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="26"/>  
   </dependency>  
-  <realization id="36">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
-  <association id="37">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="38" name="nextToCall">        
-        <position height="0" width="0" x="-5847" y="-237"/>      
-      </attribute>      
-      <multiplicity id="39" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-5847" y="-237"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="40">    
+  <dependency id="30">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <generalization id="31">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="22"/>  
   </generalization>  
-  <realization id="41">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="17"/>  
-  </realization>  
-  <realization id="42">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="21"/>  
-  </realization>  
-  <dependency id="43">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="13"/>  
-  </dependency>  
-  <dependency id="44">    
-    <bendpoint x="-1794" y="455"/>    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="25"/>  
-  </dependency>  
-  <association id="45">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="46" name="nextStep">        
-        <position height="0" width="0" x="-4893" y="-480"/>      
-      </attribute>      
-      <multiplicity id="47" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-4893" y="-480"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="48">    
-    <bendpoint x="-2499" y="665"/>    
+  <realization id="32">    
     <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="22"/>  
-  </generalization>  
-  <dependency id="49">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="7"/>  
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="33">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="24"/>  
   </dependency>  
-  <dependency id="50">    
+  <realization id="34">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <dependency id="35">    
     <bendpoint x="-2253" y="524"/>    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="13"/>  
   </dependency>  
-  <dependency id="51">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="24"/>  
-  </dependency>  
-  <realization id="52">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="15"/>  
+  <realization id="36">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="21"/>  
   </realization>  
-  <association id="53">    
+  <realization id="37">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <dependency id="38">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <dependency id="39">    
+    <bendpoint x="-1796" y="36"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <dependency id="40">    
+    <bendpoint x="-2120" y="-16"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <generalization id="41">    
+    <bendpoint x="-2500" y="665"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <realization id="42">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <generalization id="43">    
+    <bendpoint x="-2500" y="393"/>    
+    <bendpoint x="-2500" y="308"/>    
+    <bendpoint x="-2500" y="195"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <association id="44">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="54" name="responsegenerator">        
-        <position height="0" width="0" x="-3229" y="566"/>      
+      <attribute id="45" name="apicontroller">        
+        <position height="20" width="78" x="-2208" y="232"/>      
       </attribute>      
-      <multiplicity id="55" minimum="0" maximum="1">        
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="18" width="27" x="-2128" y="233"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="47">    
+    <bendpoint x="-2328" y="626"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="49">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="50" name="responsegenerator">        
+        <position height="20" width="115" x="-2511" y="711"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="1">        
         <position height="0" width="0" x="-3229" y="566"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="56">    
+  <realization id="52">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <dependency id="53">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <dependency id="54">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="55">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="56">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="57">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="57" name="nextStep">        
-        <position height="0" width="0" x="-6144" y="-681"/>      
+      <attribute id="58" name="nextStep">        
+        <position height="20" width="60" x="-2763" y="75"/>      
       </attribute>      
-      <multiplicity id="58" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-6144" y="-681"/>      
+      <multiplicity id="59" minimum="0" maximum="1">        
+        <position height="18" width="27" x="-2728" y="107"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="59">    
+  <association id="60">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="61" name="nextStep">        
+        <position height="20" width="60" x="-2785" y="121"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="1">        
+        <position height="18" width="27" x="-2747" y="141"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="63">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="64" name="nextStep">        
+        <position height="0" width="0" x="-4893" y="-480"/>      
+      </attribute>      
+      <multiplicity id="65" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-4893" y="-480"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="66">    
     <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <dependency id="67">    
+    <bendpoint x="-1794" y="455"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <realization id="68">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <realization id="69">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <association id="70">    
+    <bendpoint x="-2463" y="542"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="71" name="nextToCall">        
+        <position height="20" width="68" x="-2810" y="518"/>      
+      </attribute>      
+      <multiplicity id="72" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-5777" y="-253"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="73">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <generalization id="74">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <dependency id="75">    
+    <bendpoint x="-2016" y="626"/>    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="23"/>  
   </dependency>  
-  <dependency id="60">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <association id="61">    
+  <association id="76">    
     <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="62" name="calledMethod">        
+      <attribute id="77" name="calledMethod">        
         <position height="0" width="0" x="-4349" y="-85"/>      
       </attribute>      
-      <multiplicity id="63" minimum="0" maximum="1">        
+      <multiplicity id="78" minimum="0" maximum="1">        
         <position height="0" width="0" x="-4349" y="-85"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="64">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="25"/>  
-  </dependency>  
-  <dependency id="65">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="20"/>  
-  </dependency>  
-  <dependency id="66">    
-    <bendpoint x="-2328" y="626"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="23"/>  
-  </dependency>  
-  <realization id="67">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <realization id="68">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="11"/>  
-  </realization>  
-  <association id="69">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="70" name="apicontroller">        
-        <position height="20" width="78" x="-2208" y="232"/>      
-      </attribute>      
-      <multiplicity id="71" minimum="0" maximum="1">        
-        <position height="18" width="27" x="-2128" y="233"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 

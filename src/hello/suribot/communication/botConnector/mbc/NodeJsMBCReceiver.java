@@ -1,4 +1,4 @@
-package hello.suribot.communication.recastConnector;
+package hello.suribot.communication.botConnector.mbc;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -17,21 +17,21 @@ import hello.suribot.communication.ai.AiController;
 import hello.suribot.interfaces.IAiController;
 
 /**
- * Classe controleur permettant d'écouter des messages venant de RBC (Recast Bot Connector)
+ * Classe controleur permettant d'écouter des messages venant du programme Node.js de communication à MBC
  */
-@RequestMapping("rbc")
+@RequestMapping("mbc")
 @RestController
-public class RecastBotConnectorReceiver {
+public class NodeJsMBCReceiver{
 	
 	private static final Logger logger = LogManager.getLogger();
 	
 	private IAiController nextStep;
 
-	public RecastBotConnectorReceiver() {
+	public NodeJsMBCReceiver() {
 		this.nextStep = new AiController();
 	}
 	
-	@RequestMapping(value ={"/",""})
+	@RequestMapping(value ="/")
 	public int receivingMessage(HttpServletRequest request){
 		StringBuilder sb = null;
 	    try {
@@ -43,12 +43,10 @@ public class RecastBotConnectorReceiver {
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
-		    logger.info(json);
 		    printUserMessage(json);
 		    
-	    	String idUser = json.getString("senderId");
-	    	String message = json.getJSONObject("message").getJSONObject("attachment").getString("content");
-	    	nextStep.sendMessage(json, message, idUser);
+	    	String idUser = json.getJSONObject("user").getString("id").split(":")[0];
+	    	nextStep.sendMessage(json, json.getString("text"), idUser);
 		    
 	    } catch (JSONException e){
 	    	logger.info("No user message but a request has been received : ");
@@ -61,7 +59,7 @@ public class RecastBotConnectorReceiver {
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
-		logger.info("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
+		logger.info("User message : "+json.getString("text"));
 	}
 	
 }

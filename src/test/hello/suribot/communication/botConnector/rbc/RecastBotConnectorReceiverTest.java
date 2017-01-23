@@ -1,4 +1,4 @@
-package test.hello.suribot.communication.mbc;
+package test.hello.suribot.communication.botConnector.rbc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,23 +9,23 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import hello.suribot.communication.mbc.NodeJsMBCReceiver;
+import hello.suribot.communication.botConnector.rbc.RecastBotConnectorReceiver;
 
-
-public class NodeJsMBCReceiverTest{
+public class RecastBotConnectorReceiverTest {
 	
 	private MockMvc mockMvc;
 
     @Before
     public void setUp() {
-    	this.mockMvc = MockMvcBuilders.standaloneSetup(new NodeJsMBCReceiver()).build();
+    	this.mockMvc = MockMvcBuilders.standaloneSetup(new RecastBotConnectorReceiver()).build();
     }
-	
+    
 	@Test
 	public void receivingMessageTest() throws Exception{
-		mockMvc.perform(get("/mbc/")
+		mockMvc.perform(get("/rbc/")
 				.content(new JSONObject().toString()))
 				.andExpect(status().isOk())
 				.andReturn();
 	}
+	
 }

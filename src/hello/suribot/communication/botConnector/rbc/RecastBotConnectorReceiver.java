@@ -1,4 +1,4 @@
-package hello.suribot.communication.mbc;
+package hello.suribot.communication.botConnector.rbc;
 
 import java.io.BufferedReader;
 import java.io.Reader;
@@ -14,23 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.suribot.communication.ai.AiController;
+import hello.suribot.interfaces.IAiController;
 
 /**
- * Classe controleur permettant d'écouter des messages venant du programme Node.js de communication à MBC
+ * Classe controleur permettant d'écouter des messages venant de RBC (Recast Bot Connector)
  */
-@RequestMapping("mbc")
+@RequestMapping("rbc")
 @RestController
-public class NodeJsMBCReceiver{
+public class RecastBotConnectorReceiver {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	private AiController nextStep;
+	private IAiController nextStep;
 
-	public NodeJsMBCReceiver() {
+	public RecastBotConnectorReceiver() {
 		this.nextStep = new AiController();
 	}
 	
-	@RequestMapping(value ="/")
+	@RequestMapping(value ={"/",""})
 	public int receivingMessage(HttpServletRequest request){
 		StringBuilder sb = null;
 	    try {
@@ -42,10 +43,12 @@ public class NodeJsMBCReceiver{
 		      sb.append((char) cp);
 		    }
 		    JSONObject json = new JSONObject(sb.toString());
+		    logger.info(json);
 		    printUserMessage(json);
 		    
-	    	String idUser = json.getJSONObject("user").getString("id").split(":")[0];
-	    	nextStep.sendMessage(json, json.getString("text"), idUser);
+	    	String idUser = json.getString("senderId");
+	    	String message = json.getJSONObject("message").getJSONObject("attachment").getString("content");
+	    	nextStep.sendMessage(json, message, idUser);
 		    
 	    } catch (JSONException e){
 	    	logger.info("No user message but a request has been received : ");
@@ -58,7 +61,7 @@ public class NodeJsMBCReceiver{
 	}
 	
 	private void printUserMessage(JSONObject json) throws JSONException {
-		logger.info("User message : "+json.getString("text"));
+		logger.info("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
 	}
 	
 }

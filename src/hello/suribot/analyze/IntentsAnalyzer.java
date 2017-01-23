@@ -16,10 +16,10 @@ import hello.suribot.analyze.contracts.IContractAnalyzer;
 import hello.suribot.analyze.jsonmemory.JSONMemory;
 import hello.suribot.communication.api.APIController;
 import hello.suribot.communication.api.ApiUrls;
-import hello.suribot.communication.recastConnector.RecastBotConnectorSender;
+import hello.suribot.communication.botConnector.rbc.RecastBotConnectorSender;
 import hello.suribot.interfaces.IAPIController;
 import hello.suribot.interfaces.IIntentsAnalyzer;
-import hello.suribot.interfaces.IRecastBotConnectorSender;
+import hello.suribot.interfaces.IBotConnectorSender;
 import hello.suribot.interfaces.IResponseGenerator;
 import hello.suribot.response.Response;
 import hello.suribot.response.ResponseGenerator;
@@ -38,7 +38,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	// voir les intents de l'AI
 	public static final String CONTRAT = "contrat";
 	
-	private IRecastBotConnectorSender nextToCall;
+	private IBotConnectorSender nextToCall;
 	
 	private IResponseGenerator responsegenerator;
 	private IAPIController apicontroller;

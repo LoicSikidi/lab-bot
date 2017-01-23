@@ -40,8 +40,10 @@ public class Response {
 	}
 	
 	public void concatMessageAtTheBegin(String text){
-		if(message!=null) message=text+message;
-		else message = text;
+		if(text!=null){
+			if(message!=null) message=text+message;
+			else message = text;
+		}
 	}
 	
 	public void concatMessageAtTheEnd(String text){
@@ -66,7 +68,9 @@ public class Response {
 	}
 	
 	public void addChoice(String newChoice){
-		if(listChoice==null) listChoice = new ArrayList<>();
-		listChoice.add(newChoice);
+		if(newChoice!=null){
+			if(listChoice==null) listChoice = new ArrayList<>();
+			listChoice.add(newChoice);
+		}
 	}
 }

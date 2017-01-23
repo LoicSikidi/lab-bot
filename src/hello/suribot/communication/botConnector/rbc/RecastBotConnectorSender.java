@@ -1,4 +1,4 @@
-package hello.suribot.communication.recastConnector;
+package hello.suribot.communication.botConnector.rbc;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hello.suribot.abstracts.AbstractHttpSender;
-import hello.suribot.interfaces.IRecastBotConnectorSender;
+import hello.suribot.interfaces.IBotConnectorSender;
 import hello.suribot.response.Response;
 import hello.suribot.response.ResponseGenerator;
 import hello.suribot.utils.EnvVar;
@@ -20,7 +20,7 @@ import hello.suribot.utils.EnvVar;
 /**
  * Classe controleur permettant d'envoyer des messages à RBC (Recast Bot Connector)
  */
-public class RecastBotConnectorSender extends AbstractHttpSender implements IRecastBotConnectorSender{
+public class RecastBotConnectorSender extends AbstractHttpSender implements IBotConnectorSender{
 	
 	private static final Logger logger = LogManager.getLogger();
 	
@@ -66,22 +66,26 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 				  "content: {";
 		
 		String respMessage = resp.getMessage();
-		if(respMessage!=null && !respMessage.isEmpty())
+		if(respMessage!=null && !respMessage.isEmpty()){
 			try {
 				message+="title: '"+URLEncoder.encode(respMessage, "UTF-8")+"'"+separator;
 			} catch (UnsupportedEncodingException e) {
 				message+="title: '"+respMessage+"'"+separator;
 			}
-		else message+="title: ''"+separator;
+		} else {
+			message+="title: ''"+separator;
+		}
 
 		String urlImage = resp.getUrlImage();
-		if(urlImage!=null && !urlImage.isEmpty())
+		if(urlImage!=null && !urlImage.isEmpty()){
 			try {
 				message+="imageUrl: '"+URLEncoder.encode(urlImage, "UTF-8")+"'"+separator;
 			} catch (UnsupportedEncodingException e) {
 				message+="imageUrl: '"+urlImage+"'"+separator;
 			}
-		else message+="imageUrl: ''"+separator;
+		} else {
+			message+="imageUrl: ''"+separator;
+		}
 		
 		List<String> listChoice = resp.getListChoice();
 		if(listChoice!=null && !listChoice.isEmpty()){
@@ -94,7 +98,7 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IRec
 			                "value: '"+s+"'}"+separator;
 	    	}
 			message+="buttons: ["+listButton+"]";
-		}else {
+		} else {
 			message+="buttons: []";
 		}
 		message+="}}]";
