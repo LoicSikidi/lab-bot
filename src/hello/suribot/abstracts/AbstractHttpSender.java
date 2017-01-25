@@ -29,7 +29,7 @@ public abstract class AbstractHttpSender {
 	 * @throws Exception
 	 */
 	protected String sendGet(String url) throws IOException {
-		logger.info("AbstractHttpSender : begin SendGet(String)");
+		logger.info("AbstractHttpSender : begin sendGet");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 

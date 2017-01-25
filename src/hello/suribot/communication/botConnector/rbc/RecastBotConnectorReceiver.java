@@ -56,7 +56,7 @@ public class RecastBotConnectorReceiver {
 	    	logger.info("No user message but a request has been received : ");
 	    	logger.info(sb.toString());
 	    } catch (Exception e){
-	    	logger.error(e);
+	    	logger.error(e.getStackTrace());
 	    	return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 	    }
 	    return HttpServletResponse.SC_OK;

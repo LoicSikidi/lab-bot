@@ -164,7 +164,7 @@ public class JSONMemory {
 				file.close();
 				return;
 			} catch (IOException e1) {
-				logger.error("impossible d'écrire dans le fichier "+idUser+" : "+e1);
+				logger.error("impossible d'écrire dans le fichier "+idUser+"\n"+e1.getStackTrace());
 			}
 		}finally{
 			try {
@@ -209,7 +209,7 @@ public class JSONMemory {
 				Files.createFile(Paths.get(DIR+idUser+EXTENSION_FILE));
 			}
 		} catch (Exception e){
-			logger.error("Cannot create "+idUser+EXTENSION_FILE+" file : "+e);
+			logger.error("Cannot create "+idUser+EXTENSION_FILE+" file \n"+e.getStackTrace());
 		}
 	}
 

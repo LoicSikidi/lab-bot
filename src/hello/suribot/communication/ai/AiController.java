@@ -54,7 +54,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 			return true;
 
 		} catch (Exception e) {
-			logger.error("AiController : Message \""+message+"\" not send... ("+e+")\n"+e.getStackTrace());
+			logger.error("Message \""+message+"\" not send...\n"+e.getStackTrace());
 		}
 		return false;
 	}

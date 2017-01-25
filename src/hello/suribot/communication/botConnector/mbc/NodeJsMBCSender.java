@@ -30,10 +30,10 @@ public class NodeJsMBCSender extends AbstractHttpSender implements IBotConnector
 				json.put("text", new ResponseGenerator().generateInternalErrorMessage());
 				callNodeJsMBC(json);
 			} catch (Exception e1) {
-				logger.error("Message "+message+" not send... : "+e);
+				logger.error("Message "+message+" not send... \n"+e.getStackTrace());
 			}
 		} catch (Exception e) {
-			logger.error("NodeJsMBCSender : Message "+message+" not send... : "+e);
+			logger.error("Message "+message+" not send... \n"+e.getStackTrace());
 		}
 		return false;
 	}
