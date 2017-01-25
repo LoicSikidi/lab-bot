@@ -29,6 +29,7 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IBot
 	 */
 	@Override
 	public boolean sendMessage(JSONObject json, Response response){
+		logger.info("RecastBotConnectorSender : begin sendMessage");
 		String idConv = "";
 		try {
 			idConv = json.getJSONObject("message").getString("conversation");

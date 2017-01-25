@@ -20,6 +20,7 @@ public class NodeJsMBCSender extends AbstractHttpSender implements IBotConnector
 
 	@Override
 	public boolean sendMessage(JSONObject json, Response message){
+		logger.info("NodeJsMBCSender : begin sendMessage");
 		try {
 			json.put("text", generateRequest(message));
 			callNodeJsMBC(json);

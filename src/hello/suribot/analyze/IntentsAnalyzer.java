@@ -57,6 +57,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	 */
 	@Override
 	public void analyzeIntents(BotConnectorIdentity identity, JSONObject fullJSon, JSONObject intents, String idUser, boolean firstTraitement) {
+		logger.info("IntentsAnalyzer : begin analyzeIntents ");
 		String contexte = null;
 		String language = null;
 		JSONObject entities = null;
@@ -86,36 +87,38 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 				IContractAnalyzer analyzer = new ContractAnalyzer();
 
 				JSONObject js = analyzer.analyze(entities, idUser);
-				if(js.getBoolean(SUCCESS)){
-					JSONMemory.removeLastEntities(idUser);
-					String rep;
+				//if(js!=null){
+					if(js.getBoolean(SUCCESS)){
+						JSONMemory.removeLastEntities(idUser);
+						String rep;
+						
+						try {
+							rep = apicontroller.send(js.getString(ApiUrls.URITOCALL.name()));
+						} catch (IOException e) {
+							logger.error("APIController : Message with url \""+js.getString(ApiUrls.URITOCALL.name())+"\" not send... ("+e+")");
+							rep = null;
+						}
+						isChoice=analyzer.isChoice();
+						
+						if(rep == null  || rep.isEmpty()) responseToSender = responsegenerator.generateInternalErrorMessage();
+						else responseToSender = responsegenerator.generateUnderstoodMessage(CONTRAT, analyzer.getCalledMethod().toString(), isChoice, rep);
+						demandeComprise = true;
+						
+					}else if(js.has(MISSINGPARAMS)){
+						try {
+							List<MissingAnalyzerParam> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
+							for(Object oneMissingParam : js.getJSONArray(MISSINGPARAMS)){
+								missingParams.add(MissingAnalyzerParam.valueOf(oneMissingParam.toString()));
+							}
+							if(missingParams.size()==1){
+								responseToSender = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));
+							} else if(missingParams.size()>1){
+								responseToSender = responsegenerator.generateMessageButMissArgs(missingParams);
+							}
+						} catch (Exception e){}
 					
-					try {
-						rep = apicontroller.send(js.getString(ApiUrls.URITOCALL.name()));
-					} catch (IOException e) {
-						logger.error("APIController : Message with url \""+js.getString(ApiUrls.URITOCALL.name())+"\" not send... ("+e+")");
-						rep = null;
 					}
-					isChoice=analyzer.isChoice();
-					
-					if(rep == null  || rep.isEmpty()) responseToSender = responsegenerator.generateInternalErrorMessage();
-					else responseToSender = responsegenerator.generateUnderstoodMessage(CONTRAT, analyzer.getCalledMethod().toString(), isChoice, rep);
-					demandeComprise = true;
-					
-				}else if(js.has(MISSINGPARAMS)){
-					try {
-						List<MissingAnalyzerParam> missingParams = new ArrayList<>(js.getJSONArray(MISSINGPARAMS).length());
-						for(Object oneMissingParam : js.getJSONArray(MISSINGPARAMS)){
-							missingParams.add(MissingAnalyzerParam.valueOf(oneMissingParam.toString()));
-						}
-						if(missingParams.size()==1){
-							responseToSender = responsegenerator.generateMessageButMissOneArg(missingParams.get(0));
-						} else if(missingParams.size()>1){
-							responseToSender = responsegenerator.generateMessageButMissArgs(missingParams);
-						}
-					} catch (Exception e){}
-				
-				}
+				//}
 			} else {
 				// demande incomprise;
 				// Traitement si on a d'autre contextes : transport, maps, ...

@@ -34,6 +34,7 @@ public class RecastBotConnectorReceiver {
 	
 	@RequestMapping(value ={"/",""})
 	public int receivingMessage(HttpServletRequest request){
+		logger.info("RecastBotConnectorReceiver : begin receivingMessage");
 		StringBuilder sb = null;
 	    try {
 			Reader body = request.getReader();

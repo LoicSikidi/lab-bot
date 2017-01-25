@@ -38,6 +38,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	 */
 	@Override
 	public boolean sendMessage(BotConnectorIdentity identity, JSONObject json, String message, String idUser){
+		logger.info("AiController : begin sendMessage");
 		try {
 			String language = "fr";
 			JSONObject intents = null;
@@ -53,7 +54,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 			return true;
 
 		} catch (Exception e) {
-			logger.error("AiController : Message \""+message+"\" not send... ("+e+")");
+			logger.error("AiController : Message \""+message+"\" not send... ("+e+")\n"+e.getStackTrace());
 		}
 		return false;
 	}

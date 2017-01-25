@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 
 	private ContractParams calledMethod;
 	private boolean choice;
+	private static final Logger logger = LogManager.getLogger();
 
 	// Constantes fortement liées au paramétrage du moteur d'intelligence (Recast, API.ai, ...).
 	private static final String COUVERTURE = "risk";
@@ -39,7 +42,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	 */
 	@Override
 	public JSONObject analyze(JSONObject entities, String idUser){
-		if(entities==null || entities.length()==0) return null;
+		logger.info("ContractAnalyzer : begin analyze ");
 		resetParams();
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);
