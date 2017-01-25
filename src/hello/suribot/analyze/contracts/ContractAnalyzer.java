@@ -44,6 +44,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	public JSONObject analyze(JSONObject entities, String idUser){
 		logger.info("ContractAnalyzer : begin analyze");
 		resetParams();
+		if(entities==null) entities = new JSONObject();
 		JSONObject jsonReturn = new JSONObject();
 		List<String> missingParams = new ArrayList<>(3);
 

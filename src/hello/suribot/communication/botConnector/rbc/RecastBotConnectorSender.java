@@ -90,13 +90,28 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IBot
 		
 		List<String> listChoice = resp.getListChoice();
 		if(listChoice!=null && !listChoice.isEmpty()){
+			String split = ":::";
 			String listButton = "";
 			for(String s : listChoice){
+	    		String title = s;
+	    		String value = s;
+	    		//Permet d'afficher un titre sur le bouton et de lui affecter une valeur différente
+    			if(s!=null && s.contains(split)){
+    				String[] messageSplit = s.split(split);
+    				if(messageSplit.length>0){
+	    				title = messageSplit[1];
+		    			value = messageSplit[0];
+    				}
+    			}
 	    		try {
-					s = URLEncoder.encode(s, "UTF-8");
+	    			if(title.contains("%20")) title = title.replaceAll("%20", " ");
+					title = URLEncoder.encode(title, "UTF-8");
 				} catch (UnsupportedEncodingException e) { }
-	    		listButton+="{title: '"+s+"'"+separator+
-			                "value: '"+s+"'}"+separator;
+	    		try {
+					value = URLEncoder.encode(value, "UTF-8");
+				} catch (UnsupportedEncodingException e) { }
+	    		listButton+="{title: '"+title+"'"+separator+
+			                "value: '"+value+"'}"+separator;
 	    	}
 			message+="buttons: ["+listButton+"]";
 		} else {

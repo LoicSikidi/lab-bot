@@ -11,8 +11,10 @@ import ai.api.AIDataService;
 import ai.api.AIServiceException;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
+import hello.suribot.SuribotKeys;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.analyze.IntentsAnalyzer;
+import hello.suribot.communication.ai.parser.RecastKeys;
 import hello.suribot.communication.ai.parser.SuribotParser;
 import hello.suribot.communication.botConnector.BotConnectorIdentity;
 import hello.suribot.interfaces.IAiController;
@@ -50,6 +52,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 				intents = callRecast(message, EnvVar.TOKENRECAST.getValue(), language);
 				intents = parser.parseRecast(intents);
 			}
+ 			if(message.toLowerCase().contains("english")) intents.getJSONObject(SuribotKeys.RESULTS.value).put(RecastKeys.LANGUAGE.value, "en");
 			nextStep.analyzeIntents(identity, json, intents, idUser, true);
 			return true;
 

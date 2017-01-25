@@ -14,7 +14,7 @@ public class ContractAnalyzerTest {
 	@Test
 	public void analyzeTest(){
 		ContractAnalyzer analyzer = new ContractAnalyzer();
-		assertFalse(analyzer.analyze(null, null).optBoolean(IntentsAnalyzer.SUCCESS, false));
+		assertFalse(analyzer.analyze(new JSONObject(), null).optBoolean(IntentsAnalyzer.SUCCESS, false));
 		
 		analyzer = new ContractAnalyzer();
 		assertFalse(analyzer.analyze(new JSONObject(), null).optBoolean(IntentsAnalyzer.SUCCESS, false));

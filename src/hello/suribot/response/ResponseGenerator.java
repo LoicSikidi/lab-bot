@@ -32,6 +32,11 @@ public class ResponseGenerator implements IResponseGenerator{
 		messages = ResourceBundle.getBundle(bundleFile, locale);
 	}
 	
+	public ResponseGenerator(String langue) {
+		Locale locale = Locale.forLanguageTag(langue);
+		messages = ResourceBundle.getBundle(bundleFile, locale);
+	}
+	
 	// public pour les tests JUnit ({@link ContractResponseGeneratorTest}) */
 	public ResourceBundle getMessages() {
 		return messages;
