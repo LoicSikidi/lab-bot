@@ -30,7 +30,7 @@ public class ContractResponseGeneratorTest {
 		ContractResponseGenerator generator = new ContractResponseGenerator(messages);
 		String s = "[{\"rel\": \"self\",\"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee78595\"},"
 				+ "  {\"rel\":\"self\",\"href\": \"http://localhost:12347/insurance/contract/ID-5935697/partyRoles/ID-eee787634\"}]";
-		assertEquals("[personne eee78595, personne eee787634]", 
+		assertEquals("[personne n°eee78595, personne n°eee787634]", 
 				Arrays.toString(generator.extractChoice(MessagesResponses.partyRolesChoice, s)));
 	}
 	
