@@ -29,7 +29,7 @@ public abstract class AbstractHttpSender {
 	 * @throws Exception
 	 */
 	protected String sendGet(String url) throws IOException {
-		logger.info("AbstractHttpSender : begin sendGet");
+		logger.info("AbstractHttpSender : start sendGet");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -60,7 +60,7 @@ public abstract class AbstractHttpSender {
 	 */
 	protected String sendPost(String url, String text, String requestPropertyKey, 
 			String requestProperty, String...params) throws Exception {
-		logger.info("AbstractHttpSender : begin sendPost(String, String, String, String...)");
+		logger.info("AbstractHttpSender : start sendPost(String, String, String, String...)");
 		if(url==null || url.isEmpty()) return null;
 		
 		URL obj = new URL(url);
@@ -107,7 +107,7 @@ public abstract class AbstractHttpSender {
 	 * @throws Exception
 	 */
 	protected void sendPost(String url, JSONObject text) throws Exception {
-		logger.info("AbstractHttpSender : begin sendPost(String, JSONObject)");
+		logger.info("AbstractHttpSender : start sendPost(String, JSONObject)");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
@@ -128,7 +128,7 @@ public abstract class AbstractHttpSender {
 	 * @throws Exception 
 	 */
 	protected static int sendPost(String url, Map<String,String> property, JSONObject text) throws Exception {
-		logger.info("AbstractHttpSender : begin sendPost(String, Map<String,String>, JSONObject)");
+		logger.info("AbstractHttpSender : start sendPost(String, Map<String,String>, JSONObject)");
 		
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

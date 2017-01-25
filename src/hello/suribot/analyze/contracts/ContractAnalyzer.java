@@ -42,7 +42,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 	 */
 	@Override
 	public JSONObject analyze(JSONObject entities, String idUser){
-		logger.info("ContractAnalyzer : begin analyze");
+		logger.info("ContractAnalyzer : start analyze");
 		resetParams();
 		if(entities==null) entities = new JSONObject();
 		JSONObject jsonReturn = new JSONObject();

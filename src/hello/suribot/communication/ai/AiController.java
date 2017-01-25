@@ -40,7 +40,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	 */
 	@Override
 	public boolean sendMessage(BotConnectorIdentity identity, JSONObject json, String message, String idUser){
-		logger.info("AiController : begin sendMessage");
+		logger.info("AiController : start sendMessage");
 		try {
 			String language = "fr";
 			JSONObject intents = null;

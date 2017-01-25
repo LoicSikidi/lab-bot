@@ -56,7 +56,7 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	 */
 	@Override
 	public void analyzeIntents(BotConnectorIdentity identity, JSONObject fullJSon, JSONObject intents, String idUser, boolean firstTraitement) {
-		logger.info("IntentsAnalyzer : begin analyzeIntents ");
+		logger.info("IntentsAnalyzer : start analyzeIntents ");
 		String contexte = null;
 		String language = null;
 		JSONObject entities = null;

@@ -34,7 +34,7 @@ public class NodeJsMBCReceiver{
 	
 	@RequestMapping(value ="/")
 	public int receivingMessage(HttpServletRequest request){
-		logger.info("NodeJsMBCReceiver : begin receivingMessage");
+		logger.info("NodeJsMBCReceiver : start receivingMessage");
 		StringBuilder sb = null;
 	    try {
 			Reader body = request.getReader();
