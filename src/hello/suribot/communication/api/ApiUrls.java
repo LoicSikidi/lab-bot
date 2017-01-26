@@ -12,8 +12,7 @@ public enum ApiUrls {
 	 */
 	URITOCALL,
 	
-	demande ("http://localhost:"+System.getenv(EnvVar.CONTRACTPORT.toString())+"/insurance/contract/"),
-	maps ("http://maps.google.com/maps");
+	demande ("http://localhost:"+System.getenv(EnvVar.CONTRACTPORT.toString())+"/insurance/contract/");
 	
 	private String url;
 	

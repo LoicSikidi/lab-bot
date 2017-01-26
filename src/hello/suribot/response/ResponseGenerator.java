@@ -28,10 +28,6 @@ public class ResponseGenerator implements IResponseGenerator{
 		messages = ResourceBundle.getBundle(bundleFile, Locale.FRANCE);
 	}
 	
-	public ResponseGenerator(Locale locale) {
-		messages = ResourceBundle.getBundle(bundleFile, locale);
-	}
-	
 	public ResponseGenerator(String langue) {
 		Locale locale = Locale.forLanguageTag(langue);
 		messages = ResourceBundle.getBundle(bundleFile, locale);

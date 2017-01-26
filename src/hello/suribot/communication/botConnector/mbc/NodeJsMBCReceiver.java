@@ -60,6 +60,11 @@ public class NodeJsMBCReceiver{
 	    return HttpServletResponse.SC_OK;
 	}
 	
+	/**
+	 * Affichage du message de l'utilisateur dans les log
+	 * @param json reçu par MicrosoftBotConnector
+	 * @throws JSONException
+	 */
 	private void printUserMessage(JSONObject json) throws JSONException {
 		logger.info("User message : "+json.getString("text"));
 	}

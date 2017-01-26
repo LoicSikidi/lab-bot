@@ -62,6 +62,11 @@ public class RecastBotConnectorReceiver {
 	    return HttpServletResponse.SC_OK;
 	}
 	
+	/**
+	 * Affichage du message de l'utilisateur dans les log
+	 * @param json reçu par RecastBotConnector
+	 * @throws JSONException
+	 */
 	private void printUserMessage(JSONObject json) throws JSONException {
 		logger.info("User message : "+json.getJSONObject("message").getJSONObject("attachment").getString("content"));
 	}

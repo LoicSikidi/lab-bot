@@ -18,8 +18,8 @@ public class SuribotParser {
 
 	public SuribotParser(){ }
 
-	/** Prend en paramètre le JSON fourni par API.ai ({@link AIResponse}) et retourne un {@link JSONObject} formé pour le bot
-	 * @param response
+	/** Prend en paramètre l'{@link AIResponse} fourni par API.ai et retourne un {@link JSONObject} formé pour le bot
+	 * @param response fourni par API.AI
 	 * @return le JSONObject formé avec des {@link SuribotKeys}
 	 */
 	public JSONObject parseApiAi(AIResponse response){
@@ -62,7 +62,7 @@ public class SuribotParser {
 
 	/**
 	 * Prend en paramètre le JSON fourni par Recast ({@link JSONObject}) et retourne un {@link JSONObject} formé pour le bot
-	 * @param response
+	 * @param response fourni par Recast
 	 * @return le JSONObject formé avec des {@link SuribotKeys}
 	 */
 	public JSONObject parseRecast(JSONObject response){

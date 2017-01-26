@@ -1,6 +1,5 @@
 package hello.suribot.communication.ai;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
@@ -14,7 +13,6 @@ import ai.api.model.AIResponse;
 import hello.suribot.SuribotKeys;
 import hello.suribot.abstracts.AbstractHttpSender;
 import hello.suribot.analyze.IntentsAnalyzer;
-import hello.suribot.communication.ai.parser.RecastKeys;
 import hello.suribot.communication.ai.parser.SuribotParser;
 import hello.suribot.communication.botConnector.BotConnectorIdentity;
 import hello.suribot.interfaces.IAiController;
@@ -36,7 +34,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 	}
 
 	/* (non-Javadoc)
-	 * @see hello.suribot.communication.ai.IAiController#sendMessage(org.json.JSONObject, java.lang.String, java.lang.String)
+	 * @see hello.suribot.interfaces.IAiController#sendMessage(hello.suribot.communication.botConnector.BotConnectorIdentity, org.json.JSONObject, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public boolean sendMessage(BotConnectorIdentity identity, JSONObject json, String message, String idUser){
@@ -52,7 +50,7 @@ public class AiController extends AbstractHttpSender implements IAiController{
 				intents = callRecast(message, EnvVar.TOKENRECAST.getValue(), language);
 				intents = parser.parseRecast(intents);
 			}
- 			if(message.toLowerCase().contains("english")) intents.getJSONObject(SuribotKeys.RESULTS.value).put(RecastKeys.LANGUAGE.value, "en");
+ 			if(message.toLowerCase().contains("english")) intents.getJSONObject(SuribotKeys.RESULTS.value).put(SuribotKeys.LANGUAGE.value, "en");
 			nextStep.analyzeIntents(identity, json, intents, idUser, true);
 			return true;
 

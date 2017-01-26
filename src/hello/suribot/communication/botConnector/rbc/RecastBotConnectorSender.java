@@ -25,7 +25,7 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IBot
 	private static final Logger logger = LogManager.getLogger();
 	
 	/* (non-Javadoc)
-	 * @see interfaces.IRecastBotConnectorSender#sendMessage(org.json.JSONObject, java.lang.String)
+	 * @see interfaces.IRecastBotConnectorSender#sendMessage(org.json.JSONObject, hello.suribot.response.Response)
 	 */
 	@Override
 	public boolean sendMessage(JSONObject json, Response response){
@@ -60,6 +60,11 @@ public class RecastBotConnectorSender extends AbstractHttpSender implements IBot
 		sendPost(url,property,js);
 	}
 	
+	/**
+	 * Méthode générant la réponse au format card à envoyer à l'utilisateur
+	 * @param resp la réponse à envoyer à l'utilisateur
+	 * @return 
+	 */
 	private String generateRequest(Response resp){
 		String separator = ",";
 		String message= "messages:[{"+

@@ -18,6 +18,9 @@ public class NodeJsMBCSender extends AbstractHttpSender implements IBotConnector
 
 	private static final Logger logger = LogManager.getLogger();
 
+	/* (non-Javadoc)
+	 * @see hello.suribot.interfaces.IBotConnectorSender#sendMessage(org.json.JSONObject, hello.suribot.response.Response)
+	 */
 	@Override
 	public boolean sendMessage(JSONObject json, Response message){
 		logger.info("NodeJsMBCSender : start sendMessage");
@@ -27,7 +30,7 @@ public class NodeJsMBCSender extends AbstractHttpSender implements IBotConnector
 			return true;
 		} catch (JSONException e) {
 			try {
-				json.put("text", new ResponseGenerator().generateInternalErrorMessage());
+				json.put("text", new ResponseGenerator().generateInternalErrorMessage().getMessage());
 				callNodeJsMBC(json);
 			} catch (Exception e1) {
 				logger.error("Message "+message+" not send... \n"+e.getStackTrace());
@@ -42,6 +45,11 @@ public class NodeJsMBCSender extends AbstractHttpSender implements IBotConnector
 		sendPost("http://localhost:"+EnvVar.NODEJSPORT+"/mbc", json);
 	}
 
+	/**
+	 * Méthode générant la réponse au format texte à envoyer à l'utilisateur
+	 * @param resp la réponse à envoyer à l'utilisateur
+	 * @return la requête au format {@link java.lang.string} compris par MicrosoftBotConnector
+	 */
 	private String generateRequest(Response resp){
 		if(resp!=null){
 			String separator = "\n\n";
