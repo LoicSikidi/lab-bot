@@ -73,4 +73,9 @@ public class Response {
 			listChoice.add(newChoice);
 		}
 	}
+	
+	@Override
+	public String toString(){
+		return message;
+	}
 }

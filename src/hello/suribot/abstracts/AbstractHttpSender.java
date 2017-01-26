@@ -15,16 +15,15 @@ import org.json.JSONObject;
 
 /**
  * Classe factorisant les méthodes "send" sur le réseau.
- * L'utilisation de ces méthodes se fait en étandant ces méthodes.
+ * L'utilisation de ces méthodes se fait en étandant cette classe abstraite.
  */
 public abstract class AbstractHttpSender {
 	
 	private static final Logger logger = LogManager.getLogger();
 
-	/**
-	 * Send GET request and return response body
+	/** Envoi une requête GET à partir de l'url fournie et retourne le corps de la réponse 
 	 * @param url
-	 * @return
+	 * @return le corps de la réponse
 	 * @throws IOException 
 	 * @throws Exception
 	 */
@@ -49,13 +48,13 @@ public abstract class AbstractHttpSender {
 	}
 
 	/**
-	 * Send POST request and return response body
+	 * Envoi une requête POST et retourne le corps de la réponse 
 	 * @param url
 	 * @param text
 	 * @param requestPropertyKey
 	 * @param requestProperty
 	 * @param params
-	 * @return the response
+	 * @return la réponse
 	 * @throws Exception
 	 */
 	protected String sendPost(String url, String text, String requestPropertyKey, 
@@ -101,7 +100,7 @@ public abstract class AbstractHttpSender {
 	}
 
 	/**
-	 * Send POST request
+	 * Envoi une requête POST
 	 * @param url
 	 * @param text
 	 * @throws Exception
@@ -121,7 +120,7 @@ public abstract class AbstractHttpSender {
 	}
 	
 	/**
-	 * Send POST request
+	 * Envoi une requête POST et retourne le code de la réponse
 	 * @param url 
 	 * @param property 
 	 * @param text 

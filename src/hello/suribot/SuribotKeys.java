@@ -1,7 +1,7 @@
 package hello.suribot;
 
 /**
- * Toutes les clefs JSON du bot
+ * Toutes les clefs JSON propres au bot
  */
 public enum SuribotKeys {
 	

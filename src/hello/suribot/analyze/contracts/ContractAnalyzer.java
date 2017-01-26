@@ -104,6 +104,7 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		return jsonReturn;
 	}
 
+	/** Réinitialisation des paramètres finaux d'une analyse. */
 	private void resetParams(){
 		calledMethod = null;
 		choice = false;
@@ -125,6 +126,11 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		return choice;
 	}
 
+	/**
+	 * Retourne un paramètre permettant de choisir la méthode à mettre dans l'URL de l'API à appeler.
+	 * @param entities
+	 * @return un {@link ContractParams}
+	 */
 	private ContractParams getMethodToCall(JSONObject entities){
 		if(entities!=null){
 			Set<String> setKeyEntities = entities.keySet();
@@ -137,6 +143,12 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		return null;
 	}
 
+	/**
+	 * Retourne un paramètre permettant de choisir les paramètres liés 
+	 * à la méthode à mettre dans l'URL de l'API à appeler.
+	 * @param entities
+	 * @return le complément
+	 */
 	private String getComplement(JSONObject entities, ContractParams cp){
 		if(cp != null ){
 			try{
@@ -170,6 +182,13 @@ public class ContractAnalyzer implements IContractAnalyzer {
 		return null;
 	}
 
+	/**
+	 * Extrait l'identifiant du contrat contenu dans les entities 
+	 * @param entities
+	 * @return l'identifiant
+	 * @throws JSONException si l'identifiant n'est pas contenu dans les entities
+	 * @throws ClassCastException si l'identifiant n'est pas contenu dans les entities
+	 */
 	private String getContractId(JSONObject entities) throws JSONException, ClassCastException{
 		return entities.getJSONArray(CONTRATID).getJSONObject(0).getString(SuribotKeys.VALUES.value).replaceAll("[^0-9]+", "");
 	}

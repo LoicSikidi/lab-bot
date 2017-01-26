@@ -1,5 +1,8 @@
 package hello.suribot.utils;
 
+/**
+ * Enum contenant toutes les variables d'environnement du BOT et de l'API bouchonnée
+ */
 public enum EnvVar {
 	
 //  Old env var Microsoft Bot Connector

@@ -29,6 +29,11 @@ public enum MessagesResponses {
 	billingMissingResponse,
 	partyRoleMissingResponse;
 	
+	/**
+	 * Fais la laison entre un paramètre manquant {@link MissingAnalyzerParam} et un {@link MessagesResponses}.
+	 * @param param
+	 * @return le {@link MessagesResponses} associé, null sinon.
+	 */
 	public static MessagesResponses adapt(MissingAnalyzerParam param){
 		if(param != null){
 			switch (param) {

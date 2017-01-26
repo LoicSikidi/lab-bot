@@ -2,6 +2,9 @@ package hello.suribot.analyze.contracts;
 
 import org.json.JSONObject;
 
+/**
+ * Interface de l'analyseur de contrats
+ */
 public interface IContractAnalyzer {
 
 	/**
@@ -12,7 +15,7 @@ public interface IContractAnalyzer {
 	 * Exemple 3 :{"role":[{"confidence":0.82,"raw":"role","value":"role"}]}
 	 * @param entities
 	 * @param idUser
-	 * @return
+	 * @return le JSONObject contenant les données d'instructions
 	 */
 	JSONObject analyze(JSONObject entities, String idUser);
 

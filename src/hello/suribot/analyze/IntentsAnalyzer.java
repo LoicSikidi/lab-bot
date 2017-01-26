@@ -40,7 +40,6 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 	public static final String CONTRAT = "contrat";
 	
 	private IBotConnectorSender nextToCall;
-	
 	private IResponseGenerator responsegenerator;
 	private IAPIController apicontroller;
 	
@@ -202,6 +201,11 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		}
 	}
 	
+	/**
+	 * Retourne le {@link IBotConnectorSender} à partir de son {@link BotConnectorIdentity}
+	 * @param identity 
+	 * @return le {@link IBotConnectorSender}, {@link RecastBotConnectorSender} par défaut
+	 */
 	private IBotConnectorSender getSender(BotConnectorIdentity identity) {
 		if(identity!=null){
 			switch (identity) {
@@ -217,10 +221,10 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 
 	/**
 	 * Forme une nouvelle demande en combinant la précédente (si existante dans les fichiers ".json", voir {@link JSONMemory}) 
-	 * et la nouvelle
+	 * et la nouvelle.
 	 * @param newDemande
 	 * @param lastEntities
-	 * @return
+	 * @return la nouvelle demande sous forme de {@link JSONObject}
 	 */
 	private static JSONObject generateNewRequestWithLastEntities(JSONObject newDemande, JSONObject lastEntities){
 		String langue = null;
@@ -242,12 +246,17 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		return lastEntities;
 	}
 	
-	private static String getContext(JSONObject recastJson){
+	/**
+	 * Retourne l'intent fournis par l'AI, si contenu dans le JSON.
+	 * @param json
+	 * @return l'intent
+	 */
+	private static String getContext(JSONObject json){
 		JSONObject jsonResult = null;
-		if(recastJson != null){
+		if(json != null){
 			try{
 				jsonResult = new JSONObject();
-				jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+				jsonResult = (JSONObject) json.get(SuribotKeys.RESULTS.value);
 				JSONArray ja = (JSONArray) jsonResult.get(SuribotKeys.INTENTS.value);
 				if(ja != null) return ja.getJSONObject(0).getString(SuribotKeys.SLUG.value);
 			}catch(JSONException e){
@@ -257,20 +266,30 @@ public class IntentsAnalyzer implements IIntentsAnalyzer{
 		return null;
 	}
 	
-	private static JSONObject getEntities(JSONObject recastJson){
+	/**
+	 * Retourne le {@link JSONObject} contenant les entities fournis par l'AI, si contenu dans le JSON.
+	 * @param json
+	 * @return le {@link JSONObject} des entities
+	 */
+	private static JSONObject getEntities(JSONObject json){
 		JSONObject jsonResult = new JSONObject();
-		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+		if(json != null){
+			jsonResult = (JSONObject) json.get(SuribotKeys.RESULTS.value);
 			jsonResult = (JSONObject) jsonResult.get(SuribotKeys.ENTITIES.value);
 			return jsonResult;
 		}
 		return null;
 	}
 	
-	private static String getLanguage(JSONObject recastJson){
+	/**
+	 * Retourne la valeur de la clé de langue, si contenue dans le JSON.
+	 * @param json
+	 * @return la valeur de la langue
+	 */
+	private static String getLanguage(JSONObject json){
 		JSONObject jsonResult = new JSONObject();
-		if(recastJson != null){
-			jsonResult = (JSONObject) recastJson.get(SuribotKeys.RESULTS.value);
+		if(json != null){
+			jsonResult = (JSONObject) json.get(SuribotKeys.RESULTS.value);
 			return jsonResult.getString(SuribotKeys.LANGUAGE.value);
 		}
 		return null;

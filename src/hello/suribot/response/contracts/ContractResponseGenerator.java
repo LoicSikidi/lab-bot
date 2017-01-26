@@ -24,6 +24,9 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		this.messages = messages;
 	}
 	
+	/* (non-Javadoc)
+	 * @see hello.suribot.response.contracts.IContractResponseGenerator#generateContractMessage(java.lang.String, boolean, java.lang.String)
+	 */
 	public Response generateContractMessage(String calledMethod, boolean choice, String params) throws IllegalArgumentException {
 		ContractParams param = ContractParams.valueOf(calledMethod);
 		
@@ -49,10 +52,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see hello.suribot.response.contracts.IContractResponseGenerator#generateChoiceResponse(hello.suribot.response.MessagesResponses, java.lang.String)
+	/**
+	 * Retourne la réponse concernant un choix à fournir à partir de la {@link MessagesResponses} et des paramètres à associés.
+	 * @param key
+	 * @param params
+	 * @return la {@link Response}
+	 * @throws MissingResourceException
 	 */
-	public Response generateChoiceResponse(MessagesResponses key, String params) throws MissingResourceException {
+	private Response generateChoiceResponse(MessagesResponses key, String params) throws MissingResourceException {
 		if(key == null || params == null || params.isEmpty()) return null;
 		String response = messages.getString(key.toString());
 		
@@ -80,10 +87,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return new Response(response, listChoice);
 	}
 
-	/* (non-Javadoc)
-	 * @see hello.suribot.response.contracts.IContractResponseGenerator#generateInfosResponse(hello.suribot.response.MessagesResponses, java.lang.String)
+	/**
+	 * Retourne la réponse concernant une information à fournir à partir de la {@link MessagesResponses} et des paramètres à associés.
+	 * @param key
+	 * @param params
+	 * @return la {@link Response}
+	 * @throws MissingResourceException
 	 */
-	public Response generateInfosResponse(MessagesResponses key, String params) throws MissingResourceException {
+	private Response generateInfosResponse(MessagesResponses key, String params) throws MissingResourceException {
 		if(key == null || params == null || params.isEmpty()) return null;
 		String mess = messages.getString(key.toString());
 		
@@ -129,7 +140,14 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return results;
 	}
 	
-	
+	/**
+	 * Appelle les bonnes méthodes d'extractions suivant la clé {@link MessagesResponses}, et retourne leur résultat, null sinon.
+	 * @param key
+	 * @param params
+	 * @return
+	 * @throws JSONException
+	 * @throws MissingResourceException
+	 */
 	private Response extractInfos(MessagesResponses key, String params) throws JSONException, MissingResourceException {
 		if(key == null) return null;
 
@@ -224,13 +242,19 @@ public class ContractResponseGenerator implements IContractResponseGenerator {
 		return new Response(response,urlImage);
 	}
 	
+	/**
+	 * Essaye de récupérer des fichiers properties une valeur de langue de la clé et de la valeur associée.
+	 * @param key
+	 * @param value
+	 * @return une chaîne contenant la clé et la valeur.
+	 */
 	private String adaptInfo(String key, String value){
 		try{
 			key = messages.getString(key);
-		} catch (MissingResourceException e){}
+		} catch (MissingResourceException e){} // la ressource ne contient pas ce String
 		try {
 			value = messages.getString(value);
-		} catch (MissingResourceException e){}
+		} catch (MissingResourceException e){} // la ressource ne contient pas ce String
 		return key + " : " +value+"\n";
 	}
 }

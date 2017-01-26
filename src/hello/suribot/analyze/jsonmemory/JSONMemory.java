@@ -83,7 +83,6 @@ public class JSONMemory {
 	}
 
 	///////////////// REMOVE  ///////////////////////////
-
 	public static void removeLastEntities(String idUser){
 		removeKeyInJson(idUser, ENTITIES);
 	}
@@ -170,7 +169,9 @@ public class JSONMemory {
 			try {
 				if(isr!=null)isr.close();
 				if(fileInput!=null)fileInput.close();
-			} catch (IOException e) {}
+			} catch (IOException e) {
+				logger.error("Fichier "+idUser+" non fermable.\n"+e.getStackTrace());
+			}
 		}
 
 		// cas où fichier non vide et contient déjà du JSON
@@ -181,7 +182,7 @@ public class JSONMemory {
 			file.flush();
 			file.close();
 		} catch (IOException | JSONException e) {
-			// ecriture du fichier existant NOK
+			logger.error(e.getStackTrace());
 		}
 	}
 
@@ -217,7 +218,7 @@ public class JSONMemory {
 		try{
 			return Files.deleteIfExists(Paths.get(DIR+idUser+EXTENSION_FILE));
 		} catch (Exception e){
-			// on le vide si impossible à supprimer (https://github.com/fflewddur/archivo/issues/95)
+			// on le vide si impossible à supprimer (github.com/fflewddur/archivo/issues/95)
 			cleanJsonFileIfExists(idUser);
 		}
 		return false;
