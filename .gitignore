@@ -5,4 +5,5 @@
 .project
 */node_modules/
 .buildpath
-/jsonMemoryDir/*.json
+/JsonMemory/*.json
+/logs/*

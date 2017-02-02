@@ -1,11 +1,34 @@
 package hello.suribot.utils;
 
-public final class EnvVar {
+/**
+ * Enum contenant toutes les variables d'environnement du BOT et de l'API bouchonnée
+ */
+public enum EnvVar {
 	
-	public static final String APPID = System.getenv("APPID");
-	public static final String APPSECRET = System.getenv("APPSECRET");
-	public static final String BOTPORT = System.getenv("BOTPORT");
-	public static final String NODEJSPORT = System.getenv("NODEJSPORT");
-	public static final String CONTRACTPORT = System.getenv("CONTRACTPORT");
+//  Old env var Microsoft Bot Connector
+//	APPID
+//	APPSECRET
+	NODEJSPORT,
 
+	RBCSLUG,
+	RBCBOTID,
+	RBCTOKEN,
+	
+	BOTPORT,
+	CONTRACTPORT,
+	TOKENRECAST,
+	TOKENAPIAI;
+	
+	private String value;
+	
+	private EnvVar(){
+		try{
+			value = System.getenv(toString());
+		} catch (Exception e){
+			value = null;
+		}
+	}
+	
+	public String getValue(){ return value; }
+	
 }

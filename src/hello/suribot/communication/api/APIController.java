@@ -1,26 +1,23 @@
 package hello.suribot.communication.api;
 
-import hello.suribot.interfaces.IHttpSender;
+import java.io.IOException;
+
+import hello.suribot.abstracts.AbstractHttpSender;
+import hello.suribot.interfaces.IAPIController;
 
 /**
  * Classe permettant de communiquer avec différentes API externes
  */
-public class APIController implements IHttpSender{
+public class APIController extends AbstractHttpSender implements IAPIController{
 	
 	public APIController() {}
 	
-	/**
-	 * Send message to api, and listen response
-	 * @param message
+	/* (non-Javadoc)
+	 * @see hello.suribot.communication.api.IAPIController#send(java.lang.String)
 	 */
-	public String sendMessageAndReturnResponse(String url, String message){
-		try {
-			//if(message != null) return sendPostAndReturnResponse(url, message);
-			return sendGet(url);
-		} catch (Exception e) {
-			System.out.println("APIController : Message "+message+" not send... ("+e+")");
-		}
-		return null;
+	@Override
+	public String send(String url) throws IOException{
+		return sendGet(url);
 	}
 
 }

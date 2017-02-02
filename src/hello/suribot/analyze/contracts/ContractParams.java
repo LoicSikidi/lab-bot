@@ -1,13 +1,18 @@
 package hello.suribot.analyze.contracts;
 
+/**
+ * Divers paramètres et méthodes liés à l'URL de l'API à appeler.
+ */
 public enum ContractParams {
 	
 	risk ("risk/"),
-	billings ("billings/"),
+	prelevement ("billings/"),
 	role ("partyRoles/"),
+	rib ("rib/"),
+	
 	IDREPLACE ("YYYYYYY"),
-	IDOBJ (IDREPLACE.getChemin()+"/couverture"),
-	IDBILLING (IDREPLACE.getChemin()),
+	IDOBJ ("ID-"+IDREPLACE.chemin+"/couverture"),
+	IDBILLING ("ID-"+IDREPLACE.chemin),
 	COMPLEMENT ("complement");
 	
 	private String chemin;
@@ -18,5 +23,5 @@ public enum ContractParams {
 	public String getChemin() {
 		return chemin;
 	}
-
+	
 }
